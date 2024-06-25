@@ -1,0 +1,42 @@
+:root{
+    --background: #F2E8CF;
+    --light-green: #A7C957;
+    --green: #6A994E;
+    --dark-green:#386641;
+    --red: #BC4749;
+
+}
+
+*{
+    font-family: sans-serif;
+    color:#386641;
+}
+
+body{
+    background-color: var(--background);
+}
+
+#Title{
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.header{
+    background-color: var(--light-green);
+    height: 45px;
+    width: 100%;
+}
+
+.section{
+    background-color: var(--light-green);
+    border-radius: 20px;
+    width: 70%;
+    height: 400px;
+}
+
+.GreenButton{
+    mix-blend-mode: multiply !important;
+    background-color: #D9D909 !important;
+    width: 100% !important;
+    height: 200px;
+}
