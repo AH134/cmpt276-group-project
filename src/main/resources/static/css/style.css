@@ -8,7 +8,7 @@
 }
 
 *{
-    font-family: sans-serif;
+    font-family: 'Jua' !important;
     color:#386641;
 }
 
@@ -23,14 +23,14 @@ body{
 
 .header{
     background-color: var(--light-green);
-    height: 45px;
+    height: 90px;
     width: 100%;
 }
 
 .section{
     background-color: var(--light-green);
     border-radius: 20px;
-    width: 70%;
+    width: 80%;
     height: 400px;
 }
 
@@ -38,5 +38,8 @@ body{
     mix-blend-mode: multiply !important;
     background-color: #D9D909 !important;
     width: 100% !important;
+    border-radius: 20px;
     height: 200px;
+    font-size: 32px;
+    color: var(--dark-green);
 }
