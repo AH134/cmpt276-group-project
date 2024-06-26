@@ -1,0 +1,22 @@
+*{
+    font-family: 'Jua' !important;
+    color:#386641;
+}
+body{
+    background-color: #f2e8cf;
+}
+.header{
+    background-color: #a7c957;
+    height: 90px;
+    width: 100%;
+}
+h1{
+    font-size: 60px;
+}
+.btn{
+    background-color: #7f4f24;
+    border-color: #7f4f24;
+}
+.border{
+    border-color: #a7c957 !important;
+}
