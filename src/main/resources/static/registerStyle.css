@@ -1,8 +1,5 @@
-*{
-    font-family: 'Jua' !important;
-    color:#386641;
-}
 body{
+    font-family: 'Jua';
     background-color: #f2e8cf;
 }
 .header{
@@ -12,11 +9,21 @@ body{
 }
 h1{
     font-size: 60px;
+    color:#228400;
 }
 .btn{
     background-color: #7f4f24;
     border-color: #7f4f24;
+    width: 500px;
+    height: 50px;
 }
 .border{
     border-color: #a7c957 !important;
+}
+.form-control-lg{
+    width: 500px;
+}
+.col-md-8{
+    background-color: #fffaed;
+    border: 8px solid #a7c957;
 }

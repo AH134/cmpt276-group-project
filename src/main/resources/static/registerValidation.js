@@ -1,3 +1,5 @@
+// code from https://getbootstrap.com/docs/5.3/forms/validation/#custom-styles
+
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (() => {
     'use strict'
