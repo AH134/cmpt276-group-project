@@ -29,12 +29,12 @@ public class UserController {
         User user = (User) session.getAttribute("session_user");
 
         if (user == null) {
-            return "users/login";
+            return "redirect:login.html";
         }
 
         model.addAttribute("user", user);
 
-        return "protected/home";
+        return "protected/user/dashboard";
     }
 
     @PostMapping("/login")
@@ -49,20 +49,20 @@ public class UserController {
             model.addAttribute("error", error);
             res.setStatus(error.getStatusCode());
 
-            return "users/login";
+            return "redirect:login.html";
         }
 
         User user = userList.getFirst();
         req.getSession().setAttribute("session_user", user);
         model.addAttribute("user", user);
 
-        return "protected/home";
+        return "protected/user/dashboard";
     }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest req, HttpServletResponse res) {
         req.getSession().invalidate();
-        return "main";
+        return "redirect:main.html";
     }
 
 }
