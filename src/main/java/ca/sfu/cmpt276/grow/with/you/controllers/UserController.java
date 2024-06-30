@@ -24,8 +24,8 @@ public class UserController {
     private UserRepository userRepo;
 
     @GetMapping("/login")
-    public String getLogin(@RequestParam Map<String, String> loginData, Model model, HttpServletRequest req,
-            HttpServletResponse res, HttpSession session) {
+    public String getLogin(HttpServletRequest req,
+            HttpServletResponse res, HttpSession session, Model model) {
         User user = (User) session.getAttribute("session_user");
 
         if (user == null) {
@@ -38,8 +38,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam Map<String, String> loginData, Model model, HttpServletRequest req,
-            HttpServletResponse res) {
+    public String login(@RequestParam Map<String, String> loginData, HttpServletRequest req,
+            HttpServletResponse res, Model model) {
         String username = loginData.get("username");
         String password = loginData.get("password");
         List<User> userList = userRepo.findByUsernameAndPassword(username, password);
@@ -52,11 +52,17 @@ public class UserController {
             return "users/login";
         }
 
-        User user = userList.get(0);
+        User user = userList.getFirst();
         req.getSession().setAttribute("session_user", user);
         model.addAttribute("user", user);
 
         return "protected/home";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest req, HttpServletResponse res) {
+        req.getSession().invalidate();
+        return "main";
     }
 
 }
