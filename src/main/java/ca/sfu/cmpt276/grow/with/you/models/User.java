@@ -14,6 +14,7 @@ public class User {
     private int uid;
     private String username;
     private String password;
+    // private int/String role;
     private String email;
     private double balance;
     private boolean isAdmin;

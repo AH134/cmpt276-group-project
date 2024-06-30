@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class UserController {
+public class LoginController {
     @Autowired
     private UserRepository userRepo;
 
@@ -29,7 +29,7 @@ public class UserController {
         User user = (User) session.getAttribute("session_user");
 
         if (user == null) {
-            return "redirect:login.html";
+            return "login";
         }
 
         model.addAttribute("user", user);
@@ -49,12 +49,16 @@ public class UserController {
             model.addAttribute("error", error);
             res.setStatus(error.getStatusCode());
 
-            return "redirect:login.html";
+            return "login";
         }
 
         User user = userList.getFirst();
         req.getSession().setAttribute("session_user", user);
         model.addAttribute("user", user);
+
+        if (user.getIsAdmin()) {
+            return "redirect:dashboard";
+        }
 
         return "protected/user/dashboard";
     }

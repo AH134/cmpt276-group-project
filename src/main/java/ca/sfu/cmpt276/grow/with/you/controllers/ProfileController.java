@@ -20,27 +20,23 @@ public class ProfileController {
     @Autowired
     private ProfileRepository profileRepo;
 
-        @GetMapping("/profile")
-        public String userProfile(Model model, HttpSession session) {
-            Profile loggedInUser = (Profile) session.getAttribute("session_user");
-            model.addAttribute("profile", loggedInUser);
-            return "users/profile";
-        }
+    @GetMapping("/profile")
+    public String userProfile(Model model, HttpSession session) {
+        Profile loggedInUser = (Profile) session.getAttribute("session_user");
+        model.addAttribute("profile", loggedInUser);
+        return "protected/user/profile";
+    }
 
-
-
-        
-
-    //NOT FOR ITERATION 1 
+    // NOT FOR ITERATION 1
     @GetMapping("/profile/{id}")
     public String userProfile(@PathVariable int id, Model model) {
-    Optional<Profile> optionalProfile = profileRepo.findById(id);
-    if (optionalProfile.isPresent()) {
-    Profile profile = optionalProfile.get();
-    model.addAttribute("pr", profile);
-    return "users/profile";
-    } else
-    return "redirect:/error";
+        Optional<Profile> optionalProfile = profileRepo.findById(id);
+        if (optionalProfile.isPresent()) {
+            Profile profile = optionalProfile.get();
+            model.addAttribute("pr", profile);
+            return "protected/user/profile";
+        } else
+            return "redirect:/error";
     }
 
     @PostMapping("/users/edit/{id}")
