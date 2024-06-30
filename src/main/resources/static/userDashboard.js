@@ -9,11 +9,20 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function selectRole(role) {
-    window.location.href = `/homePage?role=${role}`;
-}
-
-function goToProfile() {
-    window.location.href = '/profile';
+    fetch(`/setRole?role=${role}`, { method: 'POST' }) // Example of setting role via POST request
+        .then(response => {
+            if (response.ok) {
+                // Redirect to the respective dashboard based on role
+                if (role === 'grower') {
+                    window.location.href = '/growerdashboard';
+                } else if (role === 'sponsor') {
+                    window.location.href = '/sponsordashboard';
+                }
+            } else {
+                console.error('Failed to set role.');
+            }
+        })
+        .catch(error => console.error('Error setting role:', error));
 }
 
 function showPopup() {
@@ -22,4 +31,7 @@ function showPopup() {
 
 function closePopup() {
     document.getElementById('popupMessage').style.display = 'none';
+}
+function goToProfile() {
+    window.location.href = '/profile';
 }
