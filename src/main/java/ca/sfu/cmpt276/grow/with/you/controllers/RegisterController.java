@@ -19,7 +19,7 @@ public class RegisterController {
 
     @GetMapping("/register")
     public String showRegister(){
-        return "registerPage.html";
+        return "redirect:registerPage.html";
     }
 
     @PostMapping("/register/new")
@@ -34,7 +34,7 @@ public class RegisterController {
         }
         catch(Exception e){
             response.setStatus(400);
-            return "registerPage.html";
+            return "redirect:registerPage.html";
         }
     }
 }
