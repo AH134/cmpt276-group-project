@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rectangle Info</title>
+    <link rel="stylesheet" href="/css/editStyle.css">
+    <script src="/js/editScript.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>User Info</h1>
+        <div> 
+            <form th:action="@{/profile/edit/{id}(id=${profile.uid})}" method="post">
+                <input type="text" id="usernameInput" name="username" th:value="${profile.username}" required><br>
+                <input type="text" id="passwordInput" name="password" th:value="${profile.password}" required><br>
+                <form>
+                    <label for="role">Select your role:</label>
+                    <select id="role" name="role">
+                        <option value="grower">Grower</option>
+                        <option value="sponsor">Sponsor</option>
+                    </select>
+                    <button type="submit">Submit</button>
+                </form><br>
+                <button type="submit">Save changes</button>
+            </form>
+        </div>
+        <button id="back-btn" onclick="window.history.back()">Back to Profile</button> 
+    </div>
+</body>
+</html>
