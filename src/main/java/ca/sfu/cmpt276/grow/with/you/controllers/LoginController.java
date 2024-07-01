@@ -31,10 +31,9 @@ public class LoginController {
         if (user == null) {
             return "login";
         }
-
         model.addAttribute("user", user);
 
-        return "protected/user/dashboard";
+        return "redirect:dashboard";
     }
 
     @PostMapping("/login")
@@ -56,11 +55,7 @@ public class LoginController {
         req.getSession().setAttribute("session_user", user);
         model.addAttribute("user", user);
 
-        if (user.getIsAdmin()) {
-            return "redirect:dashboard";
-        }
-
-        return "protected/user/dashboard";
+        return "redirect:dashboard";
     }
 
     @GetMapping("/logout")

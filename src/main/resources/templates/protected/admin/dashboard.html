@@ -34,14 +34,13 @@
                 </tr>
             </thead>
             <tbody id="userTableBody">
-                <!-- User data will be inserted here dynamically -->
                 <tr th:each="user: ${userList}">
                     <th th:text="${user.username}"></th>
                     <th th:text="${user.email}"></th>
-                    <th>Role</th>
+                    <th th:text="${user.role}"></th>
                     <th th:text="${user.balance}"></th>
-                    <th>Posts</th>
-                    <th>Plants</th>
+                    <th th:text="${user.profile.posts}"></th>
+                    <th th:text="${user.profile.plants}"></th>
                 </tr>
             </tbody>
         </table>

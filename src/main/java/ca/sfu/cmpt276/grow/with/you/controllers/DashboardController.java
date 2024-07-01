@@ -30,8 +30,8 @@ public class DashboardController {
 
         if (user.getIsAdmin()) {
             List<User> userList = userRepo.findByIsAdmin(false);
-            model.addAttribute("userList", userList);
             System.out.println(userList);
+            model.addAttribute("userList", userList);
 
             return "protected/admin/dashboard";
         }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ca.sfu.cmpt276.grow.with.you.models.Profile;
+import ca.sfu.cmpt276.grow.with.you.models.ProfileRepository;
 import ca.sfu.cmpt276.grow.with.you.models.User;
 import ca.sfu.cmpt276.grow.with.you.models.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,6 +20,9 @@ import jakarta.servlet.http.HttpServletResponse;
 public class RegisterController {
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private ProfileRepository profileRepo;
 
     @GetMapping("/register")
     public String showRegister() {
@@ -32,11 +37,20 @@ public class RegisterController {
             String newName = newUser.get("username");
             String newPwd = newUser.get("password1");
             String newEmail = newUser.get("email");
-            userRepo.save(new User(newName, newPwd, newEmail, 1000.0, false));
+
+            User user = new User(newName, newPwd, 1, newEmail, 1000.0, false, null);
+            userRepo.save(user);
+
+            Profile userProfile = new Profile(user, 0, 0);
+            profileRepo.save(userProfile);
+
+            user.setProfile(userProfile);
+            userRepo.save(user);
+
             response.setStatus(201);
 
-            List<User> user = userRepo.findByUsernameAndPassword(newName, newPwd);
-            req.getSession().setAttribute("session_user", user.getFirst());
+            List<User> userList = userRepo.findByUsernameAndPassword(newName, newPwd);
+            req.getSession().setAttribute("session_user", userList.get(0));
 
             return "redirect:/dashboard";
         } catch (Exception e) {
