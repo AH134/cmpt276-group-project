@@ -19,3 +19,12 @@
       }, false)
     })
   })()
+
+// document.getElementsByName('roleRadio').forEach(radio => {
+//   if(radio.checked){
+//     // send the value of the checked radio button to the controller
+//     document.getElementById('role').value = radio.value;
+//   }
+// });
+
+  

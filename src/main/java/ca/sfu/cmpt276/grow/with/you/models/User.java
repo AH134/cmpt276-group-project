@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,18 +15,41 @@ public class User {
     private int uid;
     private String username;
     private String password;
+    private int role;
     private String email;
     private double balance;
     private boolean isAdmin;
+    @OneToOne(mappedBy = "user")
+    private Profile profile;
 
     public User() {
     }
 
-    public User(String username, String password, String email, double balance, boolean isAdmin) {
+    public User(String username, String password, int role, String email, double balance, boolean isAdmin,
+            Profile profile) {
         this.username = username;
         this.password = password;
+        this.role = role;
         this.email = email;
         this.balance = balance;
+        this.isAdmin = isAdmin;
+        this.profile = profile;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public boolean getIsAdmin() {
+        return isAdmin;
+
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
 
@@ -45,6 +69,14 @@ public class User {
         this.password = password;
     }
 
+    public int getRole() {
+        return this.role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -60,13 +92,4 @@ public class User {
     public void setBalance(double balance) {
         this.balance = balance;
     }
-
-    public boolean getIsAdmin() {
-        return isAdmin;
-    }
-
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
-    }
-
 }
