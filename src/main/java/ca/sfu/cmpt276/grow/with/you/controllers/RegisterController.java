@@ -26,21 +26,20 @@ public class RegisterController {
 
     @GetMapping("/register")
     public String showRegister() {
-        return "redirect:register.html";
+        return "forward:/register.html";
     }
 
     @PostMapping("/register/new")
     public String registerUser(@RequestParam Map<String, String> newUser, HttpServletResponse response,
             HttpServletRequest req) {
         try {
-            // TODO need to add role (1 grower, 2 sponsor)
             System.out.println(newUser);
             String newName = newUser.get("username");
             String newPwd = newUser.get("password1");
             String newEmail = newUser.get("email");
+            int newRole = Integer.parseInt(newUser.get("roleRadio"));
 
-            // this setup works
-            User user = new User(newName, newPwd, 2, newEmail, 1000.0, false, null);
+            User user = new User(newName, newPwd, newRole, newEmail, 1000.0, false, null);
             userRepo.save(user);
 
             Profile userProfile = new Profile(user, 0, 0);
@@ -57,7 +56,7 @@ public class RegisterController {
             return "redirect:/dashboard";
         } catch (Exception e) {
             response.setStatus(400);
-            return "redirect:register.html";
+            return "forward:/register.html";
         }
     }
 }
