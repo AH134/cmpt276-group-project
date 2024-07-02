@@ -51,10 +51,17 @@ h1 {
 }
 
 .form-control-lg {
-    width: 500px;
+    width: 100%;
 }
 
 .col-md-8 {
     background-color: #fffaed;
     border: 8px solid #a7c957;
+}
+
+input[name="roleRadio"]{
+    width: 30px;
+    height: 30px;
+    filter: hue-rotate(290deg) contrast(300%);
+    border: 0.5px solid black;
 }
