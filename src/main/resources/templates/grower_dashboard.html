@@ -4,34 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="userDashboard.css">
-    <title>Dashboard</title>
+    <link rel="stylesheet" href="growerdash.css">
+    <title>Grower Dashboard</title>
 </head>
 <body>
     <nav class="navbar">
-        <div class="container">
+        
             <div class="navbar-brand">
                 <h1>GroWith You</h1>
             </div>
-            <div title="Profile" class="profile">
-                <a href="/profile">
-                <img src="profile.jpg" alt="Profile Picture" class="profile-pic">
-            </a>
+            <div class="hamburger-menu">
+                <button class="hamburger-icon" id="hamburgerIcon" aria-label="Toggle Menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+                <div id="menu" class="menu">
+                    <ul>
+                        <li><a href="/profile">&#128568 Profile</a></li>
+                        <li><a>&#127800 About</a></li>
+                        <li><a>&#9997 Give Feedback</a></li>
+                        <li><a><span>&#9754;</span> Log Out</a></li>
+
+                        <!-- Add more menu items as needed -->
+                    </ul>
+                </div>
             </div>
-        </div>
+        
     </nav>
     <div class="container mt-5 text-center">
         <h2>Welcome to your Grower Dashboard!</h2>
-        <!-- Add grower-specific content here -->
+        <!-- Grower-specific content -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="dashboard-card">
+                    <h3>Tasks</h3>
+                    <ul id="tasks">
+                        <!-- Tasks will be dynamically added here -->
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dashboard-card">
+                    <h3>Plant Data</h3>
+                    <ul id="plantData">
+                        <!-- Plant data will be dynamically added here -->
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dashboard-card">
+                    <h3>Analytics</h3>
+                    <ul id="analytics">
+                        <!-- Analytics will be dynamically added here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="message-btn">
         <button title="Messages">
-            <span>&#9993;</span>
+           <p>&#128172</p>
         </button>
-         <div id="popupMessage" class="popup">
+        <div id="popupMessage" class="popup">
             <div class="popup-content">
-             
-             <p><strong> Admins:</strong> Welcome! We're glad to have you here.&#128515;</p>
+                <p><strong>Admins:</strong> Welcome! We're glad to have you here.&#128515;</p>
             </div>
         </div>
     </div>

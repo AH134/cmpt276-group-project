@@ -16,27 +16,6 @@ public class DashboardController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/userdashboard")
-    public String userDashboard(Model model) {
-        User user = userService.getCurrentUser();
-        if (userService.isRoleSet()) {
-            String role = userService.getCurrentUserRole();
-            if ("grower".equals(role)) {
-                return "redirect:/grower_dashboard";
-            } else if ("sponsor".equals(role)) {
-                return "redirect:/sponsor_dashboard";
-            }
-        }
-        model.addAttribute("user", user);
-        return "userDashboard";
-    }
-
-    @PostMapping("/setRole")
-    public ResponseEntity<String> setRole(@RequestParam("role") String role) {
-        userService.setCurrentUserRole(role); // i will set the current user role
-        return ResponseEntity.ok("Role set successfully");
-    }
-
     @GetMapping("/growerdashboard")
     public String growerDashboard(Model model) {
         User user = userService.getCurrentUser();

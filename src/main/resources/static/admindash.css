@@ -1,16 +1,17 @@
 body {
-    font-family: 'Roobert', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     background-color: #F2E8CF;
-    background: url('background.jpg') no-repeat center center fixed;
+    /*background: url('background.jpg') no-repeat center center fixed;*/
     background-size: cover;
     padding-top: 70px;
 }
 
-h1{
-    font-family:Georgia, 'Times New Roman', Times, serif
+h1 {
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
+
 .navbar {
-    background-color: #f8f9fa;
+    background-color: #a3c744;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,7 +24,7 @@ h1{
 }
 
 .navbar-brand {
-    flex-grow: 1;
+    margin-right: auto;
 }
 
 .navbar-brand h1 {
@@ -45,65 +46,34 @@ h1{
     border: 2px solid #1A1A1A;
 }
 
-.role-option {
-    width: 200px;
-    height: 300px;
-    display: inline-block;
-    text-align: center;
-    margin: 50px;
-    cursor: pointer;
-    position: relative;
-    padding-top: 50px;
-    border: 2px solid #386641;
-    opacity: 90%;
+.dashboard-card {
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
-.role-option p {
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: bold;
+h3 {
+    font-size: 1.5rem;
     color: #BC4749;
 }
 
-.role-option .description {
-    margin-top: 10px;
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
     font-size: 1rem;
     color: #666;
-}
-
-.icon-container {
-    width: 3cm; /* Resized to 3x3 cm */
-    height: 3cm; /* Resized to 3x3 cm */
-    margin: 0 auto;
-    margin-bottom: 1rem;
-}
-
-.role-option img.icon {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.btn {
-    background: rgb(255, 255, 255);
-    color: #BC4749;
-    border-radius: .5rem;
-    transition-duration: 0.25s;
-    transition-property: border-top, border-left, border-bottom, border-right, box-shadow;
-}
-
-.btn:hover {
-    border-bottom: 2px solid #A7C957;
-    border-right: 2px solid #A7C957;
-    border-top: 2px solid #386641;
-    border-left: 2px solid #386641;
-    box-shadow: rgba(167, 201, 87, 0.4) 5px 5px, rgba(167, 201, 87, 0.3) 10px 10px, rgba(167, 201, 87, 0.2) 15px 15px;
+    margin-bottom: 10px;
 }
 
 .message-btn {
     position: fixed;
     bottom: 20px;
-    right: 200px;
+    right: 20px;
 }
 
 .message-btn button {
@@ -148,7 +118,7 @@ h1{
 
 span {
     content: "\2709";
-  }
+}
 
 .popup {
     display: none;
@@ -194,3 +164,77 @@ span {
     border-right: 9px solid transparent;
     border-top: 9px solid #fff;
 }
+
+/* Hamburger menu */
+.hamburger-menu {
+    position: relative;
+}
+
+.hamburger-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.bar {
+    display: block;
+    width: 20px;
+    height: 3px;
+    background-color: #333;
+    margin: 4px 0;
+    transition: transform 0.4s, opacity 0.4s;
+}
+
+.menu {
+    position: absolute;
+    top: calc(100% + 10px); /* Adjust distance below the hamburger icon */
+    right: 0; /* Position menu to the right of the hamburger icon */
+    width: 400px; /* Double the width of the menu */
+    background-color: #ffffff; /* Changed background color */
+    border: 1px solid #ccc;
+    padding: 10px;
+    display: none;
+    border-radius: 5px;
+    opacity: 90% ;
+}
+
+.menu.open {
+    display: block;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu li {
+    margin-bottom: 10px;
+}
+
+.menu a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+    padding: 8px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.menu a:hover {
+    background-color: #ddd;
+}
+span {
+    content: "\263A";
+  } 
+
+span {
+    content: "\2619";
+  } 
+  span {
+    content: "\270D";
+  } 
+
+  span {
+    content: "\261A";
+  }

@@ -25,6 +25,27 @@ function selectRole(role) {
         .catch(error => console.error('Error setting role:', error));
 }
 
+// JavaScript to handle menu toggle and closing on outside click
+document.addEventListener('DOMContentLoaded', function() {
+    var menu = document.getElementById('menu');
+    var hamburgerIcon = document.getElementById('hamburgerIcon');
+
+    hamburgerIcon.addEventListener('click', function() {
+        menu.classList.toggle('open');
+    });
+
+    // Close menu on outside click
+    document.addEventListener('click', function(event) {
+        var isClickInside = hamburgerIcon.contains(event.target) || menu.contains(event.target);
+        if (!isClickInside) {
+            menu.classList.remove('open');
+        }
+    });
+});
+
+
+
+
 function showPopup() {
     document.getElementById('popupMessage').style.display = 'block';
 }
