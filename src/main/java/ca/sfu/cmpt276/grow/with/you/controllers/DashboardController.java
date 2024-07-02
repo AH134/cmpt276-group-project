@@ -30,12 +30,16 @@ public class DashboardController {
 
         if (user.getIsAdmin()) {
             List<User> userList = userRepo.findByIsAdmin(false);
-            System.out.println(userList);
             model.addAttribute("userList", userList);
 
             return "protected/admin/dashboard";
         }
 
-        return "protected/user/dashboard";
+        if (user.getRole() == 1) {
+            return "protected/user/growerDashboard";
+        }
+
+        return "protected/user/sponsorDashboard";
+
     }
 }

@@ -31,7 +31,6 @@ public class LoginController {
         if (user == null) {
             return "login";
         }
-        model.addAttribute("user", user);
 
         return "redirect:dashboard";
     }
@@ -45,7 +44,7 @@ public class LoginController {
 
         if (userList.isEmpty()) {
             UserError error = UserError.USER_NOT_FOUND;
-            model.addAttribute("error", error);
+            model.addAttribute("error", error.getMessage());
             res.setStatus(error.getStatusCode());
 
             return "login";
@@ -53,7 +52,6 @@ public class LoginController {
 
         User user = userList.getFirst();
         req.getSession().setAttribute("session_user", user);
-        model.addAttribute("user", user);
 
         return "redirect:dashboard";
     }

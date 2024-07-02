@@ -14,6 +14,11 @@ public class ProfileController {
     @GetMapping("/profile")
     public String userProfile(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("session_user");
+
+        if (loggedInUser == null) {
+            return "redirect:main.html";
+        }
+
         model.addAttribute("user", loggedInUser);
         model.addAttribute("profile", loggedInUser.getProfile());
         return "protected/user/profile";

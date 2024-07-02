@@ -1,6 +1,15 @@
+:root {
+    --background: #F2E8CF;
+    --light-green: #A7C957;
+    --green: #6A994E;
+    --dark-green: #386641;
+    --red: #BC4749;
+
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #F2E8CF;
+    font-family: 'Jua';
+    background-color: var(--background);
     margin: 0;
     padding: 0;
 }
@@ -14,18 +23,18 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex; 
+    display: flex;
 }
 
 .profile-image {
     max-width: 200px;
     border-radius: 50%;
-    margin-right: 20px; 
+    margin-right: 20px;
 }
 
 .profile-info {
-    flex: 1; 
-    position: relative; 
+    flex: 1;
+    position: relative;
 }
 
 .profile-info h1,
@@ -47,26 +56,46 @@ body {
 
 .edit-btn {
     position: absolute;
-    top: 10px; 
+    top: 10px;
     right: 10px;
-    border-radius: 20px; 
-    padding: 10px 20px; 
-    background-color: #386641; 
-    color: #fff; 
+    border-radius: 20px;
+    padding: 10px 20px;
+    background-color: #386641;
+    color: #fff;
     border: none;
     cursor: pointer;
 }
 
 .back-btn {
     position: absolute;
-    top: 500px; 
+    top: 500px;
     margin-left: 10px;
-    border-radius: 20px; 
-    padding: 10px 20px; 
-    background-color: #386641; 
-    color: #fff; 
+    border-radius: 20px;
+    padding: 10px 20px;
+    background-color: #386641;
+    color: #fff;
     border: none;
     cursor: pointer;
 }
 
+.header {
+    background-color: #a7c957;
+    height: 90px;
+    width: 100%;
+}
 
+.nav-link {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: black;
+}
+
+.nav-link:hover {
+    color: var(--dark-green)
+}
+
+.navbar {
+    width: 100%;
+    height: 100%;
+    color: white;
+}

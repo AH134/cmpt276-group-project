@@ -33,12 +33,14 @@ public class RegisterController {
     public String registerUser(@RequestParam Map<String, String> newUser, HttpServletResponse response,
             HttpServletRequest req) {
         try {
+            // TODO need to add role (1 grower, 2 sponsor)
             System.out.println(newUser);
             String newName = newUser.get("username");
             String newPwd = newUser.get("password1");
             String newEmail = newUser.get("email");
 
-            User user = new User(newName, newPwd, 1, newEmail, 1000.0, false, null);
+            // this setup works
+            User user = new User(newName, newPwd, 2, newEmail, 1000.0, false, null);
             userRepo.save(user);
 
             Profile userProfile = new Profile(user, 0, 0);
