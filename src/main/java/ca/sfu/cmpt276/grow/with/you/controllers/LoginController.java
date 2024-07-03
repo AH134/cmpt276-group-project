@@ -23,6 +23,11 @@ public class LoginController {
     @Autowired
     private UserRepository userRepo;
 
+    @GetMapping("/main")
+    public String showMain() {
+        return "forward:/main.html";
+    }
+
     @GetMapping("/login")
     public String getLogin(HttpServletRequest req,
             HttpServletResponse res, HttpSession session, Model model) {
@@ -59,7 +64,7 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest req, HttpServletResponse res) {
         req.getSession().invalidate();
-        return "redirect:main.html";
+        return "redirect:main";
     }
 
 }
