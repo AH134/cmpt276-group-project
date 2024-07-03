@@ -25,7 +25,7 @@ public class DashboardController {
         User user = (User) session.getAttribute("session_user");
 
         if (user == null) {
-            return "redirect:main.html";
+            return "redirect:main";
         }
 
         if (user.getIsAdmin()) {
