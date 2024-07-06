@@ -4,6 +4,7 @@
     --green: #6A994E;
     --dark-green: #386641;
     --red: #BC4749;
+    --text: white;
 }
 
 *{
@@ -33,10 +34,11 @@ body{
 }
 
 .card {
-  background-color: #F2E8CF;
+    background-color: #F2E8CF;
     width: 600px;
     height: 250px;
     perspective: 1000px;
+    color: white !important;
 }
 
 .card-inner {
@@ -61,6 +63,7 @@ body{
     align-items: center;
     justify-content: center;
     border-radius: 20px;
+    color: white !important;
 }
 
 .card-front {
@@ -68,12 +71,38 @@ body{
     border: 5px solid var(--green);
     font-size: 24px;
     transform: rotateY(0deg);
+    color: white !important;
 }
 
 .card-back {
     background-color: var(--green);
     border: 5px solid var(--dark-green);
-    color: white;
+    color: white !important;
     font-size: 24px;
     transform: rotateY(180deg);
 }
+
+.footer {
+    height: 100px;
+}
+
+.container {
+    background-color: var(--background);
+}
+
+#signup-link {
+    color: var(--red);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.mt-3 {
+    margin-top: 0rem !important;
+  }
+
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+  }
