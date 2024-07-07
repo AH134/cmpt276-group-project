@@ -23,4 +23,5 @@ public class ProfileController {
         model.addAttribute("profile", loggedInUser.getProfile());
         return "protected/user/profile";
     }
+
 }

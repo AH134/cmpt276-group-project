@@ -36,6 +36,10 @@ public class User {
         this.profile = profile;
     }
 
+    public int getUid() {
+        return uid;
+    }
+
     public Profile getProfile() {
         return profile;
     }

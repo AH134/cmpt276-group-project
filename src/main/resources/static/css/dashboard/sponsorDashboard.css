@@ -1,0 +1,18 @@
+:root {
+    --background: #F2E8CF;
+    --light-green: #A7C957;
+    --green: #6A994E;
+    --dark-green: #386641;
+    --red: #BC4749;
+
+}
+
+* {
+    font-family: 'Jua' !important;
+}
+
+body {
+    background-color: var(--background);
+    /*background: url('background.jpg') no-repeat center center fixed;*/
+    background-size: cover;
+}
