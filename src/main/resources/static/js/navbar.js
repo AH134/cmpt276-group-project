@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
     const path = window.location.pathname;
-    console.log(path)
     const slashIndex = path.indexOf("/", 1);
     const currentPath = slashIndex !== -1 ? path.substring(0, slashIndex) : path;
 

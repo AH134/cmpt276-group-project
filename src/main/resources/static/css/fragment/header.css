@@ -34,4 +34,17 @@
     align-self: center;
 }
 
+#header-name {
+    margin: 0;
+    align-self: center;
+}
+
+#header-name:hover {
+    cursor: pointer;
+}
+
+#header-name a {
+    color: var(--dark-green);
+}
+
 /* HEADER */
