@@ -1,4 +1,4 @@
-:root{
+:root {
     --background: #F2E8CF;
     --light-green: #A7C957;
     --green: #6A994E;
@@ -7,30 +7,25 @@
     --text: white;
 }
 
-*{
+* {
     font-family: 'Jua' !important;
     color: var(--dark-green);
 }
 
-body{
+body {
     background-color: var(--background);
 }
 
-#Title{
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.header{
-    background-color: var(--light-green);
-    height: 90px;
-    width: 100%;
-}
-
-.GreenButton{
+.GreenButton {
     background-color: var(--green) !important;
-    color: white !important;
-    border-radius: 10px;
+    color: white;
+    border-radius: 8px;
+    min-width: 80px;
+}
+
+.GreenButton:hover {
+    color: var(--dark-green) !important;
+    transition: all;
 }
 
 .card {
@@ -98,11 +93,11 @@ body{
 
 .mt-3 {
     margin-top: 0rem !important;
-  }
+}
 
-  .img-fluid {
+.img-fluid {
     max-width: 100%;
     height: auto;
     object-fit: cover;
     object-position: center;
-  }
+}
