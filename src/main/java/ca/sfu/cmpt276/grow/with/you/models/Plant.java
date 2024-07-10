@@ -1,14 +1,16 @@
 package ca.sfu.cmpt276.grow.with.you.models;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "plant")
@@ -16,29 +18,34 @@ public class Plant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int plantId;
-    private int growerId;
-    private int sponsorId;
+    @ManyToOne
+    @JoinColumn(name = "grower_id")
+    private Grower grower;
+    @ManyToOne
+    @JoinColumn(name = "sponsor_id")
+    private Sponsor sponsor;
     private String name;
     private String description;
+    private String imageUrl;
     private double price;
-    @Temporal(TemporalType.DATE)
-    private Date paidDate;
+    private String province;
     private String city;
-    private String country;
+    @OneToMany(mappedBy = "plant")
+    private List<Message> messages = new ArrayList<>();
 
     public Plant() {
     }
 
-    public Plant(int growerId, String name, String description, double price, Date paidDate, String city,
-            String country) {
-        this.growerId = growerId;
-        this.sponsorId = -1;
+    public Plant(Grower grower, Sponsor sponsor, String name, String description, String imageUrl, double price,
+            String province, String city) {
+        this.grower = grower;
+        this.sponsor = sponsor;
         this.name = name;
         this.description = description;
+        this.imageUrl = imageUrl;
         this.price = price;
-        this.paidDate = paidDate;
+        this.province = province;
         this.city = city;
-        this.country = country;
     }
 
     public int getPlantId() {
@@ -49,20 +56,20 @@ public class Plant {
         this.plantId = plantId;
     }
 
-    public int getGrowerId() {
-        return growerId;
+    public Grower getGrower() {
+        return grower;
     }
 
-    public void setGrowerId(int growerId) {
-        this.growerId = growerId;
+    public void setGrower(Grower grower) {
+        this.grower = grower;
     }
 
-    public int getSponsorId() {
-        return sponsorId;
+    public Sponsor getSponsor() {
+        return sponsor;
     }
 
-    public void setSponsorId(int sponsorId) {
-        this.sponsorId = sponsorId;
+    public void setSponsor(Sponsor sponsor) {
+        this.sponsor = sponsor;
     }
 
     public String getName() {
@@ -81,6 +88,14 @@ public class Plant {
         this.description = description;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -89,12 +104,12 @@ public class Plant {
         this.price = price;
     }
 
-    public Date getPaidDate() {
-        return paidDate;
+    public String getProvince() {
+        return province;
     }
 
-    public void setPaidDate(Date paidDate) {
-        this.paidDate = paidDate;
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public String getCity() {
@@ -105,11 +120,11 @@ public class Plant {
         this.city = city;
     }
 
-    public String getCountry() {
-        return country;
+    public List<Message> getMessages() {
+        return messages;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 }

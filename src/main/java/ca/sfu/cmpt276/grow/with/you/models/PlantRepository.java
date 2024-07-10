@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PlantRepository extends JpaRepository<Plant, Integer> {
-    List<Plant> findByGrowerId(int growerId);
+    List<Plant> findByGrower(Grower grower);
 
-    List<Plant> findBySponsorId(int sponsorId);
+    List<Plant> findBySponsor(Sponsor sponsor);
 }

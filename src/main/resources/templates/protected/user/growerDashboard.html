@@ -1,51 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" layout:decorate="~{_layout}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/dashboard/growerDashboard.css">
-    <link href='https://fonts.googleapis.com/css?family=Jua' rel='stylesheet'>
-    <script src="/js/navbar.js" defer></script>
+    <link rel="stylesheet" href="css/dashboard.css">
     <title>Grower Dashboard</title>
 </head>
 
 <body>
-    <header class="header d-flex justify-content-between p-4">
-        <div class="d-flex align-items-center">
-            <a href="/main">
-                <img src="/assets/header/logo.svg" alt="logo" width="40px" height="40px">
-            </a>
-            <p id="header-name" class="fs-2">Grow With You</p>
+    <div class="main-container h-100 m-auto" layout:fragment="content">
+        <div class="d-flex mt-4 justify-content-between">
+            <div class="d-flex flex-column justify-content-between">
+                <div id="upcoming-payments" class="box-container p-2">
+                    <p class="box-title">
+                        Upcoming Payments
+                    </p>
+                </div>
+
+                <div class="d-flex bottom-row">
+                    <div class="box-container sponsor-box p-2">
+                        <p class="box-title">
+                            Active Listings
+                        </p>
+                    </div>
+                    <div class="box-container sponsor-box p-2">
+                        <p class="box-title">
+                            Lifetime Listings
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="new-notifications" class="box-container p-2">
+                <p class="box-title">
+                    New Notifications
+                </p>
+            </div>
         </div>
-        <div>hamburger</div>
-    </header>
-    <div class="main-container h-100 m-auto">
-        <nav class="navbar border nav justify-content-center m-auto">
-            <li>
-                <a class="text-decoration-none text-dark fs-5" href="/plants">Plants</a>
-            </li>
-            <li>
-                <a class="text-decoration-none text-dark fs-5" href="/messages">Messages</a>
-            </li>
-            <li>
-                <a class="text-decoration-none text-dark fs-5" href="/notifications">Notifications</a>
-            </li>
-            <li>
-                <a class="text-decoration-none text-dark fs-5" href="/payments">Payments</a>
-            </li>
-            <li>
-                <a class="text-decoration-none text-dark fs-5" href="/profile">Profile</a>
-            </li>
-            <li>
-                <a class="text-decoration-none text-dark fs-5" href="/marketplace">Marketplace</a>
-            </li>
-            <li>
-                <a class="text-decoration-none text-dark fs-5" href="/dashboard">Dashboard</a>
-            </li>
-        </nav>
     </div>
 </body>
 

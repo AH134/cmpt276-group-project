@@ -1,0 +1,52 @@
+.m-0 {
+    margin: 0 !important;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.main-container {
+    width: 800px;
+    margin-top: 20px !important;
+}
+
+.box-container {
+    background-color: var(--box-bg);
+    border: 5px solid var(--lighter-green) !important;
+    border-radius: 15px;
+}
+
+/* NAVBAR */
+.navbar {
+    height: 70px;
+    width: 800px;
+}
+
+.navbar li {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.navbar a:hover {
+    color: var(--green) !important;
+}
+
+.active {
+    color: var(--green) !important;
+}
+
+
+#hamburger-menu {
+    display: none;
+    transform: translateY(80px);
+    margin-right: 25px;
+    width: 175px;
+    z-index: 1000;
+}
+
+#hamburger-menu a:hover {
+    color: var(--green) !important;
+}
+
+/* NAVBAR */

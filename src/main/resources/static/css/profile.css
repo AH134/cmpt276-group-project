@@ -1,0 +1,70 @@
+:root {
+    --background: #F2E8CF;
+    --lighter-green: #A7C957;
+    --light-green: #6A994E;
+    --dark-green: #386641;
+    --red: #BC4749;
+    --green: #228400;
+    --box-bg: #FFFAED;
+    --box-title-font-color: #582F0E;
+
+}
+
+* {
+    font-family: 'Jua' !important;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--background);
+    background-size: cover;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.main-container {
+    width: 800px;
+    margin-top: 20px !important;
+}
+
+.box-container {
+    background-color: var(--box-bg);
+    border: 5px solid var(--lighter-green) !important;
+    border-radius: 15px;
+}
+
+#profile-container {
+    height: 150px;
+}
+
+#plant-container-title {
+    color: var(--box-title-font-color);
+}
+
+#profile-details {
+    height: 100px;
+    margin-left: 10px;
+}
+
+.plant-container {
+    width: 150px;
+    height: 170px;
+}
+
+.plant-item {
+    height: 150px;
+    overflow: hidden;
+}
+
+
+.plant-item img {
+    width: 100%;
+    height: 100%;
+}
