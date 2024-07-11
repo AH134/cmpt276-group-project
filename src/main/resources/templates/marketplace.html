@@ -4,11 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Marketplace</title>
+    <link rel="stylesheet" href="css/marketplace.css">
+    <link href='https://fonts.googleapis.com/css?family=Jua' rel='stylesheet'>
+    <script src="js/marketplace.js" defer></script>
 </head>
 
 <body>
-    marketplace
+    <div class="container">
+        <header>
+            <nav>
+                <a href="#">Plants</a>
+                <a href="#">Messages</a>
+                <a href="#">Notifications</a>
+                <a href="#">Payments</a>
+                <a href="/user/profile">Profile</a>
+                <a href="/marketplace">Marketplace</a>
+            </nav>
+        </header>
+        <main>
+            <aside>
+                <div class="search">
+                    <input type="text" placeholder="Search..." id="search-input">
+                </div>
+                <div class="filters">
+                    <h3>Filters</h3>
+                    <div class="filter-group">
+                        <label>Price:</label>
+                        <select id="price-filter">
+                            <option value="all">All Prices</option>
+                            <option value="0-20">$0 - $20</option>
+                            <option value="20-40">$20 - $40</option>
+                            <option value="40-60">$40 - $60</option>
+                            <option value="60-80">$60 - $80</option>
+                            <option value="60-80">$80 - $100</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>City:</label>
+                        <select id="city-filter">
+                            <option value="all">All Cities</option>
+                            <option value="vancouver">Vancouver</option>
+                            <option value="burnaby">Burnaby</option>
+                            <option value="surrey">Surrey</option>
+                            <option value="richmond">Richmond</option>
+                            <option value="coquitlam">Coquitlam</option>
+                        </select>
+                    </div>
+                    <button id="filter-btn" onclick="applyFilters()">Apply Filters</button>
+                </div>
+            </aside>
+            <section class="marketplace">
+                <div class="page-display">
+                    <button onclick="prevPage()"> < </button>
+                    <span id="page-info">Page 1</span>
+                    <button onclick="nextPage()"> > </button>
+                </div>
+                <div id="plant-grid">
+                    <!-- plant cards -->
+                </div>
+            </section>
+        </main>
+    </div>
 </body>
 
 </html>
