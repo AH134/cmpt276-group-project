@@ -1,0 +1,44 @@
+.m-0 {
+    margin: 0 !important;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.main-container {
+    width: 800px;
+    margin-top: 20px !important;
+}
+
+.box-container {
+    background-color: var(--box-bg);
+    border: 5px solid var(--lighter-green) !important;
+    border-radius: 15px;
+}
+
+#upcoming-payments {
+    width: 500px;
+    height: 300px;
+}
+
+#new-notifications {
+    width: 270px;
+    height: 530px;
+}
+
+.bottom-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.sponsor-box {
+    width: 235px;
+    height: 200px;
+}
+
+.box-title {
+    font-size: 1.3rem;
+    color: var(--box-title-font-color);
+}

@@ -1,47 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" layout:decorate="~{_layout}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/profileStyle.css">
-    <link href='https://fonts.googleapis.com/css?family=Jua' rel='stylesheet'>
+    <link rel="stylesheet" href="css/profile.css">
+    <title>Profile</title>
 </head>
 
 <body>
-    <div class="header">
-        <nav class="navbar navbar-expand-lg justify-content-end">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/dashboard">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div class="container">
-        <div>
-            <img class="profile-image" src="assets/profile.jpg" width="">
-        </div>
-        <div class="profile-info">
-            <h1 th:text="${user.username}"></h1>
-            <h2 th:text="${user.role == 0 ? 'admin' : user.role == 1 ? 'grower' : 'sponsor'}"></h2>
-            <!-- <button class="edit-btn" onclick=" ">Edit Profile</button> -->
-            <p><strong>Balance:</strong>$ <span th:text="${user.balance}"></span></p>
-            <div class="stats">
-                <span><strong th:text="${profile.posts}"></strong> posts</span>
-                <span><strong th:text="${profile.plants}"></strong> plants</span>
+    <div class="main-container h-100 m-auto" layout:fragment="content">
+        <div class="d-flex mt-4 d-flex justify-content-center flex-column">
+            <div id="profile-container" class="box-container m-auto w-100 p-3 d-flex align-items-center mb-4">
+                <div>
+                    <img th:src="${user.role.toString() == 'GROWER' ? 'assets/profile/default-grower-icon.svg' : 'assets/profile/default-sponsor-icon.svg'}"
+                        alt="profile-icon" width="100" height="100">
+                </div>
+                <div id="profile-details" class="d-flex flex-column justify-content-center">
+                    <div th:if="${user.role.toString() == 'GROWER'}">
+                        <p class="m-0 fs-6" th:text="${user.username}"></p>
+                        <p class="m-0 fs-6">Grower</p>
+                        <p class="m-0 fs-6" th:text="${'Active Listings: ' + #lists.size(plantsList)}"> </p>
+                        <p class="m-0 fs-6" th:text="${'Plants Grown: ' + user.plantsGrown}"></p>
+                        <p class="m-0 fs-6" th:text="${'Review: ' + user.reviewScore + '/5'}"></p>
+                    </div>
+
+                    <div th:if="${user.role.toString() == 'SPONSOR'}">
+                        <p class="m-0 fs-6" th:text="${user.username}"></p>
+                        <p class="m-0 fs-6">
+                            Sponsor
+                        </p>
+                        <p class="m-0 fs-6" th:text="${'Active Sponsors: ' + #lists.size(plantsList)}"> </p>
+                        <p class="m-0 fs-6" th:text="${'Plants Sponsored: ' + user.plantsSponsored}"></p>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- <button class="back-btn" onclick="window.history.back()">Back to Home</button> -->
+
+        <div class="box-container d-flex flex-column" th:if="${user.role.toString() != 'ADMIN'}">
+            <p id="plant-container-title" class="m-auto fs-2"
+                th:text="${user.role.toString() == 'GROWER' ? 'Listed Plants' : 'Sponsored Plants'}">
+            </p>
+
+            <div class="d-flex flex-row flex-wrap justify-content-center">
+                <!-- PLANT THING -->
+                <!-- <div class="p-3">
+                        <div class="plant-container">
+                            <div class="plant-item box-container card">
+                                <img src="https://naturebackin.files.wordpress.com/2022/11/1-wild_pomegranate_going_to_seed.jpg?w=1200"
+                                    alt="plant-image">
+                            </div>
+                            <p class="m-0 text-center">Plant Name</p>
+                        </div>
+                    </div> -->
+            </div>
+        </div>
+    </div>
     </div>
 </body>
 
