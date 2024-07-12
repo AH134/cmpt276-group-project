@@ -12,9 +12,11 @@ import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.models.User;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
+import ca.sfu.cmpt276.utils.enums.UserError;
 import ca.sfu.cmpt276.utils.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.ui.Model;
 
 @Controller
 public class RegisterController {
@@ -22,19 +24,45 @@ public class RegisterController {
     private UserService userService;
 
     @GetMapping("/register")
-    public String showRegister() {
-        return "forward:/register.html";
+    public String showRegister(Model model) {
+        model.addAttribute("username", "");
+        model.addAttribute("email", "");
+        model.addAttribute("p1", "");
+        model.addAttribute("p2", "");
+        return "/register.html";
     }
 
-    @PostMapping("/register/new")
-    public String registerUser(@RequestParam Map<String, String> newUser, HttpServletResponse response,
-            HttpServletRequest req) {
+    @PostMapping("/register")
+    public String registerUser(@RequestParam Map<String, String> newUser, HttpServletResponse res,
+            HttpServletRequest req, Model model) {
         try {
-            System.out.println(newUser);
             String newName = newUser.get("username");
             String newPwd = newUser.get("password1");
             String newEmail = newUser.get("email");
             String newRole = newUser.get("roleRadio");
+
+            User userByName = userService.getUserByUsername(newName);
+            User userByEmail = userService.getUserByEmail(newEmail);
+            UserError nameError = UserError.USERNAME_TAKEN;
+            UserError emailError = UserError.EMAIL_TAKEN;
+            if(userByName != null && userByEmail != null){
+                model.addAttribute("error1", nameError.getMessage());
+                model.addAttribute("error2", emailError.getMessage());
+            }
+            else if(userByName != null){
+                model.addAttribute("error1", nameError.getMessage());
+                model.addAttribute("email", newEmail);
+            }
+            else if(userByEmail != null) {
+                model.addAttribute("error2", emailError.getMessage());
+                model.addAttribute("username", newName);
+            }
+            if(userByName != null || userByEmail != null){
+                model.addAttribute("p1", newPwd);
+                model.addAttribute("p2", newUser.get("password2"));
+                res.setStatus(nameError.getStatusCode());
+                return "register";
+            }
 
             User user;
             if (newRole.equalsIgnoreCase(UserRole.GROWER.toString())) {
@@ -44,13 +72,13 @@ public class RegisterController {
             }
             userService.createUser(user);
 
-            response.setStatus(201);
+            res.setStatus(201);
             req.getSession().setAttribute("session_user", userService.getUserById(user.getUserId()));
 
             return "redirect:/dashboard";
         } catch (Exception e) {
-            response.setStatus(400);
-            return "forward:/register.html";
+            res.setStatus(400);
+            return "register";
         }
     }
 }

@@ -7,6 +7,7 @@ import ca.sfu.cmpt276.utils.enums.UserRole;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByUsernameAndPassword(String username, String password);
-
+    List<User> findByUsername(String username);
+    List<User> findByEmail(String email);
     List<User> findByRole(UserRole role);
 }
