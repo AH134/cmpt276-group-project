@@ -22,18 +22,34 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class PlantController {
-    
+
     @Autowired
     private PlantService plantService;
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/add/newPlant")
-    public String addPlant(@RequestParam Map<String,String> newPlant, HttpServletResponse response, HttpServletRequest request,
-    HttpSession session){
+    @GetMapping("/plants/add")
+    public String getAddPlant(HttpServletRequest req,
+            HttpServletResponse res, HttpSession session, Model model) {
         User user = userService.getUserBySession(session);
-        try{
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        if (user.getRole() != UserRole.GROWER) {
+            return "redirect:/dashboard";
+        }
+
+        return "protected/user/addPlant";
+    }
+
+    @PostMapping("/plants/add")
+    public String addPlant(@RequestParam Map<String, String> newPlant, HttpServletResponse response,
+            HttpServletRequest request,
+            HttpSession session) {
+        User user = userService.getUserBySession(session);
+        try {
             String newName = newPlant.get("plantName");
             String newDesc = newPlant.get("plantDesc");
             Double newPrice = Double.parseDouble(newPlant.get("price"));
@@ -42,32 +58,30 @@ public class PlantController {
             String Province = newPlant.get("province");
             String City = newPlant.get(Province + "-city");
 
-            if(user.getRole()==UserRole.GROWER){
+            if (user.getRole() == UserRole.GROWER) {
                 Grower grower = (Grower) user;
                 Plant newP = new Plant(grower, null, newName, newDesc, newImg, newPrice, Province, City);
 
                 plantService.createPlant(newP, grower);
             }
 
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             response.setStatus(400);
+            // perhaps an error page later on
             return "forward:/addPlant.html";
         }
-        return "protected/user/growerDashboard";
-        
-    }
-    
+        return "redirect:/dashboard";
 
-    //view one plant
-    @GetMapping("/view/{pid}")
+    }
+
+    // view one plant
+    @GetMapping("/plants/view/{pid}")
     public String getMethodName(@PathVariable("pid") int pid, HttpServletResponse response, Model model) {
         Plant plant = plantService.getPlantById(pid);
 
         model.addAttribute("plant", plant);
         return new String();
     }
-    
 
-    //edit a plant
+    // edit a plant
 }
