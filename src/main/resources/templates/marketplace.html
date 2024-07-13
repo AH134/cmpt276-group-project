@@ -19,7 +19,7 @@
                 <a href="#">Notifications</a>
                 <a href="#">Payments</a>
                 <a href="/user/profile">Profile</a>
-                <a href="/marketplace">Marketplace</a>
+                <a href="marketplace.html">Marketplace</a>
             </nav>
         </header>
         <main>
@@ -42,14 +42,29 @@
                     </div>
 
                     <div class="filter-group">
+                        <label>Province:</label>
+                        <select id="province-filter">
+                            <option value="all">All Provinces</option>
+                            <option value="AB">Alberta</option>
+                            <option value="BC">British Columbia</option>
+                            <option value="MB">Manitoba</option>
+                            <option value="NB">New Brunswick</option>
+                            <option value="NL">Newfoundland and Labradour</option>
+                            <option value="NS">Nova Scotia</option>
+                            <option value="ON">Ontario</option>
+                            <option value="PE">Prince Edward Island</option>
+                            <option value="QC">Quebec</option>
+                            <option value="SK">Saskatchewan</option>
+                            <option value="NT">Northwest Territories</option>
+                            <option value="NU">Nunavut</option>
+                            <option value="YT">Yukon</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
                         <label>City:</label>
-                        <select id="city-filter">
+                        <select id="city-filter"> 
                             <option value="all">All Cities</option>
-                            <option value="vancouver">Vancouver</option>
-                            <option value="burnaby">Burnaby</option>
-                            <option value="surrey">Surrey</option>
-                            <option value="richmond">Richmond</option>
-                            <option value="coquitlam">Coquitlam</option>
                         </select>
                     </div>
                     <button id="filter-btn" onclick="applyFilters()">Apply Filters</button>
@@ -57,9 +72,9 @@
             </aside>
             <section class="marketplace">
                 <div class="page-display">
-                    <button onclick="prevPage()"> < </button>
+                    <button id="prev-page-btn" onclick="prevPage()"> < </button>
                     <span id="page-info">Page 1</span>
-                    <button onclick="nextPage()"> > </button>
+                    <button id="next-page-btn" onclick="nextPage()"> > </button>
                 </div>
                 <div id="plant-grid">
                     <!-- plant cards -->
