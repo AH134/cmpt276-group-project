@@ -109,7 +109,7 @@ public class PlantController {
     }
 
     @GetMapping("/plants")
-    public String getMethodName(Model model, HttpSession session) {
+    public String getAllPlants(Model model, HttpSession session) {
         User user = userService.getUserBySession(session);
         if (user == null) {
             return "redirect:/login";
@@ -135,5 +135,14 @@ public class PlantController {
         return "redirect:/dashboard";
     }
 
-    // edit a plant
+    @GetMapping("/public/plants/{pid}")
+    public String getonePlant(@PathVariable("pid") int pid, HttpServletResponse response, Model model,
+    HttpSession session) {
+        User user = userService.getUserBySession(session);
+        Plant plant = plantService.getPlantById(pid);
+
+        model.addAttribute("plant", plant);
+
+        return "protected/user/viewPlant";
+    }
 }
