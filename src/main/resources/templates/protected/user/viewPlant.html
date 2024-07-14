@@ -11,9 +11,17 @@
 </head>
 <body>
     <div class="container">
+        <header class="header d-flex justify-content-between p-4" th:fragment="header">
+            <div class="d-flex align-items-center">
+                <a href="/main">
+                    <img src="/assets/header/logo.svg" alt="logo" width="40px" height="40px">
+                </a>
+                <p id="header-name" class="fs-2"><a href="/main" class="text-decoration-none">Grow With You</a></p>
+            </div>
+        </header>
         <div class="row justify-content-center" th:each="plant">
             <div class="col">
-                <img>
+                <img th:href="${plant.imageUrl}">
             </div>
             <div class="col">
                 <div class="row">
@@ -33,6 +41,7 @@
                     <div class="col" th:text="${plant.city}"></div>
                 </div>
             </div>
+            <div th:text="${plantDesc}"></div>
         </div>
 
     </div>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Plant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="/js/navbar.js" defer></script>
+    <script src="/js/addPlantValidation.js" defer></script>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/addPlant.css">
+    <link rel="stylesheet" href="/css/fragment/header.css">
+    <link href='https://fonts.googleapis.com/css?family=Jua' rel='stylesheet'>
+</head>
+
+<body>
+    <header th:replace="~{fragments/header :: header}"></header>
+    <div class="container-fluid pt-4">
+        <form action="/plants/edit/{id}(id=${plant.plantId})" th:method="put" id="plant-form" class="box-container m-auto">
+            <div class="d-flex justify-content-center mt-5" id="detail-container">
+                <div class="col-md-9 rounded-4">
+                    <h1 class="text-center mt-3 mb-5">Create Your Plant</h1>
+                    <div class="row justify-content-center">
+                        <div class="col-md-9 mb-5">
+                            <div class="row align-items-center">
+                                <div class="col-md-3">
+                                    <label for="plantName" class="form-label fw-bold fs-5">Name</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" name="plantName" id="plantName"
+                                        class="form-control form-control-lg border border-5" value="${plant.name}"
+                                        required>
+                                    <div class="errorMsg"></div>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5">
+                                <div class="col-md-3">
+                                    <label for="plantDesc" class="form-label fw-bold fs-5">Description</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" name="plantDesc" id="plantDesc"
+                                        class="form-control form-control-lg border border-5"
+                                        value="${plant.price}" required>
+                                    <div class="errorMsg"></div>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5">
+                                <div class="col-md-3">
+                                    <label for="price" class="form-label fw-bold fs-5">Price</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="number" name="price" id="price"
+                                        class="form-control form-control-lg border border-5" step="any" min="0.1"
+                                        value="${plant.price}"
+                                        required>
+                                    <div id="error-price" class="errorMsg"></div>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5">
+                                <div class="col-md-3">
+                                    <label for="image" class="form-label fw-bold fs-5">Image URL</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" name="image" id="image"
+                                        class="form-control form-control-lg border border-5" required>
+                                    <div id="error-price" class="errorMsg"></div>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5">
+                                <div class="col-md-3">
+                                    <label for="province" class="form-label fw-bold fs-5">province</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control province" id="province" name="province" >
+                                        <option value="AB">Alberta</option>
+                                        <option value="BC">British Columbia</option>
+                                        <option value="MB">Manitoba</option>
+                                        <option value="NB">New Brunswick</option>
+                                        <option value="NL">Newfoundland and Labradour</option>
+                                        <option value="NS">Nova Scotia</option>
+                                        <option value="ON">Ontario</option>
+                                        <option value="PE">Prince Edward Island</option>
+                                        <option value="QC">Quebec</option>
+                                        <option value="SK">Saskatchewan</option>
+                                        <option value="NT">Northwest Territories</option>
+                                        <option value="NU">Nunavut</option>
+                                        <option value="YT">Yukon</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-none" id="AB">
+                                <div class="col-md-3">
+                                    <label for="AB-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="AB-city" id="AB-city">
+                                        <option value="Edmonton">Edmonton</option>
+                                        <option value="Calgary">Calgary</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-flex" id="BC">
+                                <div class="col-md-3">
+                                    <label for="BC-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="BC-city" id="BC-city">
+                                        <option value="Vancouver">Vancouver</option>
+                                        <option value="Burnaby">Burnaby</option>
+                                        <option value="Surrey">Surrey</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-none" id="MB">
+                                <div class="col-md-3">
+                                    <label for="MB-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="MB-city" id="MB-city">
+                                        <option value="Winnipeg">Winnipeg</option>
+                                        <option value="Brandon">Brandon</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-none" id="NB">
+                                <div class="col-md-3">
+                                    <label for="NB-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="NB-city" id="NB-city">
+                                        <option value="Moncton">Moncton</option>
+                                        <option value="Saint John">Saint John</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-none NL" id="NL">
+                                <div class="col-md-3">
+                                    <label for="NL-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="NL-city" id="NL-city">
+                                        <option value="Corner Brook">Corner Brook</option>
+                                        <option value="St. John's">St. John's</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-none" id="NS">
+                                <div class="col-md-3">
+                                    <label for="NS-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="NS-city" id="NS-city">
+                                        <option value="Halifax">Halifax</option>
+                                        <option value="Sydney">Sydney</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-none" id="ON">
+                                <div class="col-md-3">
+                                    <label for="ON-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="ON-city" id="ON-city">
+                                        <option value="Toronto">Toronto</option>
+                                        <option value="Ottawa">Ottawa</option>
+                                        <option value="Mississauga">Mississauga</option>
+                                        <option value="Brampton">Brampton</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-none" id="PE">
+                                <div class="col-md-3">
+                                    <label for="PE-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="PE-city" id="PE-city">
+                                        <option value="Charlottetown">Charlottetown</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-none" id="QC">
+                                <div class="col-md-3">
+                                    <label for="QC-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="QC-city" id="QC-city">
+                                        <option value="Montreal">Montreal</option>
+                                        <option value="Montreal">Quebec</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-none" id="SK">
+                                <div class="col-md-3">
+                                    <label for="SK-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="SK-city" id="SK-city">
+                                        <option value="Saskatoon">Saskatoon</option>
+                                        <option value="Regina">Regina</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-none" id="NT">
+                                <div class="col-md-3">
+                                    <label for="NT-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="NT-city" id="NT-city">
+                                        <option value="Yellowknife">Yellowknife</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-none" id="NU">
+                                <div class="col-md-3">
+                                    <label for="NU-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="NU-city" id="NU-city">
+                                        <option value="Iqaluit">Iqaluit</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row align-items-center mt-5 d-none" id="YT">
+                                <div class="col-md-3">
+                                    <label for="YT-city" class="form-label fw-bold fs-5">City</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="form-control city" name="YT-city" id="YT-city">
+                                        <option value="Iqaluit">WhiteHorse</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mb-5 ">
+                                <input id="signup-btn" class="btn btn-primary rounded-4 mt-4" type="submit"
+                                    value="Create Plant"></input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </form>
+    </div>
+</body>
+
+</html>
