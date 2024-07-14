@@ -33,9 +33,10 @@
     margin-top: 30px;
 }
 
-.sponsor-box {
+.bottom-box {
     width: 235px;
     height: 200px;
+    display: block !important;
 }
 
 .box-title {
