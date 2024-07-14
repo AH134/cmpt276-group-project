@@ -1,31 +1,42 @@
 :root {
     --background: #F2E8CF;
-    --light-green: #A7C957;
-    --green: #6A994E;
+    --lighter-green: #A7C957;
+    --light-green: #6A994E;
     --dark-green: #386641;
     --red: #BC4749;
-
+    --green: #228400;
+    --box-bg: #FFFAED;
+    --box-title-font-color: #582F0E;
+    --box-title-color: #7F4F24;
 }
 
 body {
     font-family: 'Jua';
-    background-color: #f2e8cf;
+    background-color: var(--background);
 }
 
 h1 {
     font-size: 60px;
-    color: #228400;
+    color: var(--green);
 }
 
 input[id='signup-btn'] {
-    background-color: #7f4f24;
-    border-color: #7f4f24;
+    background-color: var(--box-title-color);
+    border-color: var(--box-title-color);
+    width: 500px; 
+    height: 50px;
+}
+
+input[id='signup-btn']:hover, input[id='signup-btn']:active, 
+input[id='signup-btn']:focus {
+    background-color: var(--box-title-font-color) !important;
+    border-color: var(--box-title-font-color) !important;
     width: 500px;
     height: 50px;
 }
 
 .border {
-    border-color: #a7c957 !important;
+    border-color: var(--lighter-green) !important;
 }
 
 .form-control-lg {
@@ -33,8 +44,8 @@ input[id='signup-btn'] {
 }
 
 .col-md-8 {
-    background-color: #fffaed;
-    border: 8px solid #a7c957;
+    background-color: var(--box-bg);
+    border: 8px solid var(--lighter-green);
 }
 
 input[name="roleRadio"] {

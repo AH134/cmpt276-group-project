@@ -10,6 +10,13 @@ h1 {
     height: 50px;
 }
 
+.btn:active, .btn:hover, .btn:focus{
+    background-color: #582F0E !important;
+    border-color: #582F0E !important;
+    width: 500px;
+    height: 50px;
+}
+
 .border {
     border-color: #a7c957 !important;
 }

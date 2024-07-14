@@ -12,6 +12,7 @@ import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.models.User;
 import ca.sfu.cmpt276.grow.with.you.services.PlantService;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
+import ca.sfu.cmpt276.utils.setHttpHeader;
 import ca.sfu.cmpt276.utils.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,12 +32,10 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String getDashboard(HttpServletRequest req, HttpServletResponse res, HttpSession session, Model model) {
         User user = (User) session.getAttribute("session_user");
-        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-        res.setHeader("Pragma", "no-cache");
-        res.setHeader("Expires", "0");
+        setHttpHeader.setHeader(res);
 
         if (user == null) {
-            return "redirect:main";
+            return "redirect:/";
         }
 
         if (user.getRole() == UserRole.ADMIN) {
