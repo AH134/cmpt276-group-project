@@ -1,56 +1,47 @@
 package ca.sfu.cmpt276.grow.with.you.models;
 
+import ca.sfu.cmpt276.utils.enums.UserRole;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int uid;
+    private int userId;
     private String username;
     private String password;
-    private int role;
     private String email;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
     private double balance;
-    private boolean isAdmin;
-    @OneToOne(mappedBy = "user")
-    private Profile profile;
 
     public User() {
     }
 
-    public User(String username, String password, int role, String email, double balance, boolean isAdmin,
-            Profile profile) {
+    public User(String username, String password, String email, UserRole role, double balance) {
         this.username = username;
         this.password = password;
-        this.role = role;
         this.email = email;
+        this.role = role;
         this.balance = balance;
-        this.isAdmin = isAdmin;
-        this.profile = profile;
     }
 
-    public Profile getProfile() {
-        return profile;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-    }
-
-    public boolean getIsAdmin() {
-        return isAdmin;
-
-    }
-
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -69,11 +60,11 @@ public class User {
         this.password = password;
     }
 
-    public int getRole() {
+    public UserRole getRole() {
         return this.role;
     }
 
-    public void setRole(int role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 
@@ -92,4 +83,5 @@ public class User {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
 }

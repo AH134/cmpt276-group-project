@@ -7,7 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import ca.sfu.cmpt276.grow.with.you.models.User;
-import ca.sfu.cmpt276.grow.with.you.models.UserRepository;
+import ca.sfu.cmpt276.grow.with.you.services.UserService;
+import ca.sfu.cmpt276.utils.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class DashboardController {
 
     @Autowired
-    private UserRepository userRepo;
+    private UserService userService;
 
     @GetMapping("/dashboard")
     public String getDashboard(HttpServletRequest req, HttpServletResponse res, HttpSession session, Model model) {
@@ -28,18 +29,17 @@ public class DashboardController {
             return "redirect:main";
         }
 
-        if (user.getIsAdmin()) {
-            List<User> userList = userRepo.findByIsAdmin(false);
-            model.addAttribute("userList", userList);
+        if (user.getRole() == UserRole.ADMIN) {
+            List<User> users = userService.getAllUsers();
+            model.addAttribute("userList", users);
 
             return "protected/admin/dashboard";
         }
 
-        if (user.getRole() == 1) {
+        if (user.getRole() == UserRole.GROWER) {
             return "protected/user/growerDashboard";
         }
 
         return "protected/user/sponsorDashboard";
-
     }
 }
