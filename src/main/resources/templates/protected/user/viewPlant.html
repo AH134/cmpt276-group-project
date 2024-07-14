@@ -42,6 +42,9 @@
                 </div>
             </div>
             <div th:text="${plantDesc}"></div>
+            <div>
+                <button class="btn" type="button" th:href="/plants/edit/{pid}(pid=${plant.plantId})">Edit</button>
+            </div>
         </div>
 
     </div>
