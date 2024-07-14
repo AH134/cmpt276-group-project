@@ -1,5 +1,6 @@
 package ca.sfu.cmpt276.grow.with.you.controllers;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
+import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.models.User;
 import ca.sfu.cmpt276.grow.with.you.services.PlantService;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
@@ -38,6 +39,7 @@ public class PlantController {
         if (user == null) {
             return "redirect:/login";
         }
+        System.out.println(user.getRole());
 
         if (user.getRole() != UserRole.GROWER) {
             return "redirect:/dashboard";
@@ -74,7 +76,7 @@ public class PlantController {
             // perhaps an error page later on
             return "redirect:/dashboard";
         }
-        return "redirect:/dashboard";
+        return "redirect:/plants";
 
     }
     
@@ -84,61 +86,54 @@ public class PlantController {
     }
 
     // view one plant
-    @GetMapping("/plants/view/{pid}")
-    public String getMethodName(@PathVariable("pid") int pid, HttpServletResponse response, Model model) {
-        Plant plant = plantService.getPlantById(pid);
+    @GetMapping("/plants/{pid}")
+    public String getMethodName(@PathVariable("pid") int pid, HttpServletResponse response, Model model,
+            HttpSession session) {
+        User user = userService.getUserBySession(session);
+        if (user == null) {
+            return "redirect:/login";
+        }
 
-        model.addAttribute("plant", plant);
-        return "/viewPlant";
+        List<Plant> plantsList;
+        if (user.getRole() == UserRole.GROWER) {
+            plantsList = plantService.getPlantsByGrower((Grower) user);
+            model.addAttribute("plants", plantsList);
+            model.addAttribute("selectedPlant", plantService.getPlantById(pid));
+        } else if (user.getRole() == UserRole.SPONSOR) {
+            plantsList = plantService.getPlantsBySponsor((Sponsor) user);
+            model.addAttribute("plants", plantsList);
+            model.addAttribute("selectedPlant", plantService.getPlantById(pid));
+        }
+
+        return "protected/user/growerPlants.html";
     }
 
-    // edit a plant
-    //check that they have permissions to edit the plant
-    @GetMapping("/plants/edit/{pid}")
-    public String getMethodName(@PathVariable("pid") int pid, Model model, HttpSession session, HttpServletResponse reponse) {
+    @GetMapping("/plants")
+    public String getMethodName(Model model, HttpSession session) {
         User user = userService.getUserBySession(session);
-        Plant plant = plantService.getPlantById(pid);
+        if (user == null) {
+            return "redirect:/login";
+        }
 
-        if(plant.getGrower().getUserId() == user.getUserId()){
-            //return to the edit page
-            model.addAttribute("plant", plant);
+        List<Plant> plantsList;
+        if (user.getRole() == UserRole.GROWER) {
+            plantsList = plantService.getPlantsByGrower((Grower) user);
+            model.addAttribute("plants", plantsList);
+            if (plantsList.size() != 0) {
+                model.addAttribute("selectedPlant", plantsList.get(0));
+            }
+            return "protected/user/growerPlants.html";
+        } else if (user.getRole() == UserRole.SPONSOR) {
+            plantsList = plantService.getPlantsBySponsor((Sponsor) user);
+            model.addAttribute("plants", plantsList);
+            if (plantsList.size() != 0) {
+                model.addAttribute("selectedPlant", plantsList.get(0));
+            }
+            return "protected/user/sponsorPlants.html";
         }
 
         return "redirect:/dashboard";
     }
 
-    //editing the plant
-    @PutMapping("plants/edit/{pid}")
-    public String putMethodName(@PathVariable("pid") Integer pid, @RequestParam Map<String, String> changedPlant, Model model,
-    HttpServletResponse response, HttpSession session) {
-
-        User user = userService.getUserBySession(session);
-        try {
-            String newName = changedPlant.get("plantName");
-            String newDesc = changedPlant.get("plantDesc");
-            Double newPrice = Double.valueOf(changedPlant.get("price"));
-            String newImg = changedPlant.get("image");
-
-            String Province = changedPlant.get("province");
-            String City = Province+"-city";
-            String plantCity = changedPlant.get(City);
-
-            if (user.getRole() == UserRole.GROWER) {
-                Grower grower = (Grower) user;
-                Plant newP = new Plant(grower, null, newName, newDesc, newImg, newPrice, Province, plantCity);
-
-                plantService.createPlant(newP, grower);
-                response.setStatus(201);
-            }
-
-        } catch (Exception e) {
-            response.setStatus(400);
-            // perhaps an error page later on
-            return "redirect:/dashboard";
-        }
-
-        
-        return "/plants/view/{id}";
-    }
-    
+    // edit a plant
 }
