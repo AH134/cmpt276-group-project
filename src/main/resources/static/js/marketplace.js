@@ -183,18 +183,7 @@ provinceSelect.addEventListener("change", function () {
     });
 });
 
-//Active link
-document.addEventListener('DOMContentLoaded', function () {
-    const navLinks = document.querySelectorAll('nav a');
-    const current = window.location.pathname.split('/').pop();
-
-    navLinks.forEach(link => {
-        if (link.getAttribute('href') === current) {
-            link.classList.add('active');
-        }
-    });
-
-    //Page scroll 
+    // //Page scroll 
     // let currentPage = 1;
 
     // function prevPage() {
@@ -220,5 +209,3 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // document.getElementById("prev-page-btn").addEventListener("click", prevPage);
     // document.getElementById("next-page-btn").addEventListener("click", nextPage);
-
-});

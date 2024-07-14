@@ -1,33 +1,18 @@
 :root {
     --background: #F2E8CF;
-    --light-green: #A7C957;
-    --green: #6A994E;
+    --lighter-green: #A7C957;
+    --light-green: #6A994E;
     --dark-green: #386641;
     --red: #BC4749;
+    --green: #228400;
+    --box-bg: #FFFAED;
+    --box-title-font-color: #582F0E;
 
 }
 
 body {
     font-family: 'Jua';
     background-color: #f2e8cf;
-}
-
-header {
-    display: flex;
-    justify-content: center;
-    width: 80%;
-    margin: 20px auto;
-    background-color: white;
-    padding: 10px 20px;
-    border: solid #A7C957 4px;
-    border-radius: 8px;
-} 
-
-header nav a {
-    margin-right: 20px;
-    color: black;
-    justify-content: center;
-    text-decoration: none;
 }
 
 main {
@@ -37,31 +22,32 @@ main {
 }
 
 aside {
-    width: 200px;
-    height: 700px;
-    background-color: #ffffff;
-    border: solid #A7C957 4px;
-    border-radius: 8px;
+    margin-top: 40px;
+    width: 300px;
+    height: auto;
+    background-color: var(--box-bg);
+    border: 5px solid var(--lighter-green) !important;
+    border-radius: 15px;
     padding: 20px;
-    margin-left: 9%;
     color: #386641;
 }
 
 aside #search {
-    width: 80%;
+    width: auto;
     height: auto;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 section.marketplace {
+    margin-top: 40px;
     display: flex;
     justify-content: center;
-    width: 1000px;
-    height: 900px;
-    background-color: white;
-    border: solid #A7C957 4px;
-    border-radius: 8px;
+    width: 100%;
+    height: auto;
+    background-color: var(--box-bg);
+    border: 5px solid var(--lighter-green) !important;
+    border-radius: 15px;
 }
 
 /* .page-display {
@@ -73,12 +59,13 @@ button {
     background-color: #A7C957;
     color: white;
     padding: 10px;
-    border: solid #A7C957 4px;
-    border-radius: 8px;
+    border: 5px solid var(--lighter-green) !important;
+    border-radius: 15px;
 }
 
 .filters {
     margin-bottom: 20px; 
+    margin-top: 20px; 
 }
 
 .filter-group {
@@ -86,7 +73,7 @@ button {
 }
 
 .filter-group label {
-    display: inline-block;
+    display: flex;
     width: 50px; 
     margin-right: 10px; 
 }
@@ -108,16 +95,11 @@ button {
     position: relative;
     background-color: #A7C957; 
     color: #386641;
-    padding: 60px;
-    border: solid #A7C957 4px;
-    border-radius: 8px;
+    border: 5px solid var(--lighter-green) !important;
+    border-radius: 15px;
     justify-content: center;
     align-items: center;
     text-align: center;
-    width: 100px;
-    height: 100px;
-}
-
-nav a.active {
-    color: #386641; 
+    width: 250px;
+    height: 250px;
 }
