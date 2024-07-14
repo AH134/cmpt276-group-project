@@ -1,5 +1,6 @@
 package ca.sfu.cmpt276.grow.with.you.controllers;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
+import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.User;
 import ca.sfu.cmpt276.grow.with.you.services.PlantService;
@@ -36,6 +38,7 @@ public class PlantController {
         if (user == null) {
             return "redirect:/login";
         }
+        System.out.println(user.getRole());
 
         if (user.getRole() != UserRole.GROWER) {
             return "redirect:/dashboard";
@@ -70,17 +73,58 @@ public class PlantController {
             // perhaps an error page later on
             return "forward:/addPlant.html";
         }
-        return "redirect:/dashboard";
+        return "redirect:/plants";
 
     }
 
     // view one plant
-    @GetMapping("/plants/view/{pid}")
-    public String getMethodName(@PathVariable("pid") int pid, HttpServletResponse response, Model model) {
-        Plant plant = plantService.getPlantById(pid);
+    @GetMapping("/plants/{pid}")
+    public String getMethodName(@PathVariable("pid") int pid, HttpServletResponse response, Model model,
+            HttpSession session) {
+        User user = userService.getUserBySession(session);
+        if (user == null) {
+            return "redirect:/login";
+        }
 
-        model.addAttribute("plant", plant);
-        return new String();
+        List<Plant> plantsList;
+        if (user.getRole() == UserRole.GROWER) {
+            plantsList = plantService.getPlantsByGrower((Grower) user);
+            model.addAttribute("plants", plantsList);
+            model.addAttribute("selectedPlant", plantService.getPlantById(pid));
+        } else if (user.getRole() == UserRole.SPONSOR) {
+            plantsList = plantService.getPlantsBySponsor((Sponsor) user);
+            model.addAttribute("plants", plantsList);
+            model.addAttribute("selectedPlant", plantService.getPlantById(pid));
+        }
+
+        return "protected/user/growerPlants.html";
+    }
+
+    @GetMapping("/plants")
+    public String getMethodName(Model model, HttpSession session) {
+        User user = userService.getUserBySession(session);
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        List<Plant> plantsList;
+        if (user.getRole() == UserRole.GROWER) {
+            plantsList = plantService.getPlantsByGrower((Grower) user);
+            model.addAttribute("plants", plantsList);
+            if (plantsList.size() != 0) {
+                model.addAttribute("selectedPlant", plantsList.get(0));
+            }
+            return "protected/user/growerPlants.html";
+        } else if (user.getRole() == UserRole.SPONSOR) {
+            plantsList = plantService.getPlantsBySponsor((Sponsor) user);
+            model.addAttribute("plants", plantsList);
+            if (plantsList.size() != 0) {
+                model.addAttribute("selectedPlant", plantsList.get(0));
+            }
+            return "protected/user/sponsorPlants.html";
+        }
+
+        return "redirect:/dashboard";
     }
 
     // edit a plant

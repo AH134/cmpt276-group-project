@@ -9,13 +9,23 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/adminDashboard.css">
     <link rel="stylesheet" href="css/fragment/header.css">
+    <script src="/js/navbar.js" defer></script>
     <link href='https://fonts.googleapis.com/css?family=Jua' rel='stylesheet'>
     <title>Admin Dashboard</title>
 </head>
 
 <body>
-    <header th:replace="~{fragments/header :: header}"></header>
-    <div class="container mt-5">
+    <header class="header d-flex justify-content-between p-4" th:fragment="header">
+        <div class="d-flex align-items-center">
+            <a href="/main">
+                <img src="/assets/header/logo.svg" alt="logo" width="40px" height="40px">
+            </a>
+            <p id="header-name" class="fs-2"><a href="/main" class="text-decoration-none">Grow With You</a></p>
+        </div>
+        <a class="m-0 p-0 fs-3 btn" id="logout" href="/logout">Logout</a>
+    </header>
+
+    <div class="container mt-5 box-container">
         <h2 class="text-center">Admin Dashboard</h2>
         <table class="table table-hover mt-4">
             <thead class="table-dark">
@@ -24,8 +34,6 @@
                     <th>Email</th>
                     <th>Role</th>
                     <th>Balance</th>
-                    <th>Posts</th>
-                    <th>Plants</th>
                 </tr>
             </thead>
             <tbody id="userTableBody">
@@ -34,8 +42,6 @@
                     <th th:text="${user.email}"></th>
                     <th th:text="${user.role}"></th>
                     <th th:text="${user.balance}"></th>
-                    <!-- <th th:text="${user.profile.posts}"></th> -->
-                    <!-- <th th:text="${user.profile.plants}"></th> -->
                 </tr>
             </tbody>
         </table>

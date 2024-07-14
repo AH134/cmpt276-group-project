@@ -22,7 +22,7 @@
                     <div th:if="${user.role.toString() == 'GROWER'}">
                         <p class="m-0 fs-6" th:text="${user.username}"></p>
                         <p class="m-0 fs-6">Grower</p>
-                        <p class="m-0 fs-6" th:text="${'Active Listings: ' + #lists.size(plantsList)}"> </p>
+                        <p class="m-0 fs-6" th:text="${'Active Listings: ' + #lists.size(plants)}"> </p>
                         <p class="m-0 fs-6" th:text="${'Plants Grown: ' + user.plantsGrown}"></p>
                         <p class="m-0 fs-6" th:text="${'Review: ' + user.reviewScore + '/5'}"></p>
                     </div>
@@ -32,7 +32,7 @@
                         <p class="m-0 fs-6">
                             Sponsor
                         </p>
-                        <p class="m-0 fs-6" th:text="${'Active Sponsors: ' + #lists.size(plantsList)}"> </p>
+                        <p class="m-0 fs-6" th:text="${'Active Sponsors: ' + #lists.size(plants)}"> </p>
                         <p class="m-0 fs-6" th:text="${'Plants Sponsored: ' + user.plantsSponsored}"></p>
                     </div>
                 </div>
@@ -45,16 +45,16 @@
             </p>
 
             <div class="d-flex flex-row flex-wrap justify-content-center">
-                <!-- PLANT THING -->
-                <!-- <div class="p-3">
-                        <div class="plant-container">
-                            <div class="plant-item box-container card">
-                                <img src="https://naturebackin.files.wordpress.com/2022/11/1-wild_pomegranate_going_to_seed.jpg?w=1200"
-                                    alt="plant-image">
-                            </div>
-                            <p class="m-0 text-center">Plant Name</p>
-                        </div>
-                    </div> -->
+                <div class="p-3" th:each="plant : ${plants}">
+                    <div class="plant-container">
+                        <!-- this should bring you to the markplace plant section -->
+                        <a class="plant-item box-container card text-decoration-none btn m-0 p-0"
+                            th:href="@{/plants/{plantId}(plantId=${plant.plantId})}">
+                            <img src="/assets/plant/plant-icon.svg" alt="plant-image">
+                        </a>
+                        <p class="m-0 text-center" th:text="${plant.name}"></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
