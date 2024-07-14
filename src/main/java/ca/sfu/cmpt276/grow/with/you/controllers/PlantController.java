@@ -17,6 +17,7 @@ import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.User;
 import ca.sfu.cmpt276.grow.with.you.services.PlantService;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
+import ca.sfu.cmpt276.utils.setHttpHeader;
 import ca.sfu.cmpt276.utils.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,8 +36,9 @@ public class PlantController {
     public String getAddPlant(HttpServletRequest req,
             HttpServletResponse res, HttpSession session, Model model) {
         User user = userService.getUserBySession(session);
+        setHttpHeader.setHeader(res);
         if (user == null) {
-            return "redirect:/login";
+            return "redirect:/";
         }
         System.out.println(user.getRole());
 
@@ -52,6 +54,7 @@ public class PlantController {
             HttpServletRequest request,
             HttpSession session) {
         User user = userService.getUserBySession(session);
+        setHttpHeader.setHeader(response);
         try {
             String newName = newPlant.get("plantName");
             String newDesc = newPlant.get("plantDesc");
@@ -82,8 +85,9 @@ public class PlantController {
     public String getOnePlant(@PathVariable("pid") int pid, HttpServletResponse response, Model model,
             HttpSession session) {
         User user = userService.getUserBySession(session);
+        setHttpHeader.setHeader(response);
         if (user == null) {
-            return "redirect:/login";
+            return "redirect:/";
         }
 
         List<Plant> plantsList;
@@ -101,10 +105,11 @@ public class PlantController {
     }
 
     @GetMapping("/plants")
-    public String getAllPlants(Model model, HttpSession session) {
+    public String getAllPlants(Model model, HttpSession session, HttpServletResponse res) {
         User user = userService.getUserBySession(session);
+        setHttpHeader.setHeader(res);
         if (user == null) {
-            return "redirect:/login";
+            return "redirect:/";
         }
 
         List<Plant> plantsList;
