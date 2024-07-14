@@ -195,30 +195,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     //Page scroll 
-    let currentPage = 1;
+    // let currentPage = 1;
 
-    function prevPage() {
-        if (currentPage > 1) {
-            currentPage--;
-            updatePageInfo();
-            //loadPageData(currentPage);
-        }
-    }
+    // function prevPage() {
+    //     if (currentPage > 1) {
+    //         currentPage--;
+    //         updatePageInfo();
+    //         //loadPageData(currentPage);
+    //     }
+    // }
 
-    function nextPage() {
-        let totalPage = 10; //replace or remove
-        if (currentPage < totalPage) {
-            currentPage++;
-            updatePageInfo();
-            //loadPageData(currentPage);
-        }
-    }
+    // function nextPage() {
+    //     let totalPage = 10; //replace or remove
+    //     if (currentPage < totalPage) {
+    //         currentPage++;
+    //         updatePageInfo();
+    //         //loadPageData(currentPage);
+    //     }
+    // }
 
-    function updatePageInfo() {
-        document.getElementById("page-info").textContent = `Page ${currentPage}`;
-    }
+    // function updatePageInfo() {
+    //     document.getElementById("page-info").textContent = `Page ${currentPage}`;
+    // }
 
-    document.getElementById("prev-page-btn").addEventListener("click", prevPage);
-    document.getElementById("next-page-btn").addEventListener("click", nextPage);
+    // document.getElementById("prev-page-btn").addEventListener("click", prevPage);
+    // document.getElementById("next-page-btn").addEventListener("click", nextPage);
 
 });
