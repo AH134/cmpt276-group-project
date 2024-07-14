@@ -38,11 +38,11 @@ public class ProfileController {
         if (user.getRole() == UserRole.GROWER) {
             Grower grower = (Grower) user;
             model.addAttribute("user", grower);
-            model.addAttribute("plantsList", plantService.getPlantsByGrower(grower));
+            model.addAttribute("plants", plantService.getPlantsByGrower(grower));
         } else if (user.getRole() == UserRole.SPONSOR) {
             Sponsor sponsor = (Sponsor) user;
             model.addAttribute("user", (Sponsor) user);
-            model.addAttribute("plantsList", plantService.getPlantsBySponsor(sponsor));
+            model.addAttribute("plants", plantService.getPlantsBySponsor(sponsor));
         } else {
             model.addAttribute("user", user);
         }
