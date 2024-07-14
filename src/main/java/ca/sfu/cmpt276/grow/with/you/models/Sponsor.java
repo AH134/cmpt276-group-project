@@ -45,7 +45,7 @@ public class Sponsor extends User {
         this.totalSpent = totalSpent;
     }
 
-    public List<Plant> getSponsorePlants() {
+    public List<Plant> getSponsoredPlants() {
         return sponsoredPlants;
     }
 

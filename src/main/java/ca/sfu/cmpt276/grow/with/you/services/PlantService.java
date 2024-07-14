@@ -10,11 +10,15 @@ import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
 import ca.sfu.cmpt276.grow.with.you.models.PlantRepository;
 import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
+import ca.sfu.cmpt276.grow.with.you.models.UserRepository;
 
 @Service
 public class PlantService {
     @Autowired
     private PlantRepository plantRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Plant> getAllPlants() {
         return plantRepository.findAll();
@@ -33,7 +37,9 @@ public class PlantService {
         return plantRepository.findBySponsor(sponsor);
     }
 
-    public Plant createPlant(Plant plant) {
+    public Plant createPlant(Plant plant, Grower grower) {
+        grower.setPlantsGrown(grower.getPlantsGrown()+1);
+        userRepository.save(grower);
         return plantRepository.save(plant);
     }
 

@@ -77,6 +77,14 @@ h3 {
     color: #BC4749;
 }
 
+#logout {
+    color: #386641 !important;
+}
+
+#logout:hover {
+    color: white !important;
+}
+
 /* ul {
     list-style-type: none;
     padding: 0;

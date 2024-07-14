@@ -1,0 +1,40 @@
+#plant-wrapper {
+    width: 800px;
+}
+
+#left-container {
+    width: 35%;
+    min-height: 550px;
+    margin-right: 10px;
+}
+
+#left-top {
+    flex: 1;
+    max-height: 550px;
+    margin-bottom: 1rem;
+    padding-bottom: 0 !important;
+    overflow-y: scroll;
+}
+
+#left-bottom {
+    flex-shrink: 0;
+    margin-top: auto;
+    padding-top: 0 !important;
+}
+
+#add-plant {
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    background-color: var(--box-title-color);
+}
+
+#add-plant:hover {
+    background-color: var(--box-title-font-color);
+}
+
+#right-container {
+    width: 65%;
+    min-height: 550px;
+    margin-left: 10px;
+}
