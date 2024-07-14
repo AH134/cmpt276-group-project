@@ -29,7 +29,7 @@ public class RegisterController {
         model.addAttribute("email", "");
         model.addAttribute("p1", "");
         model.addAttribute("p2", "");
-        return "/register.html";
+        return "register";
     }
 
     @PostMapping("/register")
@@ -45,19 +45,17 @@ public class RegisterController {
             User userByEmail = userService.getUserByEmail(newEmail);
             UserError nameError = UserError.USERNAME_TAKEN;
             UserError emailError = UserError.EMAIL_TAKEN;
-            if(userByName != null && userByEmail != null){
+            if (userByName != null && userByEmail != null) {
                 model.addAttribute("error1", nameError.getMessage());
                 model.addAttribute("error2", emailError.getMessage());
-            }
-            else if(userByName != null){
+            } else if (userByName != null) {
                 model.addAttribute("error1", nameError.getMessage());
                 model.addAttribute("email", newEmail);
-            }
-            else if(userByEmail != null) {
+            } else if (userByEmail != null) {
                 model.addAttribute("error2", emailError.getMessage());
                 model.addAttribute("username", newName);
             }
-            if(userByName != null || userByEmail != null){
+            if (userByName != null || userByEmail != null) {
                 model.addAttribute("p1", newPwd);
                 model.addAttribute("p2", newUser.get("password2"));
                 res.setStatus(nameError.getStatusCode());

@@ -22,8 +22,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DashboardController {
 
-    private static final Grower Grower = null;
-
     @Autowired
     private UserService userService;
 
@@ -40,7 +38,7 @@ public class DashboardController {
         if (user == null) {
             return "redirect:main";
         }
-        
+
         if (user.getRole() == UserRole.ADMIN) {
             List<User> users = userService.getAllUsers();
             model.addAttribute("userList", users);
