@@ -1,5 +1,6 @@
 .plant-item {
     height: 80px;
+    width: 240px;
     margin-bottom: 0.8rem;
 }
 
@@ -9,13 +10,14 @@
 }
 
 #plant-detail-container {
+    overflow-x: scroll;
+    max-width: 100%;
     margin-left: 5px;
 }
 
 #plant-name {
     color: var(--green);
     font-size: 1.2rem;
-
 }
 
 #plant-sponsor {

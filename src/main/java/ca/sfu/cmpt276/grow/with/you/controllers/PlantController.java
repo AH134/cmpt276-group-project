@@ -71,7 +71,7 @@ public class PlantController {
         } catch (Exception e) {
             response.setStatus(400);
             // perhaps an error page later on
-            return "forward:/addPlant.html";
+            return "redirect:/plants";
         }
         return "redirect:/plants";
 
@@ -79,7 +79,7 @@ public class PlantController {
 
     // view one plant
     @GetMapping("/plants/{pid}")
-    public String getMethodName(@PathVariable("pid") int pid, HttpServletResponse response, Model model,
+    public String getOnePlant(@PathVariable("pid") int pid, HttpServletResponse response, Model model,
             HttpSession session) {
         User user = userService.getUserBySession(session);
         if (user == null) {
@@ -101,7 +101,7 @@ public class PlantController {
     }
 
     @GetMapping("/plants")
-    public String getMethodName(Model model, HttpSession session) {
+    public String getAllPlants(Model model, HttpSession session) {
         User user = userService.getUserBySession(session);
         if (user == null) {
             return "redirect:/login";
