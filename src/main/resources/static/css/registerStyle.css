@@ -17,7 +17,7 @@ h1 {
     color: #228400;
 }
 
-.btn {
+input[id='signup-btn'] {
     background-color: #7f4f24;
     border-color: #7f4f24;
     width: 500px;
@@ -44,6 +44,14 @@ input[name="roleRadio"] {
     border: 0.5px solid black;
 }
 
+i {
+    float:right;
+    margin-right: 20px;
+    margin-top: -40px;
+    position: relative;
+    z-index: 2;
+}
+
 .errorMsg {
-    color: red;
+    color: var(--red);
 }

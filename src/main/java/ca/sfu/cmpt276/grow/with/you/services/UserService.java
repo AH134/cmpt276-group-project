@@ -39,6 +39,26 @@ public class UserService {
         return user.getFirst();
     }
 
+    public User getUserByUsername(String username) {
+        List<User> user = userRepository.findByUsername(username);
+
+        if (user.isEmpty()) {
+            return null;
+        }
+
+        return user.getFirst();
+    }
+
+    public User getUserByEmail(String email) {
+        List<User> user = userRepository.findByEmail(email);
+
+        if (user.isEmpty()) {
+            return null;
+        }
+
+        return user.getFirst();
+    }
+
     public User createUser(User user) {
         return userRepository.save(user);
     }

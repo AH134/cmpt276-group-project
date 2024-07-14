@@ -33,11 +33,14 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String getDashboard(HttpServletRequest req, HttpServletResponse res, HttpSession session, Model model) {
         User user = (User) session.getAttribute("session_user");
+        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        res.setHeader("Pragma", "no-cache");
+        res.setHeader("Expires", "0");
 
         if (user == null) {
             return "redirect:main";
         }
-
+        
         if (user.getRole() == UserRole.ADMIN) {
             List<User> users = userService.getAllUsers();
             model.addAttribute("userList", users);
