@@ -1,157 +1,41 @@
-document.addEventListener('DOMContentLoaded', () => {
-    displayPlants();
-});
+const form = document.getElementById("filter-form");
 
-function displayPlants() {
-    fetch(`/api/plants`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            const plantGrid = document.getElementById('plant-grid');
-            plantGrid.innerHTML = '';
+const prevPageBtn = document.getElementById("prev-page");
+if (prevPageBtn !== null) {
+    prevPageBtn.addEventListener("click", (e) => {
+        e.preventDefault();
 
-            if (data.length > 0) {
-                data.forEach(plant => {
-                    plantGrid.appendChild(createPlantCard(plant));
-                });
-            } else
-                plantGrid.innerHTML = '<p>No plants found</p>';
-        })
-        .catch(error => {
-            console.error('Error fetching plant data:', error);
-        });
-}
-
-function createPlantCard(plant) {
-    const plantCard = document.createElement('div');
-    plantCard.className = 'plant-card';
-    plantCard.innerHTML = `
-        <h2>${plant.name}</h2>
-        <p>Price: $${plant.price}</p>
-    `;
-    return plantCard;
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    const searchInput = document.getElementById('search-input');
-    const filterButton = document.getElementById('filter-btn');
-    const priceFilter = document.getElementById('price-filter');
-    const provinceFilter = document.getElementById('province-filter');
-    const cityFilter = document.getElementById('city-filter');
-
-    searchInput.addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-            searchPlants();
+        const prevPageNo = prevPageBtn.dataset.prevPageNo;
+        if (prevPageNo < 0) {
+            return;
         }
-    });
 
-    filterButton.addEventListener('click', function () {
-        searchPlants();
-    });
+        const pageNoInput = document.createElement("input");
+        pageNoInput.setAttribute("type", "hidden");
+        pageNoInput.setAttribute("name", "pageNo");
+        pageNoInput.setAttribute("value", prevPageNo)
+        form.appendChild(pageNoInput);
+        form.submit();
+    })
+}
 
-    function searchPlants() {
-        const query = document.getElementById('search-input').value.toLowerCase();
-        const priceFilterValue = priceFilter.value;
-        const provinceFilterValue = provinceFilter.value;
-        const cityFilterValue = cityFilter.value;
+const nextPageBtn = document.getElementById("next-page");
+if (nextPageBtn !== null) {
+    nextPageBtn.addEventListener("click", (e) => {
+        e.preventDefault();
 
-        fetch(`/api/plants`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
+        const nextPageNo = nextPageBtn.dataset.nextPageNo;
+        console.log(nextPageNo)
 
-                let filteredPlants = data;
+        const pageNoInput = document.createElement("input");
+        pageNoInput.setAttribute("type", "hidden");
+        pageNoInput.setAttribute("name", "pageNo");
+        pageNoInput.setAttribute("value", nextPageNo)
+        form.appendChild(pageNoInput);
+        form.submit();
+    })
+}
 
-                if (query) {
-                    filteredPlants = filteredPlants.filter(plant =>
-                        plant.name.toLowerCase().includes(query)
-                    );
-                }
-
-                //Price filter
-                if (priceFilterValue !== 'all') {
-                    const [minPrice, maxPrice] = priceFilterValue.split('-').map(Number);
-                    filteredPlants = filteredPlants.filter(plant =>
-                        plant.price >= minPrice && plant.price < maxPrice
-                    );
-                }
-
-                //Province filter
-                if (provinceFilterValue !== 'all') {
-                    filteredPlants = filteredPlants.filter(plant =>
-                        plant.province === provinceFilterValue
-                    );
-                }
-
-                //City filter
-                if (cityFilterValue !== 'all') {
-                    filteredPlants = filteredPlants.filter(plant =>
-                        plant.city === cityFilterValue
-                    );
-                }
-
-                //Update the UI
-                const plantGrid = document.getElementById('plant-grid');
-                plantGrid.innerHTML = '';
-
-                if (filteredPlants.length > 0) {
-                    filteredPlants.forEach(plant => {
-                        plantGrid.appendChild(createPlantCard(plant));
-                    });
-                } else
-                    plantGrid.innerHTML = '<p>No plants found</p>';
-
-            })
-            .catch(error => {
-                console.error('Error fetching plant data:', error);
-            });
-    }
-
-    function buildQuery() {
-        const priceFilterValue = priceFilter.value;
-        const cityFilterValue = cityFilter.value;
-
-        let query = `/api/plants`;
-
-        if (priceFilterValue !== 'all')
-            query += `?price=${priceFilterValue}`;
-
-        if (cityFilterValue !== 'all')
-            query += `?city=${cityFilterValue}`;
-
-        return query;
-    }
-
-    function fetchPlants() {
-        const query = buildQuery();
-        fetch(query)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const filteredPlants = filteredPlants(data);
-                displayPlants(filteredPlants);
-            })
-            .catch(error => {
-                console.error('Error fetching plant data:', error);
-            });
-    }
-
-    fetchPlants();
-});
-
-//Province and city selection
 const citiesByProvince = {
     AB: ["Calgary", "Edmonton"],
     BC: ["Vancouver", "Burnaby", "Surrey"],
@@ -183,29 +67,23 @@ provinceSelect.addEventListener("change", function () {
     });
 });
 
-    // //Page scroll 
-    // let currentPage = 1;
+document.addEventListener("DOMContentLoaded", () => {
+    const url = new URLSearchParams(window.location.search)
+    const selectedProvince = url.get("province");
 
-    // function prevPage() {
-    //     if (currentPage > 1) {
-    //         currentPage--;
-    //         updatePageInfo();
-    //         //loadPageData(currentPage);
-    //     }
-    // }
+    const cities = citiesByProvince[selectedProvince];
+    if (selectedProvince === "all" || selectedProvince === null) {
+        return;
+    }
 
-    // function nextPage() {
-    //     let totalPage = 10; //replace or remove
-    //     if (currentPage < totalPage) {
-    //         currentPage++;
-    //         updatePageInfo();
-    //         //loadPageData(currentPage);
-    //     }
-    // }
+    cities.forEach(city => {
+        const option = document.createElement("option");
+        option.value = city;
+        option.textContent = city;
+        if (city === url.get("city")) {
+            option.selected = true;
+        }
+        citySelect.appendChild(option);
+    });
 
-    // function updatePageInfo() {
-    //     document.getElementById("page-info").textContent = `Page ${currentPage}`;
-    // }
-
-    // document.getElementById("prev-page-btn").addEventListener("click", prevPage);
-    // document.getElementById("next-page-btn").addEventListener("click", nextPage);
+})

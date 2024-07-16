@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ca.sfu.cmpt276.grow.with.you.models.Grower;
@@ -37,8 +40,37 @@ public class PlantService {
         return plantRepository.findBySponsor(sponsor);
     }
 
+    public Page<Plant> getAllPlantsPage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Plant> plants = plantRepository.findAll(pageable);
+
+        return plants;
+    }
+
+    public Page<Plant> getAllPlantsByFilters(int pageNo, int pageSize, String name, String province, String city,
+            String price) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        name = name.equalsIgnoreCase("") ? null : name;
+        province = province.equalsIgnoreCase("all") ? null : province;
+        city = city.equalsIgnoreCase("all") ? null : city;
+        Optional<Integer> minPrice;
+        Optional<Integer> maxPrice;
+        if (price.equalsIgnoreCase("all")) {
+            minPrice = null;
+            maxPrice = null;
+        } else {
+            String[] priceRange = price.split("-");
+            minPrice = Optional.of(Integer.parseInt(priceRange[0]));
+            maxPrice = Optional.of(Integer.parseInt(priceRange[1]));
+        }
+
+        Page<Plant> plants = plantRepository.findAllByFilters(name, province, city, minPrice, maxPrice, pageable);
+
+        return plants;
+    }
+
     public Plant createPlant(Plant plant, Grower grower) {
-        grower.setPlantsGrown(grower.getPlantsGrown()+1);
+        grower.setPlantsGrown(grower.getPlantsGrown() + 1);
         userRepository.save(grower);
         return plantRepository.save(plant);
     }
