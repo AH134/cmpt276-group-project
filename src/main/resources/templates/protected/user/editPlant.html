@@ -18,10 +18,11 @@
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
     <div class="container-fluid pt-4">
-        <form action="/plants/edit/{id}(id=${plant.plantId})" th:method="put" id="plant-form" class="box-container m-auto">
+        <form th:action="@{/plants/edit/{id}(id=${plant.plantId})}" th:method="put" id="plant-form"
+            class="box-container m-auto">
             <div class="d-flex justify-content-center mt-5" id="detail-container">
                 <div class="col-md-9 rounded-4">
-                    <h1 class="text-center mt-3 mb-5">Create Your Plant</h1>
+                    <h1 class="text-center mt-3 mb-5">Edit Plant</h1>
                     <div class="row justify-content-center">
                         <div class="col-md-9 mb-5">
                             <div class="row align-items-center">
@@ -30,7 +31,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <input type="text" name="plantName" id="plantName"
-                                        class="form-control form-control-lg border border-5" value="${plant.name}"
+                                        class="form-control form-control-lg border border-5" th:value="${plant.name}"
                                         required>
                                     <div class="errorMsg"></div>
                                 </div>
@@ -42,7 +43,7 @@
                                 <div class="col-md-9">
                                     <input type="text" name="plantDesc" id="plantDesc"
                                         class="form-control form-control-lg border border-5"
-                                        value="${plant.price}" required>
+                                        th:value="${plant.description}" required>
                                     <div class="errorMsg"></div>
                                 </div>
                             </div>
@@ -53,8 +54,7 @@
                                 <div class="col-md-9">
                                     <input type="number" name="price" id="price"
                                         class="form-control form-control-lg border border-5" step="any" min="0.1"
-                                        value="${plant.price}"
-                                        required>
+                                        th:value="${plant.price}" required>
                                     <div id="error-price" class="errorMsg"></div>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                     <label for="image" class="form-label fw-bold fs-5">Image URL</label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" name="image" id="image"
+                                    <input type="text" name="image" id="image" th:value=${plant.imageUrl}
                                         class="form-control form-control-lg border border-5" required>
                                     <div id="error-price" class="errorMsg"></div>
                                 </div>
@@ -73,24 +73,30 @@
                                     <label for="province" class="form-label fw-bold fs-5">province</label>
                                 </div>
                                 <div class="col-md-9">
-                                    <select class="form-control province" id="province" name="province" >
-                                        <option value="AB">Alberta</option>
-                                        <option value="BC">British Columbia</option>
-                                        <option value="MB">Manitoba</option>
-                                        <option value="NB">New Brunswick</option>
-                                        <option value="NL">Newfoundland and Labradour</option>
-                                        <option value="NS">Nova Scotia</option>
-                                        <option value="ON">Ontario</option>
-                                        <option value="PE">Prince Edward Island</option>
-                                        <option value="QC">Quebec</option>
-                                        <option value="SK">Saskatchewan</option>
-                                        <option value="NT">Northwest Territories</option>
-                                        <option value="NU">Nunavut</option>
-                                        <option value="YT">Yukon</option>
+                                    <select class="form-control province" id="province" name="province">
+                                        <option value="AB" th:selected="${plant.province == 'AB'}">Alberta</option>
+                                        <option value="BC" th:selected="${plant.province == 'BC'}">British Columbia
+                                        </option>
+                                        <option value="MB" th:selected="${plant.province == 'MB'}">Manitoba</option>
+                                        <option value="NB" th:selected="${plant.province == 'NB'}">New Brunswick
+                                        </option>
+                                        <option value="NL" th:selected="${plant.province == 'NL'}">Newfoundland and
+                                            Labradour</option>
+                                        <option value="NS" th:selected="${plant.province == 'NS'}">Nova Scotia</option>
+                                        <option value="ON" th:selected="${plant.province == 'ON'}">Ontario</option>
+                                        <option value="PE" th:selected="${plant.province == 'PE'}">Prince Edward Island
+                                        </option>
+                                        <option value="QC" th:selected="${plant.province == 'QC'}">Quebec</option>
+                                        <option value="SK" th:selected="${plant.province == 'SK'}">Saskatchewan</option>
+                                        <option value="NT" th:selected="${plant.province == 'NT'}">Northwest Territories
+                                        </option>
+                                        <option value="NU" th:selected="${plant.province == 'NU'}">Nunavut</option>
+                                        <option value="YT" th:selected="${plant.province == 'YT'}">Yukon</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-none" id="AB">
+                            <div class="row align-items-center mt-5"
+                                th:classappend="${plant.province == 'AB' ? 'd-flex' : 'd-none'}" id="AB">
                                 <div class="col-md-3">
                                     <label for="AB-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -101,7 +107,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-flex" id="BC">
+                            <div class="row align-items-center mt-5"
+                                th:classappend="${plant.province == 'BC' ? 'd-flex' : 'd-none'}" id="BC">
                                 <div class="col-md-3">
                                     <label for="BC-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -113,7 +120,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-none" id="MB">
+                            <div class="row align-items-center mt-5"
+                                th:classappend="${plant.province == 'MB' ? 'd-flex' : 'd-none'}" id="MB">
                                 <div class="col-md-3">
                                     <label for="MB-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -124,7 +132,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-none" id="NB">
+                            <div class="row align-items-center mt-5"
+                                th:classappend="${plant.province == 'NB' ? 'd-flex' : 'd-none'}" id="NB">
                                 <div class="col-md-3">
                                     <label for="NB-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -135,7 +144,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-none NL" id="NL">
+                            <div class="row align-items-center mt-5 NL"
+                                th:classappend="${plant.province == 'NL' ? 'd-flex' : 'd-none'}" id="NL">
                                 <div class="col-md-3">
                                     <label for="NL-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -146,7 +156,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-none" id="NS">
+                            <div class="row align-items-center mt-5"
+                                th:classappend="${plant.province == 'NS' ? 'd-flex' : 'd-none'}" id="NS">
                                 <div class="col-md-3">
                                     <label for="NS-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -157,7 +168,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-none" id="ON">
+                            <div class="row align-items-center mt-5"
+                                th:classappend="${plant.province == 'ON' ? 'd-flex' : 'd-none'}" id="ON">
                                 <div class="col-md-3">
                                     <label for="ON-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -170,7 +182,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-none" id="PE">
+                            <div class="row align-items-center mt-5"
+                                th:classappend="${plant.province == 'PE' ? 'd-flex' : 'd-none'}" id="PE">
                                 <div class="col-md-3">
                                     <label for="PE-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -180,7 +193,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-none" id="QC">
+                            <div class="row align-items-center mt-5"
+                                th:classappend="${plant.province == 'QC' ? 'd-flex' : 'd-none'}" id="QC">
                                 <div class="col-md-3">
                                     <label for="QC-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -191,7 +205,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-none" id="SK">
+                            <div class="row align-items-center mt-5"
+                                th:classappend="${plant.province == 'SK' ? 'd-flex' : 'd-none'}" id="SK">
                                 <div class="col-md-3">
                                     <label for="SK-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -202,7 +217,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-none" id="NT">
+                            <div class="row align-items-center mt-5"
+                                th:classappend="${plant.province == 'NT' ? 'd-flex' : 'd-none'}" id="NT">
                                 <div class="col-md-3">
                                     <label for="NT-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -212,7 +228,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-none" id="NU">
+                            <div class="row align-items-center mt-5"
+                                th:classappend="${plant.province == 'NU' ? 'd-flex' : 'd-none'}" id="NU">
                                 <div class="col-md-3">
                                     <label for="NU-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -222,7 +239,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row align-items-center mt-5 d-none" id="YT">
+                            <div class="row align-items-center mt-5"
+                                th:classappend="${plant.province == 'YT' ? 'd-flex' : 'd-none'}" id="YT">
                                 <div class="col-md-3">
                                     <label for="YT-city" class="form-label fw-bold fs-5">City</label>
                                 </div>
@@ -234,7 +252,7 @@
                             </div>
                             <div class="row justify-content-center mb-5 ">
                                 <input id="signup-btn" class="btn btn-primary rounded-4 mt-4" type="submit"
-                                    value="Create Plant"></input>
+                                    value="Update Plant"></input>
                             </div>
                         </div>
                     </div>

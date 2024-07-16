@@ -49,7 +49,7 @@
                     <div class="plant-container">
                         <!-- this should bring you to the markplace plant section -->
                         <a class="plant-item box-container card text-decoration-none btn m-0 p-0"
-                            th:href="@{/plants/{plantId}(plantId=${plant.plantId})}">
+                            th:href="@{/marketplace/plant/{plantId}(plantId=${plant.plantId})}">
                             <img src="/assets/plant/plant-icon.svg" alt="plant-image">
                         </a>
                         <p class="m-0 text-center" th:text="${plant.name}"></p>
