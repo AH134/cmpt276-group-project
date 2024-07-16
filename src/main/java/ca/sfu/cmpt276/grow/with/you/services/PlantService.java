@@ -51,7 +51,7 @@ public class PlantService {
     public Page<Plant> getAllPlantsByFilters(int pageNo, int pageSize, String name, String province, String city,
             String price) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.ASC, "plantId"));
-        name = name.equalsIgnoreCase("") ? null : name;
+        name = name.equalsIgnoreCase("") ? null : name.toLowerCase();
         province = province.equalsIgnoreCase("all") ? null : province;
         city = city.equalsIgnoreCase("all") ? null : city;
         Optional<Integer> minPrice;
