@@ -3,6 +3,8 @@ package ca.sfu.cmpt276.grow.with.you.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,9 +22,11 @@ public class Plant {
     private int plantId;
     @ManyToOne
     @JoinColumn(name = "grower_id")
+    @JsonIgnore
     private Grower grower;
     @ManyToOne
     @JoinColumn(name = "sponsor_id")
+    @JsonIgnore
     private Sponsor sponsor;
     private String name;
     private String description;

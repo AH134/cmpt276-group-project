@@ -1,54 +1,45 @@
 package ca.sfu.cmpt276.grow.with.you.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
-import ca.sfu.cmpt276.grow.with.you.service.MarketplaceService;
+import ca.sfu.cmpt276.grow.with.you.services.PlantService;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@RestController
-@RequestMapping("/api/plants")
+@Controller
 public class MarketplaceController {
 
     @Autowired
-    private MarketplaceService marketplaceService;
+    private PlantService plantService;
 
-    @GetMapping
-    public List<Plant> getAllPlants() {
-        return marketplaceService.getAllPlants();
+    @GetMapping("/marketplace")
+    public String getAllPlants(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "search", defaultValue = "", required = false) String search,
+            @RequestParam(value = "province", defaultValue = "all", required = false) String province,
+            @RequestParam(value = "city", defaultValue = "all", required = false) String city,
+            @RequestParam(value = "price", defaultValue = "all", required = false) String price, Model model) {
+
+        try {
+            Page<Plant> plants = plantService.getAllPlantsByFilters(pageNo, pageSize, search, province, city, price);
+            model.addAttribute("plants", plants.getContent());
+            model.addAttribute("pageNo", pageNo);
+            model.addAttribute("province", province);
+            model.addAttribute("city", city);
+            model.addAttribute("price", price);
+            model.addAttribute("hasPrevPage", plants.hasPrevious());
+            model.addAttribute("hasNextPage", plants.hasNext());
+            model.addAttribute("totalPages", plants.getTotalPages());
+
+            return "marketplace";
+        } catch (Exception e) {
+            return "redirect:/marketplace";
+        }
     }
 
-    @PostMapping
-    public String savePlant(@ModelAttribute Plant plant) {
-        marketplaceService.savePlant(plant);
-        return "redirect:/marketplace";
-    }
-
-    @GetMapping("/{id}")
-    public Plant getPlantById(@PathVariable int id) {
-        return marketplaceService.getPlantById(id);
-    }
-
-    @GetMapping("/search")
-    public List<Plant> searchPlants(@RequestParam String query) {
-        return marketplaceService.findByName(query);
-    }
-
-    @GetMapping("/filter")
-    public List<Plant> filterPlants(@RequestParam(required = false) String city,
-                                    @RequestParam(required = false) Double minPrice,
-                                    @RequestParam(required = false) Double maxPrice) {
-        List<Plant> plants = marketplaceService.getAllPlants();
-
-        if (city != null && !city.isEmpty()) 
-            plants = marketplaceService.findByCity(city);
-        
-        if (minPrice != null && maxPrice != null) 
-            plants = marketplaceService.findByPriceBetween(minPrice, maxPrice);
-
-        return plants;
-    }
 }
-

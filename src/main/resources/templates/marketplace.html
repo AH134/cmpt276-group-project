@@ -16,60 +16,83 @@
     <div class="container" layout:fragment="content">
         <main>
             <aside>
-                <div class="search">
-                    <input type="text" placeholder="Search..." id="search-input">
-                </div>
-                <div class="filters">
-                    <h3>Filters</h3>
-                    <div class="filter-group">
-                        <label>Price:</label>
-                        <select id="price-filter">
-                            <option value="all">All Prices</option>
-                            <option value="0-20">$0 - $20</option>
-                            <option value="20-40">$20 - $40</option>
-                            <option value="40-60">$40 - $60</option>
-                            <option value="60-80">$60 - $80</option>
-                            <option value="60-80">$80 - $100</option>
-                        </select>
+                <form id="filter-form" action="/marketplace" method="get">
+                    <div class="search">
+                        <input type="text" name="search" placeholder="Search..." id="search-input">
                     </div>
+                    <div class="filters">
+                        <h3>Filters</h3>
+                        <div class="filter-group">
+                            <label for="price-filter">Price:</label>
+                            <select id="price-filter" name="price">
+                                <option value="all" th:selected="${price == 'all'}">All Prices</option>
+                                <option value="0-20" th:selected="${price == '0-20'}">$0 - $20</option>
+                                <option value="20-40" th:selected="${price == '20-40'}">$20 - $40</option>
+                                <option value="40-60" th:selected="${price == '40-60'}">$40 - $60</option>
+                                <option value="60-80" th:selected="${price == '60-80'}">$60 - $80</option>
+                                <option value="80-100" th:selected="${price == '80-100'}">$80 - $100</option>
+                            </select>
+                        </div>
 
-                    <div class="filter-group">
-                        <label>Province:</label>
-                        <select id="province-filter">
-                            <option value="all">All Provinces</option>
-                            <option value="AB">Alberta</option>
-                            <option value="BC">British Columbia</option>
-                            <option value="MB">Manitoba</option>
-                            <option value="NB">New Brunswick</option>
-                            <option value="NL">Newfoundland and Labradour</option>
-                            <option value="NS">Nova Scotia</option>
-                            <option value="ON">Ontario</option>
-                            <option value="PE">Prince Edward Island</option>
-                            <option value="QC">Quebec</option>
-                            <option value="SK">Saskatchewan</option>
-                            <option value="NT">Northwest Territories</option>
-                            <option value="NU">Nunavut</option>
-                            <option value="YT">Yukon</option>
-                        </select>
-                    </div>
+                        <div class="filter-group">
+                            <label for="province-filter">Province:</label>
+                            <select id="province-filter" name="province">
+                                <option value="all" th:selected="${province == 'all'}">All Provinces</option>
+                                <option value="AB" th:selected="${province == 'AB'}">Alberta</option>
+                                <option value="BC" th:selected="${province == 'BC'}">British Columbia
+                                </option>
+                                <option value="MB" th:selected="${province == 'MB'}">Manitoba</option>
+                                <option value="NB" th:selected="${province == 'NB'}">New Brunswick</option>
+                                <option value="NL" th:selected="${province == 'NL'}">Newfoundland
+                                    and Labrador</option>
+                                <option value="NS" th:selected="${province == 'NS'}">Nova Scotia</option>
+                                <option value="ON" th:selected="${province == 'ON'}">Ontario</option>
+                                <option value="PE" th:selected="${province == 'PE'}">Prince Edward
+                                    Island</option>
+                                <option value="QC" th:selected="${province == 'QC'}">Quebec</option>
+                                <option value="SK" th:selected="${province == 'SK'}">Saskatchewan</option>
+                                <option value="NT" th:selected="${province == 'NT'}">Northwest
+                                    Territories</option>
+                                <option value="NU" th:selected="${province == 'NU'}">Nunavut</option>
+                                <option value="YT" th:selected="${province == 'YT'}">Yukon</option>
+                            </select>
+                        </div>
 
-                    <div class="filter-group">
-                        <label>City:</label>
-                        <select id="city-filter"> 
-                            <option value="all">All Cities</option>
-                        </select>
+                        <div class="filter-group">
+                            <label for="city-filter">City:</label>
+                            <select id="city-filter" name="city">
+                                <option value="all">All Cities</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="filter-btn">Apply Filters</button>
                     </div>
-                    <button id="filter-btn" onclick="applyFilters()">Apply Filters</button>
-                </div>
+                </form>
             </aside>
-            <section class="marketplace">
-                <!-- <div class="page-display">
-                    <button id="prev-page-btn" onclick="prevPage()"> < </button>
-                    <span id="page-info">Page 1</span>
-                    <button id="next-page-btn" onclick="nextPage()"> > </button>
-                </div> -->
-                <div id="plant-grid">
-                    <!-- plant cards -->
+            <section class="marketplace d-flex flex-column">
+                <p class="m-0 align-self-center fs-2" th:if="${#lists.size(plants) == 0}">No Plants</p>
+                <div th:if="${#lists.size(plants) != 0}" id="plant-grid" class="d-flex flex-row flex-wrap">
+                    <div class="p-3" th:each="plant : ${plants}">
+                        <div class="plant-container">
+                            <!-- TEMP plant item-->
+                            <a class="plant-item box-container card text-decoration-none btn m-0 p-0"
+                                th:href="@{/plants/{plantId}(plantId=${plant.plantId})}">
+                                <img src="/assets/plant/plant-icon.svg" alt="plant-image">
+                            </a>
+                            <p class="m-0 text-center plant-name" th:text="${plant.name}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${#lists.size(plants) != 0}"
+                    class="d-flex justify-content-center gap-2 text-center align-items-center mb-1">
+                    <th:block th:if="${hasPrevPage}">
+                        <button id="prev-page" class="pagination-btn"
+                            th:attr="data-prev-page-no=${pageNo - 1}">prev</button>
+                    </th:block>
+                    <p class="text-center m-0 fs-5" th:text="${(pageNo + 1) + '-' + totalPages}"></p>
+                    <th:block th:if="${hasNextPage}">
+                        <button id="next-page" class="pagination-btn"
+                            th:attr="data-next-page-no=${pageNo + 1}">next</button>
+                    </th:block>
                 </div>
             </section>
         </main>
