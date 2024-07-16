@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
 import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
-import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.User;
 import ca.sfu.cmpt276.grow.with.you.services.PlantService;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
@@ -58,7 +58,7 @@ public class PlantController {
         try {
             String newName = newPlant.get("plantName");
             String newDesc = newPlant.get("plantDesc");
-            Double newPrice = Double.parseDouble(newPlant.get("price"));
+            Double newPrice = Double.valueOf(newPlant.get("price"));
             String newImg = newPlant.get("image");
 
             String Province = newPlant.get("province");
@@ -66,9 +66,10 @@ public class PlantController {
 
             if (user.getRole() == UserRole.GROWER) {
                 Grower grower = (Grower) user;
-                Plant newP = new Plant(grower, null, newName, newDesc, newImg, newPrice, Province, City);
+                Plant newP = new Plant(grower, null, newName, newDesc, newImg, newPrice, Province, plantCity);
 
                 plantService.createPlant(newP, grower);
+                response.setStatus(201);
             }
 
         } catch (Exception e) {

@@ -1,0 +1,19 @@
+:root {
+    --background: #F2E8CF;
+    --lighter-green: #A7C957;
+    --light-green: #6A994E;
+    --dark-green: #386641;
+    --red: #BC4749;
+    --green: #228400;
+    --box-bg: #FFFAED;
+    --box-title-font-color: #582F0E;
+    --box-title-color: #7F4F24;
+}
+
+#box{
+    background-color: var(--box-bg);
+    border-radius: 20px;
+    border: 5px solid var(--lighter-green);
+    margin-top: 20px;
+    height: 500px;
+}
