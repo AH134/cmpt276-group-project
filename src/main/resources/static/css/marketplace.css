@@ -53,15 +53,16 @@ section.marketplace {
     margin-top: 10px;
 } */
 
-#filter-btn {
+.filter-btn {
     background-color: #A7C957;
     color: white;
     padding: 10px;
     border: none;
     border-radius: 15px;
+    margin-top: 10px
 }
 
-#filter-btn:hover {
+.filter-btn:hover {
     background-color: var(--light-green) !important;
 }
 
@@ -78,10 +79,6 @@ section.marketplace {
     display: flex;
     width: 50px;
     margin-right: 10px;
-}
-
-#filter-btn {
-    margin-top: 10px;
 }
 
 .pagination-btn {

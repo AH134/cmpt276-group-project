@@ -36,17 +36,4 @@
     color: var(--green) !important;
 }
 
-
-#hamburger-menu {
-    display: none;
-    transform: translateY(80px);
-    margin-right: 25px;
-    width: 175px;
-    z-index: 1000;
-}
-
-#hamburger-menu a:hover {
-    color: var(--green) !important;
-}
-
 /* NAVBAR */
