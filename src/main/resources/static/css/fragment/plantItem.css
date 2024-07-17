@@ -10,12 +10,14 @@
 }
 
 #plant-detail-container {
-    overflow-x: scroll;
-    max-width: 100%;
+    max-width: 160px;
     margin-left: 5px;
 }
 
 #plant-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
     color: var(--green);
     font-size: 1.2rem;
 }

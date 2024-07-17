@@ -64,7 +64,10 @@
                                 <option value="all">All Cities</option>
                             </select>
                         </div>
-                        <button type="submit" id="filter-btn">Apply Filters</button>
+                        <div class="d-flex gap-4">
+                            <button type="submit" class="btn filter-btn">Apply Filters</button>
+                            <a class="btn filter-btn" href="/marketplace">Reset Filters</a>
+                        </div>
                     </div>
                 </form>
             </aside>
@@ -75,15 +78,16 @@
                         <div class="plant-container">
                             <!-- TEMP plant item-->
                             <a class="plant-item box-container card text-decoration-none btn m-0 p-0"
-                                th:href="@{/plants/{plantId}(plantId=${plant.plantId})}">
+                                th:href="@{/marketplace/plant/{plantId}(plantId=${plant.plantId})}">
                                 <img src="/assets/plant/plant-icon.svg" alt="plant-image">
                             </a>
                             <p class="m-0 text-center plant-name" th:text="${plant.name}"></p>
+                            <p class="m-0 text-center plant-name" th:text="${'$' + plant.price}"></p>
                         </div>
                     </div>
                 </div>
                 <div th:if="${#lists.size(plants) != 0}"
-                    class="d-flex justify-content-center gap-2 text-center align-items-center mb-1">
+                    class="d-flex justify-content-center gap-2 text-center align-items-center mb-1 mt-3">
                     <th:block th:if="${hasPrevPage}">
                         <button id="prev-page" class="pagination-btn"
                             th:attr="data-prev-page-no=${pageNo - 1}">prev</button>

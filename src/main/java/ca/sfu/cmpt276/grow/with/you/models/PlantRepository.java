@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,9 +13,9 @@ import org.springframework.data.repository.query.Param;
 public interface PlantRepository extends JpaRepository<Plant, Integer> {
         List<Plant> findByName(String name);
 
-        List<Plant> findByGrower(Grower grower);
+        List<Plant> findByGrower(Grower grower, Sort sort);
 
-        List<Plant> findBySponsor(Sponsor sponsor);
+        List<Plant> findBySponsor(Sponsor sponsor, Sort sort);
 
         @Query("SELECT p FROM Plant p " +
                         "WHERE (:name IS NULL OR p.name LIKE %:name%) " +
