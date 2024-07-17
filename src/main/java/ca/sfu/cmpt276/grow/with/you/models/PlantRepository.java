@@ -18,7 +18,7 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
         List<Plant> findBySponsor(Sponsor sponsor, Sort sort);
 
         @Query("SELECT p FROM Plant p " +
-                        "WHERE (:name IS NULL OR p.name LIKE %:name%) " +
+                        "WHERE (:name IS NULL OR LOWER(p.name) LIKE %:name%) " +
                         "AND (:province IS NULL OR p.province = :province) " +
                         "AND (:city IS NULL OR p.city = :city)" +
                         "AND (:minPrice IS NULL OR p.price >= :minPrice) " +
