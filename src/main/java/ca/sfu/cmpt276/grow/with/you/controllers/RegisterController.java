@@ -1,6 +1,5 @@
 package ca.sfu.cmpt276.grow.with.you.controllers;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,54 +8,75 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ca.sfu.cmpt276.grow.with.you.models.Profile;
-import ca.sfu.cmpt276.grow.with.you.models.ProfileRepository;
+import ca.sfu.cmpt276.grow.with.you.models.Grower;
+import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.models.User;
-import ca.sfu.cmpt276.grow.with.you.models.UserRepository;
+import ca.sfu.cmpt276.grow.with.you.services.UserService;
+import ca.sfu.cmpt276.utils.enums.UserError;
+import ca.sfu.cmpt276.utils.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.ui.Model;
 
 @Controller
 public class RegisterController {
     @Autowired
-    private UserRepository userRepo;
-
-    @Autowired
-    private ProfileRepository profileRepo;
+    private UserService userService;
 
     @GetMapping("/register")
-    public String showRegister() {
-        return "forward:/register.html";
+    public String showRegister(Model model) {
+        model.addAttribute("username", "");
+        model.addAttribute("email", "");
+        model.addAttribute("p1", "");
+        model.addAttribute("p2", "");
+        return "register";
     }
 
-    @PostMapping("/register/new")
-    public String registerUser(@RequestParam Map<String, String> newUser, HttpServletResponse response,
-            HttpServletRequest req) {
+    @PostMapping("/register")
+    public String registerUser(@RequestParam Map<String, String> newUser, HttpServletResponse res,
+            HttpServletRequest req, Model model) {
         try {
-            System.out.println(newUser);
             String newName = newUser.get("username");
             String newPwd = newUser.get("password1");
             String newEmail = newUser.get("email");
-            int newRole = Integer.parseInt(newUser.get("roleRadio"));
+            String newRole = newUser.get("roleRadio");
 
-            User user = new User(newName, newPwd, newRole, newEmail, 1000.0, false, null);
-            userRepo.save(user);
+            User userByName = userService.getUserByUsername(newName);
+            User userByEmail = userService.getUserByEmail(newEmail);
+            UserError nameError = UserError.USERNAME_TAKEN;
+            UserError emailError = UserError.EMAIL_TAKEN;
+            if (userByName != null && userByEmail != null) {
+                model.addAttribute("error1", nameError.getMessage());
+                model.addAttribute("error2", emailError.getMessage());
+            } else if (userByName != null) {
+                model.addAttribute("error1", nameError.getMessage());
+                model.addAttribute("email", newEmail);
+            } else if (userByEmail != null) {
+                model.addAttribute("error2", emailError.getMessage());
+                model.addAttribute("username", newName);
+            }
+            if (userByName != null || userByEmail != null) {
+                model.addAttribute("p1", newPwd);
+                model.addAttribute("p2", newUser.get("password2"));
+                res.setStatus(nameError.getStatusCode());
+                return "register";
+            }
 
-            Profile userProfile = new Profile(user, 0, 0);
-            profileRepo.save(userProfile);
+            User user;
+            if (newRole.equalsIgnoreCase(UserRole.GROWER.toString())) {
+                user = new Grower(newName, newPwd, newEmail, 1000, 0, 0, 0);
+            } else {
+                user = new Sponsor(newName, newPwd, newEmail, 1000, 0, 0);
+            }
+            userService.createUser(user);
 
-            user.setProfile(userProfile);
-            userRepo.save(user);
-
-            response.setStatus(201);
-
-            List<User> userList = userRepo.findByUsernameAndPassword(newName, newPwd);
-            req.getSession().setAttribute("session_user", userList.get(0));
+            res.setStatus(201);
+            req.getSession().setAttribute("session_user", userService.getUserById(user.getUserId()));
 
             return "redirect:/dashboard";
         } catch (Exception e) {
-            response.setStatus(400);
-            return "forward:/register.html";
+            res.setStatus(400);
+            return "register";
         }
     }
 }

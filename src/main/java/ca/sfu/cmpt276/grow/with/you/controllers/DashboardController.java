@@ -6,8 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
+import ca.sfu.cmpt276.grow.with.you.models.Grower;
+import ca.sfu.cmpt276.grow.with.you.models.Plant;
+import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.models.User;
-import ca.sfu.cmpt276.grow.with.you.models.UserRepository;
+import ca.sfu.cmpt276.grow.with.you.services.PlantService;
+import ca.sfu.cmpt276.grow.with.you.services.UserService;
+import ca.sfu.cmpt276.utils.setHttpHeader;
+import ca.sfu.cmpt276.utils.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -18,28 +24,41 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class DashboardController {
 
     @Autowired
-    private UserRepository userRepo;
+    private UserService userService;
+
+    @Autowired
+    private PlantService plantService;
 
     @GetMapping("/dashboard")
     public String getDashboard(HttpServletRequest req, HttpServletResponse res, HttpSession session, Model model) {
         User user = (User) session.getAttribute("session_user");
+        setHttpHeader.setHeader(res);
 
         if (user == null) {
-            return "redirect:main";
+            return "redirect:/";
         }
 
-        if (user.getIsAdmin()) {
-            List<User> userList = userRepo.findByIsAdmin(false);
-            model.addAttribute("userList", userList);
+        if (user.getRole() == UserRole.ADMIN) {
+            List<User> users = userService.getAllUsers();
+            model.addAttribute("userList", users);
 
             return "protected/admin/dashboard";
         }
 
-        if (user.getRole() == 1) {
+        if (user.getRole() == UserRole.GROWER) {
+            List<Plant> plantsList = plantService.getPlantsByGrower((Grower) user);
+            model.addAttribute("activeListings", plantsList.size());
+            model.addAttribute("lifetimeListings", ((Grower) user).getPlantsGrown());
             return "protected/user/growerDashboard";
         }
 
-        return "protected/user/sponsorDashboard";
+        if (user.getRole() == UserRole.SPONSOR) {
+            List<Plant> plantsList = plantService.getPlantsBySponsor((Sponsor) user);
+            model.addAttribute("activeSponsors", plantsList.size());
+            model.addAttribute("lifetimeSponsors", ((Sponsor) user).getPlantsSponsored());
+            return "protected/user/sponsorDashboard";
+        }
 
+        return "protected/user/sponsorDashboard";
     }
 }

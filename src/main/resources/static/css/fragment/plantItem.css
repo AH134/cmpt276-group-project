@@ -1,0 +1,38 @@
+.plant-item {
+    height: 80px;
+    width: 240px;
+    margin-bottom: 0.8rem;
+}
+
+.plant-item:hover {
+    cursor: pointer;
+    background-color: rgba(167, 201, 87, 0.5);
+}
+
+#plant-detail-container {
+    max-width: 160px;
+    margin-left: 5px;
+}
+
+#plant-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+    color: var(--green);
+    font-size: 1.2rem;
+}
+
+#plant-sponsor {
+    color: black;
+    font-size: 0.9rem;
+}
+
+#plant-price {
+    color: black;
+    font-size: 0.8rem;
+}
+
+.plant-selected {
+    border-radius: 5px;
+    background-color: rgba(167, 201, 87, 0.3);
+}

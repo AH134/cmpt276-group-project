@@ -1,0 +1,120 @@
+:root {
+    --background: #F2E8CF;
+    --lighter-green: #A7C957;
+    --light-green: #6A994E;
+    --dark-green: #386641;
+    --red: #BC4749;
+    --green: #228400;
+    --box-bg: #FFFAED;
+    --box-title-font-color: #582F0E;
+
+}
+
+body {
+    font-family: 'Jua';
+    background-color: #f2e8cf;
+}
+
+main {
+    position: relative;
+    display: flex;
+    gap: 40px;
+}
+
+aside {
+    margin-top: 40px;
+    width: 300px;
+    height: auto;
+    background-color: var(--box-bg);
+    border: 5px solid var(--lighter-green) !important;
+    border-radius: 15px;
+    padding: 20px;
+    color: #386641;
+}
+
+aside #search {
+    width: auto;
+    height: auto;
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
+section.marketplace {
+    margin-top: 40px;
+    width: 100%;
+    height: auto;
+    background-color: var(--box-bg);
+    border: 5px solid var(--lighter-green) !important;
+    border-radius: 15px;
+}
+
+/* .page-display {
+    position: absolute;
+    margin-top: 10px;
+} */
+
+.filter-btn {
+    background-color: #A7C957;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    margin-top: 10px
+}
+
+.filter-btn:hover {
+    background-color: var(--light-green) !important;
+}
+
+.filters {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-group label {
+    display: flex;
+    width: 50px;
+    margin-right: 10px;
+}
+
+.pagination-btn {
+    color: white;
+    background-color: var(--lighter-green);
+    width: 80px;
+    height: 40px;
+    border: none;
+    border-radius: 15px;
+}
+
+.pagination-btn:hover {
+    background-color: var(--light-green) !important;
+}
+
+#plant-grid {
+    flex: 1;
+}
+
+.plant-container {
+    width: 150px;
+    height: 170px;
+}
+
+.plant-item {
+    height: 150px;
+}
+
+
+.plant-item img {
+    width: 100%;
+    height: 100%;
+}
+
+.plant-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+}

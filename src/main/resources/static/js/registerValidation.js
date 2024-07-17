@@ -1,111 +1,83 @@
-// https://www.youtube.com/watch?v=hAqglX3Jm7Y
+const verifyPwd = () => {
+    const p1 = document.getElementById("password1");
+    const p2 = document.getElementById("password2");
+    const p1Err = document.getElementById("error-pwd1");
+    const p2Err = document.getElementById("error-pwd2");
 
-const APP = {
-    init(){
-        APP.addListeners();
-    },
-    addListeners(){
-        let form = document.getElementsByTagName("form")[0];
-        let username = document.getElementById("username");
-        let email = document.getElementById("email");
-        let password = document.getElementById("password1");
-        let password2 = document.getElementById("password2");
+    p1Err.innerText = "";
+    p2Err.innerText = "";
 
-        username.addEventListener('change', APP.testUsername);
-        email.addEventListener('change', APP.testEmail);
-        password.addEventListener('input', APP.testPassword);
-        password2.addEventListener('input', APP.testPassword2);
+    const pwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    let isValidPwd = true;
 
-        username.addEventListener('invalid', APP.fail);
-        email.addEventListener('invalid', APP.fail);
-        password.addEventListener('invalid', APP.fail);
-        password2.addEventListener('invalid', APP.fail);
-    },
-    testUsername(evt){
-        let username = evt.target;
-        username.parentElement.querySelector('.errorMsg').textContent = '';
-        username.setCustomValidity('');
-        let state = username.checkValidity();
-
-        if(state){
-            const userReg = /^\S+$/;
-            if(userReg.test(username.value) == false){
-                username.setCustomValidity('No spaces allowed');
-                username.reportValidity();
-            }
-        }
-    },
-    testEmail(evt){
-        let email = evt.target;
-        email.parentElement.querySelector('.errorMsg').textContent = '';
-        email.setCustomValidity('');
-        let state = email.checkValidity();
-
-        if(state){
-        }
-    },
-    testPassword(evt){
-        let password = evt.target;
-        let pass1 = password.value;
-        let pass2 = document.getElementById("password2").value;
-        password.parentElement.querySelector('.errorMsg').textContent = '';
-        document.getElementById("password2").parentElement.querySelector('.errorMsg').textContent = '';
-        password.setCustomValidity('');
-        let state = password.checkValidity();
-
-        if(state){
-            const passReg = /^\S+$/;
-            if(pass1 != pass2){
-                password.setCustomValidity('Passwords do not match');
-                password.reportValidity();
-            }
-            else if(passReg.test(pass1) == false){
-                password.setCustomValidity('No spaces allowed');
-                password.reportValidity();
-            }
-        }
-    },
-    testPassword2(evt){
-        let password2 = evt.target;
-        let pass1 = document.getElementById("password1").value;
-        let pass2 = password2.value;
-        document.getElementById("password1").parentElement.querySelector('.errorMsg').textContent = '';
-        password2.parentElement.querySelector('.errorMsg').textContent = '';
-        password2.setCustomValidity('');
-        let state = password2.checkValidity();
-
-        if(state){
-            const passReg = /^\S+$/;
-            if(pass1 != pass2){
-                password2.setCustomValidity('Passwords do not match');
-                password2.reportValidity();
-            }
-            else if(passReg.test(pass2) == false){
-                password2.setCustomValidity('No spaces allowed');
-                password2.reportValidity();
-            }
-        }
-    },
-    fail(evt){
-        let field = evt.target;
-        switch(field.id){
-            case 'username':
-                let username = field.parentElement.querySelector('.errorMsg');
-                username.textContent = 'No spaces allowed';
-                break;
-            case 'email':
-                let email = field.parentElement.querySelector('.errorMsg');
-                email.textContent = 'Incorrect email address';
-                break;
-            case 'password1':
-                let password = field.parentElement.querySelector('.errorMsg');
-                password.textContent = 'Passwords do not match and/or no spaces allowed';
-                break;
-            case 'password2':
-                let password2 = field.parentElement.querySelector('.errorMsg');
-                password2.textContent = 'Passwords do not match and/or no spaces allowed';
-                break;
-        }
+    if (!pwdRegex.test(p1.value)) {
+        p1Err.innerText = "Password must contain at least: eight characters, one lowercase letter, one uppercase letter, one digit, and one special character (@$!%*?&).";
+        isValidPwd = false;
     }
-};
-document.addEventListener('DOMContentLoaded', APP.init);
+
+    if (!pwdRegex.test(p2.value)) {
+        p2Err.innerText = "Password must contain at least: eight characters, one lowercase letter, one uppercase letter, one digit, and one special character (@$!%*?&).";
+        isValidPwd = false;
+    }
+
+    if (p1.value !== p2.value) {
+        p2Err.innerText = "Passwords do not match.";
+        isValidPwd = false;
+    }
+
+    return isValidPwd;
+}
+const verifyName = () => {
+    const name = document.getElementById("username");
+    const nameErr = document.getElementById("error-name");
+    nameErr.innerText = "";
+    let isValidName = true;
+
+    if (name.value == "") {
+        nameErr.innerText = "Username cannot be empty.";
+        isValidName = false;
+    }
+
+    return isValidName;
+
+}
+const verifyEmail = () => {
+    const email = document.getElementById("email");
+    const emailErr = document.getElementById("error-email");
+    emailErr.innerText = "";
+    let isValidEmail = true;
+
+    if (email.value == "") {
+        emailErr.innerText = "Email cannot be empty.";
+        isValidEmail = false;
+    }
+
+    return isValidEmail;
+}
+const form = document.getElementById("register-form");
+form.addEventListener("submit", (e) => {
+    if (!verifyName() || !verifyEmail() || !verifyPwd()){
+        e.preventDefault();
+    }
+})
+
+const signUpBtn = document.getElementById("signup-btn");
+signUpBtn.addEventListener("click", (e) => {
+    if (!verifyName() || !verifyEmail() || !verifyPwd()){
+        e.preventDefault();
+    }
+})
+
+const togglePass = document.querySelectorAll("#togglePass");
+const pwd1 = document.querySelector("#password1");
+const pwd2 = document.querySelector("#password2");
+togglePass.forEach(function(pass){
+    pass.addEventListener("click", (e) => {
+        const type = pwd1.getAttribute("type") == "password" 
+            ? "text" : "password";
+        pwd1.setAttribute("type", type);
+        pwd2.setAttribute("type", type);
+        togglePass[0].classList.toggle("bi-eye");
+        togglePass[1].classList.toggle("bi-eye");
+    })
+});
