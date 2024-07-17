@@ -1,0 +1,36 @@
+:root {
+    --background: #F2E8CF;
+    --lighter-green: #A7C957;
+    --light-green: #6A994E;
+    --dark-green: #386641;
+    --red: #BC4749;
+    --green: #228400;
+    --box-bg: #FFFAED;
+    --box-title-font-color: #582F0E;
+    --box-title-color: #7F4F24;
+
+}
+
+a[id='back-btn'], input[id='save-btn'] {
+    background-color: var(--box-title-color);
+    border-color: var(--box-title-color);
+}
+
+a[id='back-btn']:hover, a[id='back-btn']:active, 
+a[id='back-btn']:focus, input[id='save-btn']:hover, 
+input[id='save-btn']:active, input[id='save-btn']:focus {
+    background-color: var(--box-title-font-color) !important;
+    border-color: var(--box-title-font-color) !important;
+}
+
+.border {
+    border-color: var(--lighter-green) !important;
+}
+
+input[type='color']{
+    height: 50px;
+}
+
+.errorMsg {
+    color: var(--red);
+}

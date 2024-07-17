@@ -1,15 +1,28 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const usernameInput = document.getElementById('usernameInput');
-    const passwordInput = document.getElementById('passwordInput');
-    const roleInput = document.getElementById('roleInput');
+const verifyName = () => {
+    const name = document.getElementById("username");
+    const nameErr = document.getElementById("error-name");
+    nameErr.innerText = "";
+    let isValidName = true;
 
-    function editProfile() {
-        profileDisplay.style.username = usernameInput.value;
-        profileDisplay.style.password = passwordInput.value;
-        profileDisplay.style.role = roleInput.value;
+    if (name.value == "") {
+        nameErr.innerText = "Username cannot be empty.";
+        isValidName = false;
     }
-    
-    usernameInput.addEventListener('input', editProfile);
-    passwordInput.addEventListener('input', editProfile);
-    roleInput.addEventListener('input', editProfile);
-});
+
+    return isValidName;
+
+}
+
+const form = document.getElementById("edit-form");
+form.addEventListener("submit", (e) => {
+    if (!verifyName()){
+        e.preventDefault();
+    }
+})
+
+const saveBtn = document.getElementById("save-btn");
+saveBtn.addEventListener("click", (e) => {
+    if (!verifyName()){
+        e.preventDefault();
+    }
+})

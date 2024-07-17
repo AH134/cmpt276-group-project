@@ -55,6 +55,12 @@ input[name="roleRadio"] {
     border: 0.5px solid black;
 }
 
+input[name="roleRadio"]:checked {
+    width: 30px;
+    height: 30px;
+    filter: hue-rotate(290deg) contrast(300%);
+}
+
 i {
     float:right;
     margin-right: 20px;
