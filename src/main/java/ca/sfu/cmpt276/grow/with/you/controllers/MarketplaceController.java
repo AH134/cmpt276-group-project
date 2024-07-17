@@ -4,6 +4,7 @@ import ca.sfu.cmpt276.grow.with.you.models.Plant;
 import ca.sfu.cmpt276.grow.with.you.models.User;
 import ca.sfu.cmpt276.grow.with.you.services.PlantService;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
+import ca.sfu.cmpt276.utils.setHttpHeader;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
@@ -32,8 +33,9 @@ public class MarketplaceController {
             @RequestParam(value = "province", defaultValue = "all", required = false) String province,
             @RequestParam(value = "city", defaultValue = "all", required = false) String city,
             @RequestParam(value = "price", defaultValue = "all", required = false) String price, Model model,
-            HttpSession session) {
+            HttpSession session, HttpServletResponse res) {
         User user = userService.getUserBySession(session);
+        setHttpHeader.setHeader(res);
         if (user == null) {
             return "redirect:/main";
         }
@@ -59,6 +61,7 @@ public class MarketplaceController {
     public String getonePlant(@PathVariable("pid") int pid, HttpServletResponse response, Model model,
             HttpSession session) {
         User user = userService.getUserBySession(session);
+        setHttpHeader.setHeader(response);
         if (user == null) {
             return "redirect:/main";
         }
