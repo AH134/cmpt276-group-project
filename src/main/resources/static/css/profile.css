@@ -7,6 +7,7 @@
     --green: #228400;
     --box-bg: #FFFAED;
     --box-title-font-color: #582F0E;
+    --box-title-color: #7F4F24;
 
 }
 
@@ -73,4 +74,15 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: wrap;
+}
+
+a[id='edit'] {
+    background-color: var(--box-title-color);
+    border-color: var(--box-title-color);
+}
+
+a[id='edit']:hover, a[id='edit']:active, 
+a[id='edit']:focus {
+    background-color: var(--box-title-font-color) !important;
+    border-color: var(--box-title-font-color) !important;
 }

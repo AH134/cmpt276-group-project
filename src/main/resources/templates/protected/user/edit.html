@@ -1,31 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" layout:decorate="~{_layout}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rectangle Info</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/editStyle.css">
     <script src="/js/editScript.js" defer></script>
+    <title>Edit Profile</title>
 </head>
 <body>
-    <div class="container">
-        <h1>User Info</h1>
-        <div> 
-            <form th:action="@{/profile/edit/{id}(id=${profile.uid})}" method="post">
-                <input type="text" id="usernameInput" name="username" th:value="${profile.username}" required><br>
-                <input type="text" id="passwordInput" name="password" th:value="${profile.password}" required><br>
-                <form>
-                    <label for="role">Select your role:</label>
-                    <select id="role" name="role">
-                        <option value="grower">Grower</option>
-                        <option value="sponsor">Sponsor</option>
-                    </select>
-                    <button type="submit">Submit</button>
-                </form><br>
-                <button type="submit">Save changes</button>
+    <div class="main-container h-100 m-auto" layout:fragment="content">
+        <div class="d-flex mt-4 justify-content-center flex-column">
+            <form id="edit-form" action="/profile/edit" method="post">
+                <div id="edit-container" class="box-container w-100 p-3 d-flex mb-4 justify-content-center flex-column">
+                    <div id="edit-username">
+                        <label class="form-label fs-5">Change Username (You will login with this)</label>
+                        <input th:value="${user.username}" type="text" name="username" id="username"
+                            class="form-control form-control-lg border border-5" placeholder=Username required>
+                        <div id="error-name" class="errorMsg"></div>
+                        <p th:text="${error1}" style="color: #BC4749"></p>
+                    </div>
+                    <!-- <label class="form-label fs-5 mt-2">Change Background Color</label>
+                    <input type="color" class="form-control form-control-color w-100"> -->
+                    
+                    <div class="d-flex flex-column"> 
+                        <a id="back-btn" class="btn btn-primary mt-5" href="/profile">Back</a>
+                        <input id="save-btn" class="btn btn-primary mt-2" type="submit" value="Save"></input>
+                    </div>                
+                </div>
             </form>
         </div>
-        <button id="back-btn" onclick="window.history.back()">Back to Profile</button> 
     </div>
 </body>
 </html>
