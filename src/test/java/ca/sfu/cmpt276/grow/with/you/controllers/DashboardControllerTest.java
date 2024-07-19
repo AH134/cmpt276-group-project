@@ -31,12 +31,12 @@ import ca.sfu.cmpt276.grow.with.you.services.UserService;
 @AutoConfigureMockMvc
 public class DashboardControllerTest {
 
-    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(), 
-    MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+    public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
+            MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
     @MockBean
     private PlantService plantService;
-    
+
     @MockBean
     private UserService userService;
 
@@ -46,51 +46,50 @@ public class DashboardControllerTest {
     @Autowired
     private WebApplicationContext context;
 
-    @Autowired
-    private MockHttpSession session;
+    // @Autowired
+    // private MockHttpSession session;
 
-    //test null user
+    // test null user
     @Test
     void testNullUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/dashboard"))
-            .andExpect(MockMvcResultMatchers.status().is(302))
-            .andExpect(MockMvcResultMatchers.view().name("redirect:/"));
+                .andExpect(MockMvcResultMatchers.status().is(302))
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/"));
     }
 
-    //test that it returns to grower dashboard if the user is a grower
+    // test that it returns to grower dashboard if the user is a grower
     @Test
     void testGetGrowerDashboard() throws Exception {
-        //create the fake session after a grower has logged in
+        // create the fake session after a grower has logged in
         Grower grower = new Grower("grower", "grower", "email@email.com", 1000, 1, 0, 0);
-        Plant plant = new Plant(grower, null, "rose", "rose", "rose.png", 5.5,"BC","Burnaby");
-        List<Plant> plantsList = new ArrayList<>();
-        plantsList.add(plant);
+        Plant plant = new Plant(grower, null, "rose", "rose", "rose.png", 5.5, "BC", "Burnaby");
 
-        session.setAttribute("session_user",grower);
+        List<Plant> plants = new ArrayList<>();
+        plants.add(plant);
 
+        // mock get from service
+        when(plantService.getPlantsByGrower(grower)).thenReturn(plants);
 
-        //ensure the endpoint is protected/user/dashboard
-        mockMvc.perform(MockMvcRequestBuilders.get("/dashboard"))
-            .andExpect(MockMvcResultMatchers.status().is(302))
-            .andExpect(MockMvcResultMatchers.view().name("protected/user/growerDashboard"))
-            
-            .andExpect(MockMvcResultMatchers.model().attribute("h", hasItem(
-                allOf(
-                    hasProperty("activeListings", Matchers.is(1)),
-                    hasProperty("lifetimeListings", Matchers.is(1))
-                )
-            )));
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("session_user", grower);
+
+        // ensure the endpoint is protected/user/dashboard
+        mockMvc.perform(MockMvcRequestBuilders.get("/dashboard").session(session))
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.view().name("protected/user/growerDashboard"))
+                .andExpect(MockMvcResultMatchers.model().attribute("activeListings", Matchers.is(1)))
+                .andExpect(MockMvcResultMatchers.model().attribute("lifetimeListings", Matchers.is(1)));
     }
 
-    //test that it returns to sponsor dashboard if the user is a sponsor
+    // test that it returns to sponsor dashboard if the user is a sponsor
     @Test
     void testGetSponsorDashboard() {
 
     }
 
-    //test that it returns to admin dashboard if the user is an admin
+    // test that it returns to admin dashboard if the user is an admin
     @Test
     void testGetAdminDashboard() {
-        //need to be able to create admin user
+        // need to be able to create admin user
     }
 }
