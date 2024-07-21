@@ -22,7 +22,8 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
                         "AND (:province IS NULL OR p.province = :province) " +
                         "AND (:city IS NULL OR p.city = :city)" +
                         "AND (:minPrice IS NULL OR p.price >= :minPrice) " +
-                        "AND (:maxPrice IS NULL OR p.price <= :maxPrice)")
+                        "AND (:maxPrice IS NULL OR p.price <= :maxPrice)" +
+                        "AND (p.sponsor IS NULL)")
         Page<Plant> findAllByFilters(
                         @Param("name") String name,
                         @Param("province") String province,

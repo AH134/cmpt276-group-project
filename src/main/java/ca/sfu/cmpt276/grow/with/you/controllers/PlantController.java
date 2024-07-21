@@ -147,13 +147,12 @@ public class PlantController {
             plantsList = plantService.getPlantsByGrower((Grower) user);
             model.addAttribute("plants", plantsList);
             model.addAttribute("selectedPlant", plantService.getPlantById(pid));
-        } else if (user.getRole() == UserRole.SPONSOR) {
-            plantsList = plantService.getPlantsBySponsor((Sponsor) user);
-            model.addAttribute("plants", plantsList);
-            model.addAttribute("selectedPlant", plantService.getPlantById(pid));
+            return "protected/user/growerPlants.html";
         }
-
-        return "protected/user/growerPlants.html";
+        plantsList = plantService.getPlantsBySponsor((Sponsor) user);
+        model.addAttribute("plants", plantsList);
+        model.addAttribute("selectedPlant", plantService.getPlantById(pid));
+        return "protected/user/sponsorPlants.html";
     }
 
     @GetMapping("/plants")
