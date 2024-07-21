@@ -10,7 +10,7 @@
     --box-title-color: #7F4F24;
 }
 
-#box{
+#box {
     background-color: var(--box-bg);
     border-radius: 20px;
     border: 5px solid var(--lighter-green);
@@ -18,7 +18,18 @@
     height: 500px;
 }
 
-#plantimg{
+#plantimg {
     width: 450px !important;
     height: 450px !important;
+}
+
+#error-container {
+    max-width: 600px;
+    border-radius: 10px !important;
+}
+
+#error-container p {
+    vertical-align: middle;
+    text-align: center;
+    color: var(--red);
 }

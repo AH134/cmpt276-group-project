@@ -10,38 +10,48 @@
     <link rel="stylesheet" href=/css/main.css>
     <link rel="stylesheet" href=/css/viewPlant.css>
     <link rel="stylesheet" href=/css/fragment/header.css>
+    <script src="/js/viewPlantError.js" defer></script>
 </head>
 
 <body>
-    <div class="container" id="box" layout:fragment="content">
-        <div class="row justify-content-center" th:each="plant:${plant}">
-            <div class="col mt-4">
-                <img class="img-fluid mx-auto" id="plantimg" src="/assets/plant/plant-icon.svg">
+    <div layout:fragment="content">
+        <div class="box-container m-auto mt-2 d-flex justify-content-center" id="error-container" th:if="${error}">
+            <p class="fs-5 text-center p-0 m-0" th:text="${error}"></p>
+        </div>
+        <div class="container" id="box">
+            <div class="row justify-content-center" th:each="plant:${plant}">
+                <div class="col mt-4">
+                    <img class="img-fluid mx-auto" id="plantimg" src="/assets/plant/plant-icon.svg">
+                </div>
+                <div class="col m-4">
+                    <div class="row">
+                        <div class="col">Plant Name:</div>
+                        <div class="col" th:text="${plant.name}"></div>
+                    </div>
+                    <div class="row plant-info">
+                        <div class="col">Plant Price:</div>
+                        <div class="col" th:text="${plant.price}"></div>
+                    </div>
+                    <div class="row plant-info">
+                        <div class="col">Province:</div>
+                        <div class="col" th:text="${plant.province}"></div>
+                    </div>
+                    <div class="row plant-info">
+                        <div class="col">City:</div>
+                        <div class="col" th:text="${plant.city}"></div>
+                    </div>
+                    <div class="plant-info mt-4" th:text="${plant.description}"></div>
+                    <div>
+                        <a th:if="${isOwner}" class="btn btn-primary float-bottom"
+                            th:href="@{/plants/edit/{pid}(pid=${plant.plantId})}">Edit</a>
+
+                        <form th:if="${!isOwner}" th:action="@{/marketplace/plant/{pid}(pid=${plant.plantId})}"
+                            th:method="post">
+                            <button type="submit" class="btn btn-primary">Buy</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="col m-4">
-                <div class="row">
-                    <div class="col">Plant Name:</div>
-                    <div class="col" th:text="${plant.name}"></div>
-                </div>
-                <div class="row plant-info">
-                    <div class="col">Plant Price:</div>
-                    <div class="col" th:text="${plant.price}"></div>
-                </div>
-                <div class="row plant-info">
-                    <div class="col">Province:</div>
-                    <div class="col" th:text="${plant.province}"></div>
-                </div>
-                <div class="row plant-info">
-                    <div class="col">City:</div>
-                    <div class="col" th:text="${plant.city}"></div>
-                </div>
-                <div class="plant-info mt-4" th:text="${plant.description}"></div>
-                <div>
-                    <a th:if="${isOwner}" class="btn btn-primary float-bottom" th:href="@{/plants/edit/{pid}(pid=${plant.plantId})}">Edit</a>
-                </div>
-            </div>
-            
-           
         </div>
     </div>
 </body>

@@ -25,13 +25,13 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "plant_id")
     private Plant plant;
-    private boolean amount;
+    private double amount;
     private LocalDate paymentDate;
 
     public Payment() {
     }
 
-    public Payment(Grower grower, Sponsor sponsor, Plant plant, boolean amount, LocalDate paymentDate) {
+    public Payment(Grower grower, Sponsor sponsor, Plant plant, double amount, LocalDate paymentDate) {
         this.grower = grower;
         this.sponsor = sponsor;
         this.plant = plant;
@@ -71,11 +71,11 @@ public class Payment {
         this.plant = plant;
     }
 
-    public boolean isAmount() {
+    public double isAmount() {
         return amount;
     }
 
-    public void setAmount(boolean amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
