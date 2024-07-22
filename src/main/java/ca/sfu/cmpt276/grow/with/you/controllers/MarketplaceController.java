@@ -4,6 +4,7 @@ import ca.sfu.cmpt276.grow.with.you.models.Payment;
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
 import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.models.User;
+import ca.sfu.cmpt276.grow.with.you.services.ChatService;
 import ca.sfu.cmpt276.grow.with.you.services.PaymentService;
 import ca.sfu.cmpt276.grow.with.you.services.PlantService;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
@@ -33,6 +34,9 @@ public class MarketplaceController {
 
     @Autowired
     private PaymentService paymentService;
+
+    @Autowired
+    private ChatService chatService;
 
     @GetMapping("/marketplace")
     public String getAllPlants(
@@ -112,6 +116,8 @@ public class MarketplaceController {
             model.addAttribute("isOwner", false);
             return "protected/viewPlant";
         }
+
+        chatService.createChat(plant, plant.getGrower(), (Sponsor) user);
 
         return "redirect:/plants/" + pid;
     }

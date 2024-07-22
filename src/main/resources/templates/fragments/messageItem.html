@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Item</title>
+</head>
+
+<body>
+    <a th:fragment="messageItem" th:href="@{/messages/{chatId}(chatId=${chat.chatId})}"
+        th:class="${chat.plant.plantId == selectedChat.plant.plantId ? 'plant-item d-flex plant-selected p-1 text-decoration-none' : 'plant-item d-flex p-1 text-decoration-none'}">
+        <img src="/assets/plant/plant-icon.svg" alt="plant-icon" width="70" height="70">
+        <div class="d-flex flex-column justify-content-center" id="plant-detail-container">
+            <h1 class="m-0" id="plant-name" th:text="${chat.plant.name}"></h1>
+            <p class="m-0" id="plant-sponsor"
+                th:text="${chat.plant.sponsor != null ? 'Sponsor: ' + chat.plant.sponsor.username : 'Sponsor: None'}">
+            </p>
+            <p class="m-0" id="plant-price" th:text="${'Price: ' + chat.plant.price}"></p>
+        </div>
+    </a>
+</body>
+
+</html>

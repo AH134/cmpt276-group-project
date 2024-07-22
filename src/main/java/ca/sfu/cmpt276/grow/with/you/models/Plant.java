@@ -34,8 +34,6 @@ public class Plant {
     private double price;
     private String province;
     private String city;
-    @OneToMany(mappedBy = "plant")
-    private List<Message> messages = new ArrayList<>();
 
     public Plant() {
     }
@@ -122,13 +120,5 @@ public class Plant {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public List<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
     }
 }
