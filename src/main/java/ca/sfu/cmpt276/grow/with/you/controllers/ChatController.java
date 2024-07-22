@@ -23,6 +23,7 @@ import ca.sfu.cmpt276.grow.with.you.services.PlantService;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
 import ca.sfu.cmpt276.utils.setHttpHeader;
 import ca.sfu.cmpt276.utils.chat.ChatNotification;
+import ca.sfu.cmpt276.utils.chat.MessagePayload;
 import ca.sfu.cmpt276.utils.enums.UserRole;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -45,18 +46,17 @@ public class ChatController {
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @MessageMapping("/chat")
-    public void processMessage(@Payload ChatMessage chatMessage) {
+    public void processMessage(@Payload MessagePayload messagePayload) {
+        System.out.println("[MESSAGE]: " + messagePayload.getContent());
+        ChatMessage chatMessage = new ChatMessage(chatService.getChatById(messagePayload.getChatId()),
+                messagePayload.getSenderId(), messagePayload.getRecipientId(), messagePayload.getContent(),
+                messagePayload.getTimestamp());
+        ChatNotification chatNotification = chatMessageService.save(chatMessage);
+        String location = "/user/" + chatNotification.getChatId() + "/" + chatNotification.getRecipientId()
+                + "/queue/messages";
 
-        ChatNotification chatNotification = new ChatNotification(chatMessage.getMessageId(), chatMessage.getSenderId(),
-                chatMessage.getRecipientId(), chatMessage.getContent());
-        simpMessagingTemplate.convertAndSendToUser(String.valueOf(chatMessage.getRecipientId()), "/queue/messsages",
+        simpMessagingTemplate.convertAndSend(location,
                 chatNotification);
-    }
-
-    @GetMapping("/messages/{senderId}/{recipientId}")
-    public ResponseEntity<List<ChatMessage>> findChatMessages(@PathVariable("senderId") String senderId,
-            @PathVariable("recipientId") String recipientId) {
-        return ResponseEntity.ok(null);
     }
 
     @GetMapping("/messages")
@@ -71,11 +71,17 @@ public class ChatController {
         if (user.getRole() == UserRole.GROWER) {
             chatList = chatService.getChatsByGrower((Grower) user);
             model.addAttribute("chats", chatList);
-            model.addAttribute("selectedChat", chatList.get(0));
+            model.addAttribute("role", "grower");
+            if (chatList.size() != 0) {
+                return "redirect:/messages/1";
+            }
         } else if (user.getRole() == UserRole.SPONSOR) {
             chatList = chatService.getChatsBySponsor((Sponsor) user);
             model.addAttribute("chats", chatList);
-            model.addAttribute("selectedChat", chatList.get(0));
+            model.addAttribute("role", "sponsor");
+            if (chatList.size() != 0) {
+                return "redirect:/messages/1";
+            }
         }
 
         return "protected/user/messages";
@@ -91,13 +97,34 @@ public class ChatController {
         }
 
         Chat chat = chatService.getChatById(chatId);
-        // if (chat == null) {
-        // return "redirect/messages";
-        // }
-        model.addAttribute("messages", chat.getMessages());
-        System.out.println(chat.getMessages());
+        if (chat == null) {
+            return "redirect:/messages";
+        }
+
+        if (chat.getPlant().getSponsor().getUserId() != user.getUserId()
+                && chat.getPlant().getGrower().getUserId() != user.getUserId()) {
+            return "redirect:/messages";
+        }
+
+        List<Chat> chatList;
+        if (user.getRole() == UserRole.GROWER) {
+            chatList = chatService.getChatsByGrower((Grower) user);
+            model.addAttribute("chats", chatList);
+            if (chatList.size() != 0) {
+                model.addAttribute("selectedChat", chat);
+            }
+            model.addAttribute("user", (Grower) user);
+            model.addAttribute("role", "grower");
+        } else if (user.getRole() == UserRole.SPONSOR) {
+            chatList = chatService.getChatsBySponsor((Sponsor) user);
+            model.addAttribute("chats", chatList);
+            if (chatList.size() != 0) {
+                model.addAttribute("selectedChat", chat);
+            }
+            model.addAttribute("user", (Sponsor) user);
+            model.addAttribute("role", "sponsor");
+        }
 
         return "protected/user/plantChat";
     }
-
 }

@@ -13,8 +13,11 @@
         <img src="/assets/plant/plant-icon.svg" alt="plant-icon" width="70" height="70">
         <div class="d-flex flex-column justify-content-center" id="plant-detail-container">
             <h1 class="m-0" id="plant-name" th:text="${chat.plant.name}"></h1>
-            <p class="m-0" id="plant-sponsor"
+            <p class="m-0" id="plant-sponsor" th:if="${role == 'grower'}"
                 th:text="${chat.plant.sponsor != null ? 'Sponsor: ' + chat.plant.sponsor.username : 'Sponsor: None'}">
+            </p>
+            <p class="m-0" id="plant-sponsor" th:if="${role == 'sponsor'}"
+                th:text="${chat.plant.grower != null ? 'Grower: ' + chat.plant.grower.username : 'Grower: None'}">
             </p>
             <p class="m-0" id="plant-price" th:text="${'Price: ' + chat.plant.price}"></p>
         </div>

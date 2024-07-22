@@ -29,12 +29,12 @@ public class ChatMessage {
         this.timestamp = LocalDate.now();
     }
 
-    public ChatMessage(Chat chat, int senderId, int recipientId, String content) {
+    public ChatMessage(Chat chat, int senderId, int recipientId, String content, LocalDate timestamp) {
         this.chat = chat;
         this.senderId = senderId;
         this.recipientId = recipientId;
         this.content = content;
-        this.timestamp = LocalDate.now();
+        this.timestamp = timestamp;
     }
 
     public int getMessageId() {

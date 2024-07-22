@@ -24,7 +24,7 @@ public class Chat {
     private Grower grower;
     @OneToOne
     private Plant plant;
-    @OneToMany
+    @OneToMany(mappedBy = "chat")
     private List<ChatMessage> messages = new ArrayList<>();
 
     public Chat() {

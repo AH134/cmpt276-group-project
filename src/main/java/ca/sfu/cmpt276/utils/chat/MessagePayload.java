@@ -1,30 +1,27 @@
 package ca.sfu.cmpt276.utils.chat;
 
-public class ChatNotification {
-    private int id;
+import java.time.LocalDate;
+
+public class MessagePayload {
     private int chatId;
     private int senderId;
     private int recipientId;
     private String content;
+    private LocalDate timestamp;
 
-    public ChatNotification(int id, int chatId, int senderId, int recipientId, String content) {
-        this.id = id;
+    public MessagePayload() {
+    }
+
+    public MessagePayload(int chatId, int senderId, int recipientId, String content, LocalDate timestamp) {
         this.chatId = chatId;
         this.senderId = senderId;
         this.recipientId = recipientId;
         this.content = content;
-    }
-
-    public int getId() {
-        return id;
+        this.timestamp = timestamp;
     }
 
     public int getChatId() {
         return chatId;
-    }
-
-    public void setChatId(int chatId) {
-        this.chatId = chatId;
     }
 
     public int getSenderId() {
@@ -39,8 +36,12 @@ public class ChatNotification {
         return content;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public LocalDate getTimestamp() {
+        return timestamp;
+    }
+
+    public void setChatId(int chatId) {
+        this.chatId = chatId;
     }
 
     public void setSenderId(int senderId) {
@@ -53,5 +54,9 @@ public class ChatNotification {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public void setTimestamp(LocalDate timestamp) {
+        this.timestamp = timestamp;
     }
 }

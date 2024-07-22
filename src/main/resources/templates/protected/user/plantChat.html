@@ -8,24 +8,39 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/growerPlants.css">
     <link rel="stylesheet" href="/css/fragment/plantItem.css">
-    <title>Plants</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.js" defer></script>
+    <script src="/js/messages.js" defer></script>
+    <title>Messages</title>
 </head>
 
 <body>
-    <div class="d-flex m-auto justify-content-between" id="plant-wrapper" layout:fragment="content">
+    < <div class="d-flex m-auto justify-content-between" id="plant-wrapper" layout:fragment="content">
         <div class="box-container mt-4 d-flex flex-column" id="left-container">
             <div id="left-top" class="p-3">
-                <div th:if="${#lists.size(plants) == 0}" class="align-items-center d-flex justify-content-center">No
+                <div th:if="${#lists.size(chats) == 0}" class="align-items-center d-flex justify-content-center">No
                     Messages</div>
-                <div th:if="${selectedPlant != null}" th:each="plant : ${plants}">
-                    <a th:replace="~{fragments/plantItem :: plantItem}"></a>
+                <div th:if="${selectedChat != null}" th:each="chat : ${chats}">
+                    <a th:replace="~{fragments/messageItem :: messageItem}"></a>
                 </div>
             </div>
         </div>
         <div class="box-container mt-4" id="right-container">
-            <p th:if="${selectedPlant != null}" th:text="${selectedPlant.name}"></p>
+            <p th:if="${selectedChat != null}" th:text="${selectedChat.chatId}"></p>
+            <div id="message-container" class="d-felx flex-column">
+                <p th:if="${selectedChat != null}"
+                    th:style="${message.senderId == user.userId ? 'color:var(--red);' : ''}"
+                    th:each="message : ${selectedChat.messages}" th:text="${message.content}"></p>
+            </div>
+
+            <div>
+                <input type="text" name="message-content" id="message-content"
+                    th:attr="data-message-id=${role == 'grower' ? selectedChat.grower.userId + '-' + selectedChat.sponsor.userId : selectedChat.sponsor.userId + '-' + selectedChat.grower.userId}"
+                    required>
+                <button id="message-btn" class="btn">Send</button>
+            </div>
         </div>
-    </div>
+        </div>
 
 </body>
 
