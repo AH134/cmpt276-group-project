@@ -21,3 +21,17 @@ body {
     background-color: var(--background) !important;
     background-size: cover;
 }
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(155, 155, 155, 0.5);
+    border-radius: 5px;
+    border: transparent;
+}
