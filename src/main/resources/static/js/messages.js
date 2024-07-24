@@ -48,8 +48,6 @@ const handleMessageBtnClick = (e, stompClient) => {
         return;
     }
 
-    console.log(getMessageIds())
-
     const message = {
         chatId: getChatId(),
         senderId: getMessageIds().senderId,
@@ -77,8 +75,6 @@ const registerLocation = (stompClient) => {
         const recipientUsername = document.getElementById("plant-sponsor").innerText.split(":")[1];
 
         const createdMessage = createMessage(recipientUsername, parsedMessage.content, false);
-        console.log(createMessage)
-        console.log("here")
         addMessage(createdMessage);
     })
 }
