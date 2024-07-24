@@ -29,10 +29,9 @@
         <div class="box-container mt-4 d-flex flex-column" id="right-container"
             th:attr="data-username=${user.username}">
             <div id="message-container" class="d-flex flex-column p-3">
-                <div th:class="${message.senderId == user.userId} ? 'text-end mb-2' : 'text-start mb-2'"
-                    th:each="message : ${selectedChat.messages}">
+                <div class="mb-2" th:each="message : ${selectedChat.messages}">
                     <p id="message-username"
-                        th:class="${message.senderId == user.userId} ? 'text-align-start fs-5 m-0' : 'text-align-end fs-5 m-0'"
+                        th:class="${message.senderId == user.userId} ? 'text-end fs-5 m-0' : 'text-start fs-5 m-0'"
                         th:text="${message.senderId == user.userId ?
                             user.username :
                             (message.senderId == selectedChat.sponsor.userId ?

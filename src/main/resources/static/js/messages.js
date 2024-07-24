@@ -1,77 +1,97 @@
+const getChatId = () => {
+    const path = window.location.pathname;
+    const slashIndex = path.indexOf("/", 2);
+    const chatId = slashIndex !== -1 ? path.substring(slashIndex + 1) : path;
+    return chatId;
+}
 
-const path = window.location.pathname;
-const slashIndex = path.indexOf("/", 2);
-const chatId = slashIndex !== -1 ? path.substring(slashIndex + 1) : path;
+const getMessageIds = () => {
+    const messageContent = document.getElementById("message-content");
+    const messageIdList = messageContent.dataset.messageId.split("-");
+    const senderId = messageIdList[0];
+    const recipientId = messageIdList[1];
 
-const messageContent = document.getElementById("message-content");
-const messageIdList = messageContent.dataset.messageId.split("-");
-const senderId = messageIdList[0];
-const recipientId = messageIdList[1];
+    return { senderId, recipientId };
+}
 
 const scrollToBottom = () => {
     const messageContainer = document.getElementById("message-container");
     messageContainer.scrollTop = messageContainer.scrollHeight;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    scrollToBottom();
-})
-
-const socket = new SockJS("/ws");
-const stompClient = StompJs.Stomp.over(socket);
-stompClient.connect({}, () => {
-    stompClient.subscribe(`/user/${chatId}/${senderId}/queue/messages`, (message) => {
-        const parsedMessage = JSON.parse(message.body);
-        const messageConatiner = document.getElementById("message-container");
-        const recipientUsername = document.getElementById("plant-sponsor").innerText.split(":")[1];
-        let newMessage = document.createElement("div");
-        newMessage = `
-        <p id="message-username" class="text-align-start fs-5 m-0">
-            ${recipientUsername}
+const createMessage = (username, content, sender) => {
+    let newMessage = document.createElement("div");
+    newMessage = `
+        <p id="message-username" class="${sender ? "text-end" : "text-start"} fs-5 m-0">
+            ${username}
         </p>
-                        <div id="message-text"
-                            class="d-flex justify-content-start">
-                            <div id="message-text-wrapper" class="box-container">
-                                <p class="m-0 p-1">${parsedMessage.content}</p>
-                            </div>
-                        </div>
+        <div id="message-text" class="d-flex ${sender ? "justify-content-end" : "justify-content-start"}">
+            <div id="message-text-wrapper" class="box-container">
+                <p class="m-0 p-1">${content}</p>
+            </div>
+        </div>
         `
-        messageConatiner.innerHTML += newMessage;
-        scrollToBottom();
-    })
-})
+    return newMessage;
+}
 
-const btn = document.getElementById("message-btn");
-btn.addEventListener("click", (e) => {
+const addMessage = (message) => {
+    const messageContainer = document.getElementById("message-container");
+    messageContainer.innerHTML += message;
+    scrollToBottom();
+}
+
+const handleMessageBtnClick = (e, stompClient) => {
     e.preventDefault();
+
+    const messageContent = document.getElementById("message-content");
     if (messageContent.value === "") {
         return;
     }
 
-    stompClient.send("/app/chat", {}, JSON.stringify({
-        chatId: chatId,
-        senderId: senderId,
-        recipientId: recipientId,
+    console.log(getMessageIds())
+
+    const message = {
+        chatId: getChatId(),
+        senderId: getMessageIds().senderId,
+        recipientId: getMessageIds().recipientId,
         content: messageContent.value,
         timestamp: new Date().toISOString()
-    }))
+    }
+    stompClient.send("/app/chat", {}, JSON.stringify(message));
 
-    const messageConatiner = document.getElementById("message-container");
+
     const senderUsername = document.getElementById("right-container").dataset.username;
-    let newMessage = document.createElement("div");
-    newMessage = `
-    <p id="message-username" class="text-end fs-5 m-0">
-        ${senderUsername}
-    </p>
-                    <div id="message-text"
-                        class="d-flex justify-content-end">
-                        <div id="message-text-wrapper" class="box-container">
-                            <p class="m-0 p-1">${messageContent.value}</p>
-                        </div>
-                    </div>
-    `
-    messageConatiner.innerHTML += newMessage;
-    scrollToBottom();
+    const createdMessage = createMessage(senderUsername, messageContent.value, true);
+    addMessage(createdMessage);
 
     messageContent.value = "";
-})
+}
+
+const registerLocation = (stompClient) => {
+    const chatId = getChatId();
+    const senderId = getMessageIds().senderId;
+    const subscribeLocation = `/user/${chatId}/${senderId}/queue/messages`;
+
+    stompClient.subscribe(subscribeLocation, (message) => {
+        const parsedMessage = JSON.parse(message.body);
+        const recipientUsername = document.getElementById("plant-sponsor").innerText.split(":")[1];
+
+        const createdMessage = createMessage(recipientUsername, parsedMessage.content, false);
+        console.log(createMessage)
+        console.log("here")
+        addMessage(createdMessage);
+    })
+}
+
+const main = () => {
+    const socket = new SockJS("/ws");
+    const stompClient = StompJs.Stomp.over(socket);
+    stompClient.connect({}, () => registerLocation(stompClient));
+
+    const btn = document.getElementById("message-btn");
+    btn.addEventListener("click", (e) => handleMessageBtnClick(e, stompClient));
+
+    document.addEventListener("DOMContentLoaded", scrollToBottom)
+}
+
+main();
