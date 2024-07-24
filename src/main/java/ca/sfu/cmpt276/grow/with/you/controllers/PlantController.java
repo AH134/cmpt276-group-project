@@ -147,11 +147,13 @@ public class PlantController {
             plantsList = plantService.getPlantsByGrower((Grower) user);
             model.addAttribute("plants", plantsList);
             model.addAttribute("selectedPlant", plantService.getPlantById(pid));
+            model.addAttribute("role", "grower");
             return "protected/user/growerPlants.html";
         }
         plantsList = plantService.getPlantsBySponsor((Sponsor) user);
         model.addAttribute("plants", plantsList);
         model.addAttribute("selectedPlant", plantService.getPlantById(pid));
+        model.addAttribute("role", "sponsor");
         return "protected/user/sponsorPlants.html";
     }
 
@@ -170,6 +172,7 @@ public class PlantController {
             if (plantsList.size() != 0) {
                 model.addAttribute("selectedPlant", plantsList.get(0));
             }
+            model.addAttribute("role", "grower");
             return "protected/user/growerPlants.html";
         } else if (user.getRole() == UserRole.SPONSOR) {
             plantsList = plantService.getPlantsBySponsor((Sponsor) user);
@@ -177,6 +180,7 @@ public class PlantController {
             if (plantsList.size() != 0) {
                 model.addAttribute("selectedPlant", plantsList.get(0));
             }
+            model.addAttribute("role", "sponsor");
             return "protected/user/sponsorPlants.html";
         }
 

@@ -2,38 +2,40 @@ package ca.sfu.cmpt276.grow.with.you.models;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "message")
-public class Message {
+public class ChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int messageId;
     @ManyToOne
-    @JoinColumn(name = "plant_id")
-    private Plant plant;
-    private int receiverId;
+    @JsonIgnore
+    private Chat chat;
     private int senderId;
-    private String text;
-    private boolean read;
+    private int recipientId;
+    @Column(columnDefinition = "text")
+    private String content;
     private LocalDate timestamp;
 
-    public Message() {
+    public ChatMessage() {
+        this.timestamp = LocalDate.now();
     }
 
-    public Message(Plant plant, int receiverId, int senderId, String text, boolean read, LocalDate timestamp) {
-        this.plant = plant;
-        this.receiverId = receiverId;
+    public ChatMessage(Chat chat, int senderId, int recipientId, String content, LocalDate timestamp) {
+        this.chat = chat;
         this.senderId = senderId;
-        this.text = text;
-        this.read = read;
+        this.recipientId = recipientId;
+        this.content = content;
         this.timestamp = timestamp;
     }
 
@@ -45,20 +47,12 @@ public class Message {
         this.messageId = messageId;
     }
 
-    public Plant getPlant() {
-        return plant;
+    public Chat getChat() {
+        return chat;
     }
 
-    public void setPlant(Plant plant) {
-        this.plant = plant;
-    }
-
-    public int getReceiverId() {
-        return receiverId;
-    }
-
-    public void setReceiverId(int receiverId) {
-        this.receiverId = receiverId;
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 
     public int getSenderId() {
@@ -69,20 +63,20 @@ public class Message {
         this.senderId = senderId;
     }
 
-    public String getText() {
-        return text;
+    public int getRecipientId() {
+        return recipientId;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setRecipientId(int recipientId) {
+        this.recipientId = recipientId;
     }
 
-    public boolean isRead() {
-        return read;
+    public String getContent() {
+        return content;
     }
 
-    public void setRead(boolean read) {
-        this.read = read;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public LocalDate getTimestamp() {
