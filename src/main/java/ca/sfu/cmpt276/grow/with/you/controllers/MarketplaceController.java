@@ -1,13 +1,5 @@
 package ca.sfu.cmpt276.grow.with.you.controllers;
 
-import ca.sfu.cmpt276.grow.with.you.models.Plant;
-import ca.sfu.cmpt276.grow.with.you.models.User;
-import ca.sfu.cmpt276.grow.with.you.services.PlantService;
-import ca.sfu.cmpt276.grow.with.you.services.UserService;
-import ca.sfu.cmpt276.utils.setHttpHeader;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,6 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import ca.sfu.cmpt276.grow.with.you.models.Plant;
+import ca.sfu.cmpt276.grow.with.you.models.User;
+import ca.sfu.cmpt276.grow.with.you.services.PlantService;
+import ca.sfu.cmpt276.grow.with.you.services.UserService;
+import ca.sfu.cmpt276.utils.setHttpHeader;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MarketplaceController {

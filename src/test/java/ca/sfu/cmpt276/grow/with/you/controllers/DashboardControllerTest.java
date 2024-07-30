@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.Matchers;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasProperty;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +16,11 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
+import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.services.PlantService;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
 
@@ -42,12 +39,6 @@ public class DashboardControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private WebApplicationContext context;
-
-    // @Autowired
-    // private MockHttpSession session;
 
     // test null user
     @Test
@@ -84,7 +75,16 @@ public class DashboardControllerTest {
     // test that it returns to sponsor dashboard if the user is a sponsor
     @Test
     void testGetSponsorDashboard() {
+        Sponsor sponsor = new Sponsor("sponsor", "sponsor", "sponsor@email.com", 130, 1, 5);
+        Plant plant = new Plant(null, sponsor, "rose", "rose", "rose.png", 5, "BC", "Burnaby");
 
+        List<Plant> plants = new ArrayList<>();
+        plants.add(plant);
+
+        when(plantService.getPlantsBySponsor(sponsor)).thenReturn(plants);
+
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("session_user", sponsor);
     }
 
     // test that it returns to admin dashboard if the user is an admin
