@@ -17,12 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
 import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.services.PlantService;
+import ca.sfu.cmpt276.grow.with.you.services.UserService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -34,9 +33,11 @@ public class PlantControllerTest {
     @MockBean
     private PlantService plantService;
 
+    @MockBean
+    private UserService userService;
+
     @Autowired
     private MockMvc mockMvc;
-
     
     @Test
     void testAddPlant() throws Exception {
@@ -44,15 +45,14 @@ public class PlantControllerTest {
         Plant plant = new Plant(grower, null, "rose", "rose","rose", 5.5, "BC", "Burnaby");
         plant.setPlantId(1);
 
-        final ObjectMapper mapper = new ObjectMapper();
-        final String jsonContent = mapper.writeValueAsString(plant);
+        String newName = "lilac";
+        String newDesc = "purple flowers";
+        Double newPrice = 10.0;
 
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("session_user", grower);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/plants/add")
-            .content(jsonContent)
-            .contentType(MediaType.APPLICATION_JSON)
             .session(session))
             
             .andExpect(MockMvcResultMatchers.status().isCreated());
@@ -183,6 +183,12 @@ public class PlantControllerTest {
 
     @Test
     void testPutPlant() {
-        //TODO: write test for editing the plant
+        Grower grower = new Grower("grower", "grower", "email@email.com", 1000, 1, 0, 0);
+        Plant plant = new Plant(grower, null, "rose", "rose","rose", 5.5, "BC", "Burnaby");
+        plant.setPlantId(1);
+
+        MockHttpSession session = new MockHttpSession();
+
+        when(userService.getUserBySession(session)).thenReturn(grower);
     }
 }

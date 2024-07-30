@@ -49,7 +49,6 @@ public class LoginControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/login"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("dashboard"));
-
     }
 
     @Test
@@ -73,7 +72,6 @@ public class LoginControllerTest {
 
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("redirect:dashboard"));
-
     }
 
     @Test
@@ -97,7 +95,6 @@ public class LoginControllerTest {
             .andExpect(MockMvcResultMatchers.status().is(error.getStatusCode()))
             .andExpect(MockMvcResultMatchers.view().name("login"))
             .andExpect(MockMvcResultMatchers.model().attribute("error", Matchers.is(error.getMessage())));
-
     }
 
     @Test

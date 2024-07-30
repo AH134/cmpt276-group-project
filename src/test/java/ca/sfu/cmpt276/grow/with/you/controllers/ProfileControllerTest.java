@@ -10,10 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.util.LinkedMultiValueMap;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
@@ -40,9 +44,7 @@ public class ProfileControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/profile/edit")
             .session(session))
-            
             .andExpect(MockMvcResultMatchers.status().is(302));
-
     }
 
     @Test
@@ -61,8 +63,32 @@ public class ProfileControllerTest {
     }
 
     @Test
-    void testEditProfile() {
+    void testEditProfileSuccess() throws Exception{
+        Grower grower = new Grower("grower", "grower", "email@email.com", 1000, 1, 0, 0);
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("session_user", grower);
 
+        String newName = "username";
+        LinkedMultiValueMap<String, String> profileData = new LinkedMultiValueMap<>();
+        profileData.add("username",newName);
+        grower.setUsername(newName);
+
+        when(userService.getUserByUsername(newName)).thenReturn(null);
+        when(userService.createUser(grower)).thenReturn(grower);
+
+        final ObjectMapper mapper = new ObjectMapper();
+        String userJson = mapper.writeValueAsString(grower);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/profile/edit")
+            .content(userJson)
+            .contentType(MediaType.APPLICATION_JSON)
+            .session(session)
+            .params(profileData))
+
+            .andExpect(MockMvcResultMatchers.status().isCreated())
+            .andExpect(MockMvcResultMatchers.content().json(userJson))
+            .andExpect(MockMvcResultMatchers.view().name("/profile"))
+            ;
     }
 
     @Test
@@ -105,8 +131,4 @@ public class ProfileControllerTest {
             .andExpect(MockMvcResultMatchers.model().attribute("plants", Matchers.is(plants)));
     }
 
-    @Test
-    void testUserProfileElse() {
-
-    }
 }
