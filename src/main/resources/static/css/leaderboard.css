@@ -1,0 +1,93 @@
+:root {
+    --background: #F2E8CF;
+    --lighter-green: #A7C957;
+    --light-green: #6A994E;
+    --dark-green: #386641;
+    --red: #BC4749;
+    --green: #228400;
+    --box-bg: #FFFAED;
+    --box-title-font-color: #582F0E;
+
+}
+
+body {
+    font-family: 'Jua';
+    background-color: #f2e8cf;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 30px;
+    color: #386641;
+}
+
+main {
+    margin-top: 40px;
+    width: 100%;
+    height: auto;
+    background-color: var(--box-bg);
+    border: 5px solid var(--lighter-green) !important;
+    border-radius: 15px;
+}
+
+table {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+th {
+    padding: 10px;
+    text-align: center;
+    background-color: #A7C957;
+    color: #386641
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+}
+
+th,
+td {
+    border: 1px solid #F2E8CF;
+}
+
+.column-rank {
+    width: 10%;
+}
+
+.column-name {
+    width: 45%;
+}
+
+.column-total-listings {
+    width: 45%;
+}
+
+#growerTable {
+    display: table;
+}
+
+#sponsorTable {
+    display: none;
+}
+
+.button-container button {
+    background-color: #A7C957;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    margin-top: 10px;
+}
+
+.button-container {
+    text-align: center;
+}
+
+button:focus {
+    color: #386641;
+}
