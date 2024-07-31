@@ -26,17 +26,19 @@ public class ChatMessage {
     @Column(columnDefinition = "text")
     private String content;
     private LocalDate timestamp;
+    private boolean isImage;
 
     public ChatMessage() {
         this.timestamp = LocalDate.now();
     }
 
-    public ChatMessage(Chat chat, int senderId, int recipientId, String content, LocalDate timestamp) {
+    public ChatMessage(Chat chat, int senderId, int recipientId, String content, LocalDate timestamp, boolean isImage) {
         this.chat = chat;
         this.senderId = senderId;
         this.recipientId = recipientId;
         this.content = content;
         this.timestamp = timestamp;
+        this.isImage = isImage;
     }
 
     public int getMessageId() {
@@ -85,5 +87,13 @@ public class ChatMessage {
 
     public void setTimestamp(LocalDate timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public boolean getIsImage() {
+        return isImage;
+    }
+
+    public void setIsImage(boolean isImage) {
+        this.isImage = isImage;
     }
 }

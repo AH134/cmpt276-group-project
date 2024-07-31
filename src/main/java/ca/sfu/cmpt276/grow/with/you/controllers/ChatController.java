@@ -43,7 +43,7 @@ public class ChatController {
         System.out.println("[MESSAGE]: " + messagePayload.getContent());
         ChatMessage chatMessage = new ChatMessage(chatService.getChatById(messagePayload.getChatId()),
                 messagePayload.getSenderId(), messagePayload.getRecipientId(), messagePayload.getContent(),
-                messagePayload.getTimestamp());
+                messagePayload.getTimestamp(), messagePayload.getIsImage());
         ChatNotification chatNotification = chatMessageService.save(chatMessage);
         String location = "/user/" + chatNotification.getChatId() + "/" + chatNotification.getRecipientId()
                 + "/queue/messages";

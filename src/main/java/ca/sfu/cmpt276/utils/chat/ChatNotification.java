@@ -6,13 +6,15 @@ public class ChatNotification {
     private int senderId;
     private int recipientId;
     private String content;
+    private boolean isImage;
 
-    public ChatNotification(int id, int chatId, int senderId, int recipientId, String content) {
+    public ChatNotification(int id, int chatId, int senderId, int recipientId, String content, boolean isImage) {
         this.id = id;
         this.chatId = chatId;
         this.senderId = senderId;
         this.recipientId = recipientId;
         this.content = content;
+        this.isImage = isImage;
     }
 
     public int getId() {
@@ -53,5 +55,13 @@ public class ChatNotification {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public boolean getIsImage() {
+        return isImage;
+    }
+
+    public void setIsImage(boolean isImage) {
+        this.isImage = isImage;
     }
 }
