@@ -73,7 +73,7 @@ public class DashboardControllerTest {
 
     // test that it returns to sponsor dashboard if the user is a sponsor
     @Test
-    void testGetSponsorDashboard() {
+    void testGetSponsorDashboard() throws Exception {
         Sponsor sponsor = new Sponsor("sponsor", "sponsor", "sponsor@email.com", 130, 1, 5);
         Plant plant = new Plant(null, sponsor, "rose", "rose", "rose.png", 5, "BC", "Burnaby");
 
@@ -84,6 +84,12 @@ public class DashboardControllerTest {
 
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("session_user", sponsor);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/dashboard").session(session))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.view().name("protected/user/sponsorDashboard"))
+        .andExpect(MockMvcResultMatchers.model().attribute("activeSponsors", Matchers.is(1)))
+        .andExpect(MockMvcResultMatchers.model().attribute("lifetimeSponsors", Matchers.is(1)));
     }
 
 }
