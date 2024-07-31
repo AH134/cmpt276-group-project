@@ -1,9 +1,11 @@
 package ca.sfu.cmpt276.grow.with.you.services;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import ca.sfu.cmpt276.grow.with.you.models.Grower;
@@ -44,5 +46,13 @@ public class PaymentService {
         paymentRepository.save(payment);
 
         return payment;
+    }
+
+    public List<Payment> getPaymentByGrower(Grower grower) {
+        return paymentRepository.findByGrower(grower, Sort.by(Sort.Direction.DESC, "paymentId"));
+    }
+
+    public List<Payment> getPaymentBySponsor(Sponsor sponsor) {
+        return paymentRepository.findBySponsor(sponsor, Sort.by(Sort.Direction.DESC, "paymentId"));
     }
 }
