@@ -43,10 +43,12 @@ public class LoginControllerTest {
     void testGetLoginSuccess() throws Exception{
         Grower grower = new Grower("username","password","email@gmail.com",100,0,0,0);
         MockHttpSession session = new MockHttpSession();
+        session.setAttribute("session_user", grower);
         
         when(userService.getUserBySession(session)).thenReturn(grower);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/login"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/login")
+            .session(session))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("dashboard"));
     }
