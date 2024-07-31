@@ -55,8 +55,16 @@ const citiesByProvince = {
 const provinceSelect = document.getElementById("province-filter");
 const citySelect = document.getElementById("city-filter");
 
-provinceSelect.addEventListener("change", function () {
-    const selectedProvince = provinceSelect.value;
+function updateCityOptions(selectedProvince) {
+    citySelect.innerHTML = '';
+
+    const allCitiesOption = document.createElement("option");
+    allCitiesOption.value = "";
+    allCitiesOption.textContent = "All Cities";
+    citySelect.appendChild(allCitiesOption);
+
+    if (selectedProvince === "all" || selectedProvince === null) 
+        return;
 
     const cities = citiesByProvince[selectedProvince];
     cities.forEach(city => {
@@ -65,25 +73,22 @@ provinceSelect.addEventListener("change", function () {
         option.textContent = city;
         citySelect.appendChild(option);
     });
+
+    const url = new URLSearchParams(window.location.search);
+    const selectedCity = url.get("city");
+    if (selectedCity) {
+        const cityOption = Array.from(citySelect.options).find(option => option.value === selectedCity);
+        if (cityOption) 
+            cityOption.selected = true;
+    }
+}
+
+provinceSelect.addEventListener("change", function () {
+    updateCityOptions(provinceSelect.value);
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const url = new URLSearchParams(window.location.search)
+    const url = new URLSearchParams(window.location.search);
     const selectedProvince = url.get("province");
-
-    const cities = citiesByProvince[selectedProvince];
-    if (selectedProvince === "all" || selectedProvince === null) {
-        return;
-    }
-
-    cities.forEach(city => {
-        const option = document.createElement("option");
-        option.value = city;
-        option.textContent = city;
-        if (city === url.get("city")) {
-            option.selected = true;
-        }
-        citySelect.appendChild(option);
-    });
-
-})
+    updateCityOptions(selectedProvince);
+});
