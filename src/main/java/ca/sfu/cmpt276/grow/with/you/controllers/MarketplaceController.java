@@ -1,18 +1,5 @@
 package ca.sfu.cmpt276.grow.with.you.controllers;
 
-import ca.sfu.cmpt276.grow.with.you.models.Payment;
-import ca.sfu.cmpt276.grow.with.you.models.Plant;
-import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
-import ca.sfu.cmpt276.grow.with.you.models.User;
-import ca.sfu.cmpt276.grow.with.you.services.PaymentService;
-import ca.sfu.cmpt276.grow.with.you.services.PlantService;
-import ca.sfu.cmpt276.grow.with.you.services.UserService;
-import ca.sfu.cmpt276.utils.setHttpHeader;
-import ca.sfu.cmpt276.utils.enums.PaymentError;
-import ca.sfu.cmpt276.utils.enums.UserRole;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -21,6 +8,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import ca.sfu.cmpt276.grow.with.you.models.Payment;
+import ca.sfu.cmpt276.grow.with.you.models.Plant;
+import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
+import ca.sfu.cmpt276.grow.with.you.models.User;
+import ca.sfu.cmpt276.grow.with.you.services.NotificationService;
+import ca.sfu.cmpt276.grow.with.you.services.PaymentService;
+import ca.sfu.cmpt276.grow.with.you.services.PlantService;
+import ca.sfu.cmpt276.grow.with.you.services.UserService;
+import ca.sfu.cmpt276.utils.enums.PaymentError;
+import ca.sfu.cmpt276.utils.enums.UserRole;
+import ca.sfu.cmpt276.utils.setHttpHeader;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MarketplaceController {
@@ -33,6 +34,9 @@ public class MarketplaceController {
 
     @Autowired
     private PaymentService paymentService;
+
+    @Autowired
+    private NotificationService notifService;
 
     @GetMapping("/marketplace")
     public String getAllPlants(
@@ -112,6 +116,9 @@ public class MarketplaceController {
             model.addAttribute("isOwner", false);
             return "protected/viewPlant";
         }
+        //add notifications to both grower and sponsor
+        notifService.createNotifGrower(plant.getGrower().getUserId(), pid);
+        notifService.createNotifSponsor(user.getUserId(), pid);
 
         return "redirect:/plants/" + pid;
     }

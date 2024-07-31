@@ -51,8 +51,21 @@
                 </p>
 
                 <div class="d-flex align-items-center h-auto">
-                    <!-- TEMP -->
-                    <p>No Notifications</p>
+                    <!-- Notifications display -->
+                     <div th:if="${#lists.size(notifications) == 0}">
+                        <p>No Notifications</p>
+                     </div>
+                     <div th:unless="${#lists.size(notifications) == 0}">
+                        <div th:each="notif:${notifications}">
+                            <div class = "d-flex notifs">
+                                <img src="/assets/header/logo.svg" class="notifImg">
+                                <div class="flex-column notifs-info">
+                                    <p th:text="${notif.message}" class="m-0"></p>
+                                    <p th:text="${notif.plant.name}" class="m-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                     </div>    
                 </div>
             </div>
         </div>
