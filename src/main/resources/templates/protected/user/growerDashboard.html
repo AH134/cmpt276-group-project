@@ -19,10 +19,9 @@
                         Payments
                     </p>
                     <div th:if="${#lists.size(payments) == 0}" class="d-flex align-items-center h-auto">
-                        <!-- TEMP -->
-                        <p>No Notifications</p>
+                        <p>No Payments</p>
                     </div>
-                    <div class="container">
+                    <div class="container" th:if="${#lists.size(payments) != 0}">
                         <div class="table-responsive">
                             <table id="growerTable" class="table">
                                 <thead>

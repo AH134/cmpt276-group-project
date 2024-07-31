@@ -45,21 +45,22 @@ public class BalanceController {
             model.addAttribute("user", user);
         }
 
-        return "protected/user/balance";
+        return "protected/user/balance.html";
     }
 
     @PostMapping("/balance/complete")
-    public String updateBalance(@RequestParam Map<String, String> formInput, HttpSession session, HttpServletResponse res,
-            HttpServletRequest req, Model model){
-        try{
+    public String updateBalance(@RequestParam Map<String, String> formInput, HttpSession session,
+            HttpServletResponse res,
+            HttpServletRequest req, Model model) {
+        try {
             setHttpHeader.setHeader(res);
             User user = (User) session.getAttribute("session_user");
             Double newBalance = Double.parseDouble(formInput.get("balance"));
 
             if (user == null) {
                 return "redirect:/";
-            }    
-            
+            }
+
             if (user.getRole() == UserRole.GROWER) {
                 Grower grower = (Grower) user;
                 grower.setBalance(grower.getBalance() - newBalance);
@@ -74,11 +75,10 @@ public class BalanceController {
                 model.addAttribute("user", user);
             }
 
-            return "protected/user/balance";
-        }
-        catch(Exception e){
+            return "protected/user/balance.html";
+        } catch (Exception e) {
             res.setStatus(400);
-            return "protected/user/balance";
+            return "protected/user/balance.html";
         }
     }
 }
