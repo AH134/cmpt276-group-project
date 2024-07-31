@@ -8,16 +8,19 @@ public class MessagePayload {
     private int recipientId;
     private String content;
     private LocalDate timestamp;
+    private boolean isImage;
 
     public MessagePayload() {
     }
 
-    public MessagePayload(int chatId, int senderId, int recipientId, String content, LocalDate timestamp) {
+    public MessagePayload(int chatId, int senderId, int recipientId, String content, LocalDate timestamp,
+            boolean isImage) {
         this.chatId = chatId;
         this.senderId = senderId;
         this.recipientId = recipientId;
         this.content = content;
         this.timestamp = timestamp;
+        this.isImage = isImage;
     }
 
     public int getChatId() {
@@ -58,5 +61,13 @@ public class MessagePayload {
 
     public void setTimestamp(LocalDate timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public boolean getIsImage() {
+        return isImage;
+    }
+
+    public void setIsImage(boolean isImage) {
+        this.isImage = isImage;
     }
 }

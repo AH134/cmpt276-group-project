@@ -16,7 +16,7 @@ public class ChatMessageService {
         ChatMessage savedChatMessage = messageRepository.save(chatMessage);
         ChatNotification chatNotification = new ChatNotification(savedChatMessage.getMessageId(),
                 savedChatMessage.getChat().getChatId(), savedChatMessage.getSenderId(),
-                savedChatMessage.getRecipientId(), savedChatMessage.getContent());
+                savedChatMessage.getRecipientId(), savedChatMessage.getContent(), savedChatMessage.getIsImage());
 
         return chatNotification;
     }
