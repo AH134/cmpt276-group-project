@@ -53,7 +53,7 @@
             </div>
 
             <div id="text-container" class="p-2 d-flex justify-content-center flex-column">
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2" th:if="${role == 'grower'}">
                     <form action="post" enctype="multipart/form-data" id="image-form">
                         <label class="send-option-btn" for="file">Upload an image</label>
                         <input type="file" name="file" id="file" accept="image/*" class="visually-hidden">
