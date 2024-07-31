@@ -16,7 +16,6 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.context.WebApplicationContext;
 
 import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
@@ -87,9 +86,4 @@ public class DashboardControllerTest {
         session.setAttribute("session_user", sponsor);
     }
 
-    // test that it returns to admin dashboard if the user is an admin
-    @Test
-    void testGetAdminDashboard() {
-        // need to be able to create admin user
-    }
 }
