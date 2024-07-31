@@ -24,7 +24,6 @@ import ca.sfu.cmpt276.utils.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.PutMapping;
 
 @Controller
 public class PlantController {
@@ -154,17 +153,32 @@ public class PlantController {
             return "redirect:/";
         }
 
+        Plant plant = plantService.getPlantById(pid);
+        if (plant == null) {
+            return "redirect:/plants";
+        }
+
         List<Plant> plantsList;
         if (user.getRole() == UserRole.GROWER) {
+            if (plant.getGrower().getUserId() != user.getUserId()) {
+                return "redirect:/plants";
+            }
             plantsList = plantService.getPlantsByGrower((Grower) user);
             model.addAttribute("plants", plantsList);
-            model.addAttribute("selectedPlant", plantService.getPlantById(pid));
+            model.addAttribute("selectedPlant", plant);
             model.addAttribute("role", "grower");
             return "protected/user/growerPlants.html";
         }
+
+        if (plant.getSponsor() != null) {
+            if (plant.getSponsor().getUserId() != user.getUserId()) {
+                return "redirect:/plants";
+            }
+        }
+
         plantsList = plantService.getPlantsBySponsor((Sponsor) user);
         model.addAttribute("plants", plantsList);
-        model.addAttribute("selectedPlant", plantService.getPlantById(pid));
+        model.addAttribute("selectedPlant", plant);
         model.addAttribute("role", "sponsor");
         return "protected/user/sponsorPlants.html";
     }

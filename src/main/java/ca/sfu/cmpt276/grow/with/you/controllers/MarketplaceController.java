@@ -80,6 +80,14 @@ public class MarketplaceController {
         }
 
         Plant plant = plantService.getPlantById(pid);
+        if (plant == null) {
+            return "redirect:/marketplace";
+        }
+
+        if (plant.getSponsor() != null) {
+            return "redirect:/marketplace";
+        }
+
         model.addAttribute("plant", plant);
         if (user != null) {
             model.addAttribute("isOwner", user.getUserId() == plant.getGrower().getUserId());

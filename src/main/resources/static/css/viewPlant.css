@@ -33,3 +33,17 @@
     text-align: center;
     color: var(--red);
 }
+
+.m-btn {
+    flex-shrink: 0;
+    color: white;
+    background-color: #7f4f24;
+    border-color: #7f4f24;
+    height: 35px;
+}
+
+.m-btn:hover {
+    background-color: #582F0E !important;
+    border-color: #582F0E !important;
+    color: white;
+}
