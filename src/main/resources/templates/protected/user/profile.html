@@ -25,7 +25,6 @@
                         <p class="m-0 fs-6" th:text="${'Balance: $' + user.balance}"></p>
                         <p class="m-0 fs-6" th:text="${'Active Listings: ' + #lists.size(plants)}"> </p>
                         <p class="m-0 fs-6" th:text="${'Plants Grown: ' + user.plantsGrown}"></p>
-                        <p class="m-0 fs-6" th:text="${'Review: ' + user.reviewScore + '/5'}"></p>
                     </div>
 
                     <div th:if="${user.role.toString() == 'SPONSOR'}">

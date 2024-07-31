@@ -16,11 +16,31 @@
             <div class="d-flex flex-column justify-content-between">
                 <div id="upcoming-payments" class="box-container p-2">
                     <p class="box-title">
-                        Upcoming Payments
+                        Payments
                     </p>
-                    <div class="d-flex align-items-center h-auto">
+                    <div th:if="${#lists.size(payments) == 0}" class="d-flex align-items-center h-auto">
                         <!-- TEMP -->
                         <p>No Notifications</p>
+                    </div>
+                    <div class="container">
+                        <div class="table-responsive">
+                            <table id="growerTable" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Plant</th>
+                                        <th>Amount</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="payment : ${payments}">
+                                        <td th:text="${payment.plant.name}"></td>
+                                        <td th:text="${payment.amount}"></td>
+                                        <td th:text="${payment.paymentDate}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
