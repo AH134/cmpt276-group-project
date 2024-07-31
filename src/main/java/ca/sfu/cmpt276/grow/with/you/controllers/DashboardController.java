@@ -5,20 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import ca.sfu.cmpt276.grow.with.you.models.Grower;
+import ca.sfu.cmpt276.grow.with.you.models.Notifications;
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
 import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.models.User;
+import ca.sfu.cmpt276.grow.with.you.services.NotificationService;
 import ca.sfu.cmpt276.grow.with.you.services.PlantService;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
-import ca.sfu.cmpt276.utils.setHttpHeader;
 import ca.sfu.cmpt276.utils.enums.UserRole;
+import ca.sfu.cmpt276.utils.setHttpHeader;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class DashboardController {
@@ -28,6 +29,9 @@ public class DashboardController {
 
     @Autowired
     private PlantService plantService;
+
+    @Autowired
+    private NotificationService notifService;
 
     @GetMapping("/dashboard")
     public String getDashboard(HttpServletRequest req, HttpServletResponse res, HttpSession session, Model model) {
@@ -47,15 +51,19 @@ public class DashboardController {
 
         if (user.getRole() == UserRole.GROWER) {
             List<Plant> plantsList = plantService.getPlantsByGrower((Grower) user);
+            List<Notifications> notifList = notifService.getAllNotifsGrower((Grower) user); 
             model.addAttribute("activeListings", plantsList.size());
             model.addAttribute("lifetimeListings", ((Grower) user).getPlantsGrown());
+            model.addAttribute("notifications", notifList);
             return "protected/user/growerDashboard";
         }
 
         if (user.getRole() == UserRole.SPONSOR) {
             List<Plant> plantsList = plantService.getPlantsBySponsor((Sponsor) user);
+            List<Notifications> notifs = notifService.getAllNotifsSponsor((Sponsor) user);
             model.addAttribute("activeSponsors", plantsList.size());
             model.addAttribute("lifetimeSponsors", ((Sponsor) user).getPlantsSponsored());
+            model.addAttribute("notifications", notifs);
             return "protected/user/sponsorDashboard";
         }
 
