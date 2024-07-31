@@ -10,7 +10,7 @@
 <body>
     <a th:fragment="messageItem" th:href="@{/messages/{chatId}(chatId=${chat.chatId})}"
         th:class="${chat.plant.plantId == selectedChat.plant.plantId ? 'plant-item d-flex plant-selected p-1 text-decoration-none' : 'plant-item d-flex p-1 text-decoration-none'}">
-        <img src="/assets/plant/plant-icon.svg" alt="plant-icon" width="70" height="70">
+        <img th:src="${chat.plant.imageUrl}" alt="plant-icon" width="70" height="70">
         <div class="d-flex flex-column justify-content-center" id="plant-detail-container">
             <h1 class="m-0" id="plant-name" th:text="${chat.plant.name}"></h1>
             <p class="m-0" id="plant-sponsor" th:if="${role == 'grower'}"

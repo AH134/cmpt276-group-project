@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
 import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.models.User;
+import ca.sfu.cmpt276.grow.with.you.services.ImageUploadService;
 import ca.sfu.cmpt276.grow.with.you.services.PlantService;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
 import ca.sfu.cmpt276.utils.setHttpHeader;
@@ -29,6 +31,9 @@ public class PlantController {
 
     @Autowired
     private PlantService plantService;
+
+    @Autowired
+    private ImageUploadService imageUploadService;
 
     @Autowired
     private UserService userService;
@@ -50,7 +55,8 @@ public class PlantController {
     }
 
     @PostMapping("/plants/add")
-    public String addPlant(@RequestParam Map<String, String> newPlant, HttpServletResponse response,
+    public String addPlant(@RequestParam Map<String, String> newPlant,
+            @RequestParam("image") MultipartFile multipartFile, HttpServletResponse response,
             HttpServletRequest request,
             HttpSession session) {
         User user = userService.getUserBySession(session);
@@ -59,7 +65,7 @@ public class PlantController {
             String newName = newPlant.get("plantName");
             String newDesc = newPlant.get("plantDesc");
             Double newPrice = Double.valueOf(newPlant.get("price"));
-            String newImg = newPlant.get("image");
+            String newImg = imageUploadService.upload(multipartFile);
 
             String Province = newPlant.get("province");
             String City = Province + "-city";
@@ -100,8 +106,9 @@ public class PlantController {
         return "protected/user/editPlant.html";
     }
 
-    @PutMapping("/plants/edit/{pid}")
+    @PostMapping("/plants/edit/{pid}")
     public String putPlant(@PathVariable("pid") int pid, @RequestParam Map<String, String> newPlant,
+            @RequestParam("image") MultipartFile multipartFile,
             HttpSession session, HttpServletResponse response) {
         User user = userService.getUserBySession(session);
         setHttpHeader.setHeader(response);
@@ -109,7 +116,12 @@ public class PlantController {
             String newName = newPlant.get("plantName");
             String newDesc = newPlant.get("plantDesc");
             Double newPrice = Double.valueOf(newPlant.get("price"));
-            String newImg = newPlant.get("image");
+            String newImg = "";
+            if (!multipartFile.isEmpty()) {
+                newImg = imageUploadService.upload(multipartFile);
+            } else {
+                newImg = plantService.getPlantById(pid).getImageUrl();
+            }
 
             String Province = newPlant.get("province");
             String City = Province + "-city";

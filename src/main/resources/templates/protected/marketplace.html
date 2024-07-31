@@ -76,10 +76,9 @@
                 <div th:if="${#lists.size(plants) != 0}" id="plant-grid" class="d-flex flex-row flex-wrap">
                     <div class="p-3" th:each="plant : ${plants}">
                         <div class="plant-container">
-                            <!-- TEMP plant item-->
                             <a class="plant-item box-container card text-decoration-none btn m-0 p-0"
                                 th:href="@{/marketplace/plant/{plantId}(plantId=${plant.plantId})}">
-                                <img src="/assets/plant/plant-icon.svg" alt="plant-image">
+                                <img th:src="${plant.imageUrl}" alt="plant-image">
                             </a>
                             <p class="m-0 text-center plant-name" th:text="${plant.name}"></p>
                             <p class="m-0 text-center plant-name" th:text="${'$' + plant.price}"></p>

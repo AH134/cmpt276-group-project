@@ -18,7 +18,8 @@
 <body>
     <header th:replace="~{fragments/header :: header}"></header>
     <div class="container-fluid pt-4">
-        <form action="/plants/add" method="post" id="plant-form" class="box-container m-auto">
+        <form action="/plants/add" method="post" id="plant-form" enctype="multipart/form-data"
+            class="box-container m-auto">
             <div class="d-flex justify-content-center mt-5" id="detail-container">
                 <div class="col-md-9 rounded-4">
                     <h1 class="text-center mt-3 mb-5">Create Your Plant</h1>
@@ -59,11 +60,11 @@
                             </div>
                             <div class="row align-items-center mt-5">
                                 <div class="col-md-3">
-                                    <label for="image" class="form-label fw-bold fs-5">Image URL</label>
+                                    <label for="image" class="form-label fw-bold fs-5">Image</label>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" name="image" id="image"
-                                        class="form-control form-control-lg border border-5" required>
+                                    <input type="file" name="image" id="image"
+                                        class="form-control form-control-lg border border-5" accept="image/*" required>
                                     <div id="error-price" class="errorMsg"></div>
                                 </div>
                             </div>
@@ -231,9 +232,10 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row justify-content-center mb-5 ">
-                                <input id="signup-btn" class="btn btn-primary rounded-4 mt-4" type="submit"
-                                    value="Create Plant"></input>
+                            <div class="d-flex justify-content-between mt-4">
+                                <input id="signup-btn" class="btn" type="submit" value="Add Plant"></input>
+                                <a href="/plants" class="btn d-flex justify-content-center align-items-center"
+                                    id="cancel-btn">Cancel</a>
                             </div>
                         </div>
                     </div>
