@@ -10,11 +10,14 @@
 <body>
     <a th:fragment="plantItem" th:href="@{/plants/{plantId}(plantId=${plant.plantId})}"
         th:class="${plant.plantId == selectedPlant.plantId ? 'plant-item d-flex plant-selected p-1 text-decoration-none' : 'plant-item d-flex p-1 text-decoration-none'}">
-        <img src="/assets/plant/plant-icon.svg" alt="plant-icon" width="70" height="70">
+        <img th:src="${plant.imageUrl}" alt="plant-icon" width="70" height="70">
         <div class="d-flex flex-column justify-content-center" id="plant-detail-container">
             <h1 class="m-0" id="plant-name" th:text="${plant.name}"></h1>
-            <p class="m-0" id="plant-sponsor"
+            <p class="m-0" id="plant-sponsor" th:if="${role == 'grower'}"
                 th:text="${plant.sponsor != null ? 'Sponsor: ' + plant.sponsor.username : 'Sponsor: None'}">
+            </p>
+            <p class="m-0" id="plant-sponsor" th:if="${role == 'sponsor'}"
+                th:text="${plant.grower != null ? 'Grower: ' + plant.grower.username : 'Grower: None'}">
             </p>
             <p class="m-0" id="plant-price" th:text="${'Price: ' + plant.price}"></p>
         </div>

@@ -22,6 +22,7 @@
                     <div th:if="${user.role.toString() == 'GROWER'}">
                         <p class="m-0 fs-6" th:text="${user.username}"></p>
                         <p class="m-0 fs-6">Grower</p>
+                        <p class="m-0 fs-6" th:text="${'Balance: $' + user.balance}"></p>
                         <p class="m-0 fs-6" th:text="${'Active Listings: ' + #lists.size(plants)}"> </p>
                         <p class="m-0 fs-6" th:text="${'Plants Grown: ' + user.plantsGrown}"></p>
                         <p class="m-0 fs-6" th:text="${'Review: ' + user.reviewScore + '/5'}"></p>
@@ -32,11 +33,12 @@
                         <p class="m-0 fs-6">
                             Sponsor
                         </p>
+                        <p class="m-0 fs-6" th:text="${'Balance: $' + user.balance}"></p>
                         <p class="m-0 fs-6" th:text="${'Active Sponsors: ' + #lists.size(plants)}"> </p>
                         <p class="m-0 fs-6" th:text="${'Plants Sponsored: ' + user.plantsSponsored}"></p>
                     </div>
                 </div>
-                <div id="edit-profile" class="d-flex flex-column align-self-start ms-auto"> 
+                <div id="edit-profile" class="d-flex flex-column align-self-start ms-auto">
                     <a id="edit" class="btn btn-primary" href="/profile/edit">Edit</a>
                 </div>
             </div>
@@ -53,7 +55,7 @@
                         <!-- this should bring you to the markplace plant section -->
                         <a class="plant-item box-container card text-decoration-none btn m-0 p-0"
                             th:href="@{/marketplace/plant/{plantId}(plantId=${plant.plantId})}">
-                            <img src="/assets/plant/plant-icon.svg" alt="plant-image">
+                            <img th:src="${plant.imageUrl}" alt="plant-image">
                         </a>
                         <p class="m-0 text-center" th:text="${plant.name}"></p>
                     </div>

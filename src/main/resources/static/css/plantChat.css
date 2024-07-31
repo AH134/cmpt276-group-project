@@ -1,0 +1,101 @@
+#right-container {
+    height: 100%;
+}
+
+#message-container {
+    flex: 1;
+    max-height: 500px;
+    margin-bottom: 5px;
+    overflow-y: auto;
+}
+
+#text-container {
+    flex-shrink: 0;
+    margin-top: auto;
+    padding-top: 0 !important;
+    gap: 5px;
+}
+
+.send-option-btn {
+    cursor: pointer;
+    color: #7f4f24;
+    border: none;
+    background: transparent;
+}
+
+.send-option-btn:hover {
+    color: #582F0E;
+}
+
+.message-box {
+    flex: 1;
+    background-color: #fff6e7 !important;
+    border: 2px solid var(--lighter-green);
+    border-radius: 5px;
+    align-self: center;
+    vertical-align: middle;
+}
+
+#message-btn {
+    flex-shrink: 0;
+    color: white;
+    background-color: #7f4f24;
+    border-color: #7f4f24;
+    height: 35px;
+    width: 60px;
+}
+
+#message-btn:hover {
+    background-color: #582F0E !important;
+    border-color: #582F0E !important;
+    color: white;
+}
+
+.m-btn {
+
+    flex-shrink: 0;
+    color: white;
+    background-color: #7f4f24;
+    border-color: #7f4f24;
+    height: 35px;
+}
+
+.m-btn:hover {
+    background-color: #582F0E !important;
+    border-color: #582F0E !important;
+    color: white;
+}
+
+#message-file-btn-reset {
+    background-color: var(--red) !important;
+}
+
+#message-file-btn-reset:hover {
+    background-color: #a53e40 !important;
+}
+
+
+.message-wrapper {
+    max-width: 500px;
+}
+
+#message-username {
+    color: var(--green);
+}
+
+#message-text {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+#message-text-wrapper {
+    border: 2px solid var(--lighter-green) !important;
+    border-radius: 5px !important;
+    background-color: #fff6e7 !important;
+    max-width: 99%;
+}
+
+.img-container {
+    overflow: auto;
+}

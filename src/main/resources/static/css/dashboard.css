@@ -43,3 +43,22 @@
     font-size: 1.3rem;
     color: var(--box-title-font-color);
 }
+
+.notifImg{
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    border: solid 2px var(--lighter-green);
+    padding: 5px;
+    margin:auto;
+    margin-left: 10px;
+}
+
+.notifs{
+    border-radius: 5px;
+    border: solid 5px var(--lighter-green);
+}
+
+.notifs-info{
+    margin-left:5px;
+}

@@ -6,9 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface GrowerRepository extends JpaRepository<Grower, Integer> {
+public interface SponsorRepository extends JpaRepository<Sponsor, Integer> {
 
-    @Query("SELECT g FROM Grower g ORDER BY g.plantsGrown DESC")
-    List<Grower> findTopGrowers();
+    @Query("SELECT g FROM Sponsor g ORDER BY g.plantsSponsored DESC")
+    List<Sponsor> findTopSponsors();
 }
- 

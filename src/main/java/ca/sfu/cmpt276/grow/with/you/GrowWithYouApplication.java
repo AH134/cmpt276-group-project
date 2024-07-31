@@ -9,5 +9,4 @@ public class GrowWithYouApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GrowWithYouApplication.class, args);
 	}
-
 }

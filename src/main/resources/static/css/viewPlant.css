@@ -10,15 +10,40 @@
     --box-title-color: #7F4F24;
 }
 
-#box{
+#box {
     background-color: var(--box-bg);
     border-radius: 20px;
     border: 5px solid var(--lighter-green);
     margin-top: 20px;
-    height: 500px;
+    height: 930px;
 }
 
-#plantimg{
+#plantimg {
     width: 450px !important;
     height: 450px !important;
+}
+
+#error-container {
+    max-width: 600px;
+    border-radius: 10px !important;
+}
+
+#error-container p {
+    vertical-align: middle;
+    text-align: center;
+    color: var(--red);
+}
+
+.m-btn {
+    flex-shrink: 0;
+    color: white;
+    background-color: #7f4f24;
+    border-color: #7f4f24;
+    height: 35px;
+}
+
+.m-btn:hover {
+    background-color: #582F0E !important;
+    border-color: #582F0E !important;
+    color: white;
 }

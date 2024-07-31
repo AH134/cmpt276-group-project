@@ -1,3 +1,23 @@
 #plant-form {
     width: 1200px;
 }
+
+#cancel-btn {
+    color: white;
+    background-color: var(--red);
+    height: 50px;
+}
+
+#cancel-btn:hover {
+    background-color: #a53e40;
+}
+
+#signup-btn {
+    color: white;
+    background-color: #7f4f24;
+    height: 50px;
+}
+
+#signup-btn:hover {
+    background-color: var(--box-title-font-color);
+}
