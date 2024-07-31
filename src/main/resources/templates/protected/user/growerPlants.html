@@ -8,6 +8,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/growerPlants.css">
     <link rel="stylesheet" href="/css/fragment/plantItem.css">
+    <script src="/js/weather.js" defer></script>
     <title>Plants</title>
 </head>
 
@@ -29,6 +30,9 @@
         </div>
         <div class="box-container mt-4 p-2 d-flex flex-column" id="right-container">
             <div class="d-flex flex-column" id="right-top">
+                <div id="weather-container" th:attr="data-city=${selectedPlant.city}">
+
+                </div>
                 <div class="d-flex">
                     <img id="plant-img" th:src="${selectedPlant.imageUrl}" alt="img" width="200" height="200">
                     <div>

@@ -71,7 +71,7 @@ public class Payment {
         this.plant = plant;
     }
 
-    public double isAmount() {
+    public double getAmount() {
         return amount;
     }
 
