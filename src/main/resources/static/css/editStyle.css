@@ -27,9 +27,9 @@ input[id='save-btn']:active, input[id='save-btn']:focus {
     border-color: var(--lighter-green) !important;
 }
 
-input[type='color']{
+/* input[type='color']{
     height: 50px;
-}
+} */
 
 .errorMsg {
     color: var(--red);

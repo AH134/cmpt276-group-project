@@ -21,6 +21,8 @@
 #plantimg {
     width: 450px !important;
     height: 450px !important;
+    border: 5px solid var(--lighter-green);
+    border-radius: 10px;
 }
 
 #error-container {
@@ -34,7 +36,7 @@
     color: var(--red);
 }
 
-.m-btn {
+.m-btn, a[id="editButton"] {
     flex-shrink: 0;
     color: white;
     background-color: #7f4f24;
@@ -42,7 +44,8 @@
     height: 35px;
 }
 
-.m-btn:hover {
+.m-btn:hover, .m-btn:active, .m-btn:focus, 
+a[id="editButton"]:hover, a[id="editButton"]:active, a[id="editButton"]:focus {
     background-color: #582F0E !important;
     border-color: #582F0E !important;
     color: white;

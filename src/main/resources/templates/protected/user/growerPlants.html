@@ -8,6 +8,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/growerPlants.css">
     <link rel="stylesheet" href="/css/fragment/plantItem.css">
+    <script src="/js/weather.js" defer></script>
     <title>Plants</title>
 </head>
 
@@ -28,39 +29,50 @@
             </div>
         </div>
         <div class="box-container mt-4 p-2 d-flex flex-column" id="right-container">
-            <div class="d-flex flex-column" id="right-top">
-                <div class="d-flex">
-                    <img id="plant-img" th:src="${selectedPlant.imageUrl}" alt="img" width="200" height="200">
-                    <div>
-                        <div class="d-flex gap-2 mt-2 fs-4">
-                            <div>Plant Name:</div>
-                            <div th:text="${selectedPlant.name}"></div>
+            <th:block th:if="${selectedPlant != null}">
+
+                <div class="d-flex flex-column" id="right-top" th:if="${selectedPlant != null}">
+                    <div id="weather-container" th:attr="data-city=${selectedPlant.city}">
+
+                    </div>
+                    <div class="d-flex">
+                        <img id="plant-img" th:src="${selectedPlant.imageUrl}" alt="img" width="200" height="200">
+                        <div>
+                            <div class="d-flex gap-2 mt-2 fs-4">
+                                <div>Plant Name:</div>
+                                <div th:text="${selectedPlant.name}"></div>
+                            </div>
+                            <div class="d-flex gap-2 mt-2 fs-4">
+                                <div>Plant Price:</div>
+                                <div th:text="${selectedPlant.price}"></div>
+                            </div>
+                            <div class="d-flex gap-2 mt-2 fs-4">
+                                <div>Province:</div>
+                                <div th:text="${selectedPlant.province}"></div>
+                            </div>
+                            <div class="d-flex gap-2 mt-2 fs-4">
+                                <div>City:</div>
+                                <div th:text="${selectedPlant.city}"></div>
+                            </div>
                         </div>
-                        <div class="d-flex gap-2 mt-2 fs-4">
-                            <div>Plant Price:</div>
-                            <div th:text="${selectedPlant.price}"></div>
-                        </div>
-                        <div class="d-flex gap-2 mt-2 fs-4">
-                            <div>Province:</div>
-                            <div th:text="${selectedPlant.province}"></div>
-                        </div>
-                        <div class="d-flex gap-2 mt-2 fs-4">
-                            <div>City:</div>
-                            <div th:text="${selectedPlant.city}"></div>
-                        </div>
+                    </div>
+
+                    <div class="plant-info mt-4" id="right-bottom">
+                        <p class="fs-4 m-0">Description</p>
+                        <p th:text="${selectedPlant.description}"></p>
                     </div>
                 </div>
 
-                <div class="plant-info mt-4" id="right-bottom">
-                    <p class="fs-4 m-0">Description</p>
-                    <p th:text="${selectedPlant.description}"></p>
+                <div class="mt-auto d-flex justify-content-between">
+                    <form th:action="@{/plants/{pid}(pid=${selectedPlant.plantId})}" th:method="delete">
+                        <button class="btn d-flex justify-content-center align-items-center" type="submit"
+                            id="delete-btn">Delete</button>
+                    </form>
+                    <a th:href="@{/plants/edit/{pid}(pid=${selectedPlant.plantId})}"
+                        class="btn d-flex justify-content-center align-items-center" id="edit-btn">Edit</a>
                 </div>
-            </div>
 
-            <div class="mt-auto d-flex justify-content-end">
-                <a th:href="@{/plants/edit/{pid}(pid=${selectedPlant.plantId})}"
-                    class="btn d-flex justify-content-center align-items-center" id="edit-btn">Edit</a>
-            </div>
+            </th:block>
         </div>
     </div>
 
