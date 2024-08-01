@@ -95,6 +95,7 @@ public class MarketplaceController {
         model.addAttribute("plant", plant);
         if (user != null) {
             model.addAttribute("isOwner", user.getUserId() == plant.getGrower().getUserId());
+            model.addAttribute("role", user.getRole());
         }
 
         return "protected/viewPlant";
@@ -130,7 +131,7 @@ public class MarketplaceController {
         }
 
         chatService.createChat(plant, plant.getGrower(), (Sponsor) user);
-        //add notifications to both grower and sponsor
+        // add notifications to both grower and sponsor
         notifService.createNotifGrower(plant.getGrower().getUserId(), pid);
         notifService.createNotifSponsor(user.getUserId(), pid);
 
