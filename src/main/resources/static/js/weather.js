@@ -19,9 +19,10 @@ const getWeather = async (city) => {
 document.addEventListener("DOMContentLoaded", async () => {
     const weatherDiv = document.getElementById("weather-container");
 
-    const city = weatherDiv.dataset.city;
-    const weather = await getWeather(city);
-    weatherDiv.innerHTML = `
+    if (weatherDiv != null) {
+        const city = weatherDiv.dataset.city;
+        const weather = await getWeather(city);
+        weatherDiv.innerHTML = `
     <div class="d-flex align-items-center">
         <img src="${weather.icon}" alt="weather-icon">
         <p class="m-0">${weather.mainWeather}</p>
@@ -30,4 +31,5 @@ document.addEventListener("DOMContentLoaded", async () => {
         <p class="m-0">${weather.temp}°C</p>
     </div>
         `;
+    }
 })

@@ -39,4 +39,12 @@ public class ChatService {
     public List<Chat> getChatsBySponsor(Sponsor sponsor) {
         return chatRepository.findBySponsor(sponsor);
     }
+
+    public void deleteChatByPlant(Plant plant) {
+        List<Chat> chatList = chatRepository.findByPlant(plant);
+        if (!chatList.isEmpty()) {
+            Chat chat = chatList.get(0);
+            chatRepository.deleteById(chat.getChatId());
+        }
+    }
 }

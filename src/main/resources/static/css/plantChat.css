@@ -1,5 +1,10 @@
 #right-container {
     height: 100%;
+    height: 550px;
+}
+
+#left-container {
+    height: 550px;
 }
 
 #message-container {
