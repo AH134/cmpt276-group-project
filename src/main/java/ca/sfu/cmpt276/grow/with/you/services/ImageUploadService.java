@@ -36,7 +36,7 @@ public class ImageUploadService {
         BlobId blobId = BlobId.of("cmpt276-5ba81.appspot.com", fileName);
         BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
         InputStream inputStream = ImageUploadService.class.getClassLoader()
-                .getResourceAsStream("cmpt276-5ba81-firebase-adminsdk-rhl42-622c318ee1.json");
+                .getResourceAsStream("cmpt276-5ba81-firebase-adminsdk-rhl42-4c1d318f56.json");
         Credentials credentials = GoogleCredentials.fromStream(inputStream);
         Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
         storage.create(blobInfo, Files.readAllBytes(file.toPath()));

@@ -21,6 +21,8 @@
 #plantimg {
     width: 450px !important;
     height: 450px !important;
+    border: 5px solid var(--lighter-green);
+    border-radius: 10px;
 }
 
 #error-container {
