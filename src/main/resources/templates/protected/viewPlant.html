@@ -45,7 +45,7 @@
                         <a th:if="${isOwner}" class="btn btn-primary float-bottom"
                             th:href="@{/plants/edit/{pid}(pid=${plant.plantId})}">Edit</a>
 
-                        <form th:if="${!isOwner}" th:action="@{/marketplace/plant/{pid}(pid=${plant.plantId})}"
+                        <form th:if="${role == 'SPONSOR'}" th:action="@{/marketplace/plant/{pid}(pid=${plant.plantId})}"
                             th:method="post">
                             <button type="submit" class="btn m-btn">Buy</button>
                             <!-- <div class="row mt-4">

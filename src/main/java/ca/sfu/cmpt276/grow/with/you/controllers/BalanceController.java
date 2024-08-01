@@ -14,7 +14,6 @@ import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.models.User;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
 import ca.sfu.cmpt276.utils.setHttpHeader;
-import ca.sfu.cmpt276.utils.enums.UserError;
 import ca.sfu.cmpt276.utils.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
