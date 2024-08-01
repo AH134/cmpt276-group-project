@@ -64,7 +64,7 @@ public class ProfileController {
         }
 
         model.addAttribute("user", user);
-        return "protected/user/edit";
+        return "protected/user/edit.html";
     }
 
     @PostMapping("/profile/edit")
@@ -74,23 +74,44 @@ public class ProfileController {
             setHttpHeader.setHeader(res);
             User user = (User) session.getAttribute("session_user");
             String newName = formInput.get("username");
+            String newEmail = formInput.get("email");
             User userByName = userService.getUserByUsername(newName);
+            User userByEmail = userService.getUserByEmail(newEmail);
             UserError nameError = UserError.USERNAME_TAKEN;
+            UserError emailError = UserError.EMAIL_TAKEN;
 
-            if (userByName != null) {
-                model.addAttribute("user", formInput);
-                model.addAttribute("error1", nameError.getMessage());
-                return "protected/user/edit";
-            }
-            else{
-                user.setUsername(newName);
-                userService.createUser(user);
+            if (user.getUsername().equals(newName) && user.getEmail().equals(newEmail)) {
+                model.addAttribute("user", user);
                 return "redirect:/profile";
             }
+            
+            model.addAttribute("error1", "");
+            model.addAttribute("error2", "");
+            if(!user.getUsername().equals(newName) || !user.getEmail().equals(newEmail)) { 
+                if ((userByName != null) && !(user.getUsername().equals(newName))) {
+                    System.out.println("error1");
+                    model.addAttribute("error1", nameError.getMessage());
+                }
+                
+                if (userByEmail != null && !(user.getEmail().equals(newEmail))) {
+                    System.out.println("error2");
+                    model.addAttribute("error2", emailError.getMessage());
+                }
+
+                if (model.getAttribute("error1") != "" || model.getAttribute("error2") != "") {
+                    model.addAttribute("user", formInput);
+                    return "protected/user/edit.html";
+                }
+            }
+            user.setUsername(newName);
+            user.setEmail(newEmail);
+            userService.createUser(user);
+            model.addAttribute("user", user);
+            return "redirect:/profile";
         }
         catch(Exception e){
             res.setStatus(400);
-            return "protected/user/profile";
+            return "protected/user/profile.html";
         }
     }
 }

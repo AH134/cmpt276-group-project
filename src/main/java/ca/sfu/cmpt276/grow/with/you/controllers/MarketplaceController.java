@@ -95,7 +95,7 @@ public class MarketplaceController {
         model.addAttribute("plant", plant);
         if (user != null) {
             model.addAttribute("isOwner", user.getUserId() == plant.getGrower().getUserId());
-            model.addAttribute("role", user.getRole());
+            model.addAttribute("role", user.getRole().toString());
         }
 
         return "protected/viewPlant";
