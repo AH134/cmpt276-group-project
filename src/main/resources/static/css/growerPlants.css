@@ -40,6 +40,13 @@
     width: 60px;
 }
 
+#delete-btn {
+    color: white;
+    background-color: #BC4749;
+    height: 35px;
+    width: 60px;
+}
+
 #plant-img {
     margin-right: 10px;
     border: 2px solid var(--light-green);

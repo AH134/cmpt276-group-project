@@ -42,7 +42,7 @@
                     </div>
                     <div class="plant-info mt-4" th:text="${plant.description}"></div>
                     <div>
-                        <a th:if="${isOwner}" class="btn btn-primary float-bottom"
+                        <a th:if="${isOwner}" id="editButton" class="btn btn-primary float-bottom"
                             th:href="@{/plants/edit/{pid}(pid=${plant.plantId})}">Edit</a>
 
                         <form th:if="${role == 'SPONSOR'}" th:action="@{/marketplace/plant/{pid}(pid=${plant.plantId})}"

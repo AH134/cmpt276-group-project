@@ -66,7 +66,7 @@
                 <div class="mt-auto d-flex justify-content-between">
                     <form th:action="@{/plants/{pid}(pid=${selectedPlant.plantId})}" th:method="delete">
                         <button class="btn d-flex justify-content-center align-items-center" type="submit"
-                            id="edit-btn">Delete</button>
+                            id="delete-btn">Delete</button>
                     </form>
                     <a th:href="@{/plants/edit/{pid}(pid=${selectedPlant.plantId})}"
                         class="btn d-flex justify-content-center align-items-center" id="edit-btn">Edit</a>
