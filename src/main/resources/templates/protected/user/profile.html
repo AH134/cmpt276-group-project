@@ -48,17 +48,24 @@
                 th:text="${user.role.toString() == 'GROWER' ? 'Listed Plants' : 'Sponsored Plants'}">
             </p>
 
-            <div class="d-flex flex-row flex-wrap justify-content-center">
-                <div class="p-3" th:each="plant : ${plants}">
-                    <div class="plant-container">
-                        <!-- this should bring you to the markplace plant section -->
+            <div class="d-flex flex-row flex-wrap justify-content-center gap-2">
+                <div class="plant-container" th:each="plant : ${plants}" th:if="${user.role.toString() != 'GROWER'}">
+                    <a class="plant-item box-container card text-decoration-none btn m-0 p-0"
+                        th:href="@{/plants/{plantId}(plantId=${plant.plantId})}">
+                        <img th:src="${plant.imageUrl}" alt="plant-image">
+                    </a>
+                    <p class="m-0 text-center" th:text="${plant.name}"></p>
+                </div>
+
+                <th:block th:if="${plant.sponsor == null}" th:each="plant : ${plants}">
+                    <div class="plant-container" th:if="${user.role.toString() == 'GROWER'}">
                         <a class="plant-item box-container card text-decoration-none btn m-0 p-0"
                             th:href="@{/marketplace/plant/{plantId}(plantId=${plant.plantId})}">
                             <img th:src="${plant.imageUrl}" alt="plant-image">
                         </a>
                         <p class="m-0 text-center" th:text="${plant.name}"></p>
                     </div>
-                </div>
+                </th:block>
             </div>
         </div>
     </div>

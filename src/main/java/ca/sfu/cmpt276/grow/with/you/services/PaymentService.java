@@ -39,6 +39,7 @@ public class PaymentService {
         plantRepository.save(plant);
 
         user.setBalance(user.getBalance() - plant.getPrice());
+        user.setPlantsSponsored(user.getPlantsSponsored() + 1);
         userRepository.save(user);
 
         Payment payment = new Payment((Grower) plant.getGrower(), (Sponsor) user, plant, plant.getPrice(),
@@ -54,5 +55,13 @@ public class PaymentService {
 
     public List<Payment> getPaymentBySponsor(Sponsor sponsor) {
         return paymentRepository.findBySponsor(sponsor, Sort.by(Sort.Direction.DESC, "paymentId"));
+    }
+
+    public void deletePaymentByPlant(Plant plant) {
+        Optional<Payment> pOptional = paymentRepository.findByPlant(plant);
+        if (pOptional.isPresent()) {
+            Payment payment = pOptional.get();
+            paymentRepository.deleteById(payment.getPaymentId());
+        }
     }
 }

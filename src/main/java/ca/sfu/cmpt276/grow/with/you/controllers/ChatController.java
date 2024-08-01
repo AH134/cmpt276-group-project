@@ -66,14 +66,14 @@ public class ChatController {
             model.addAttribute("chats", chatList);
             model.addAttribute("role", "grower");
             if (chatList.size() != 0) {
-                return "redirect:/messages/1";
+                return "redirect:/messages/" + chatList.get(0).getChatId();
             }
         } else if (user.getRole() == UserRole.SPONSOR) {
             chatList = chatService.getChatsBySponsor((Sponsor) user);
             model.addAttribute("chats", chatList);
             model.addAttribute("role", "sponsor");
             if (chatList.size() != 0) {
-                return "redirect:/messages/1";
+                return "redirect:/messages/" + chatList.get(0).getChatId();
             }
         }
 

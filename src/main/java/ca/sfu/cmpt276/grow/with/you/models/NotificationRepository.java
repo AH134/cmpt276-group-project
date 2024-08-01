@@ -8,4 +8,6 @@ public interface NotificationRepository extends JpaRepository<Notifications, Int
     List<Notifications> findByGrower(Grower grower);
 
     List<Notifications> findBySponsor(Sponsor sponsor);
+
+    List<Notifications> findByPlant(Plant plant);
 }

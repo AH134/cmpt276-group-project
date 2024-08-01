@@ -29,3 +29,11 @@ input[id='save-btn']:active, input[id='save-btn']:focus {
     background-color: var(--box-title-font-color) !important;
     border-color: var(--box-title-font-color) !important;
 }
+
+.border {
+    border-color: var(--lighter-green) !important;
+}
+
+p[id='balance'], h1[id='balanceTitle'] {
+    text-align: center;
+}

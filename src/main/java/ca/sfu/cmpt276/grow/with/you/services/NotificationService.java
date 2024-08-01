@@ -26,7 +26,7 @@ public class NotificationService {
     @Autowired
     NotificationRepository notifRepository;
 
-    public Notifications createNotifSponsor(int sponsor_id, int plantId){
+    public Notifications createNotifSponsor(int sponsor_id, int plantId) {
         String sponsorBuy = "You recently bought a plant:";
 
         Optional<User> sponsorOptional = userRepository.findById(sponsor_id);
@@ -43,7 +43,7 @@ public class NotificationService {
         return notifRepository.save(notif);
     }
 
-    public Notifications createNotifGrower(int grower_id, int plantId){
+    public Notifications createNotifGrower(int grower_id, int plantId) {
         String growerBuy = "Your plant was recently bought:";
 
         Optional<User> growerOptional = userRepository.findById(grower_id);
@@ -60,12 +60,19 @@ public class NotificationService {
         return notifRepository.save(notif);
     }
 
-    public List<Notifications> getAllNotifsGrower(Grower grower){
+    public List<Notifications> getAllNotifsGrower(Grower grower) {
         return notifRepository.findByGrower(grower);
     }
 
-    public List<Notifications> getAllNotifsSponsor(Sponsor sponsor){
+    public List<Notifications> getAllNotifsSponsor(Sponsor sponsor) {
         return notifRepository.findBySponsor(sponsor);
     }
-    
+
+    public void deleteNotifByPlant(Plant plant) {
+        List<Notifications> notifications = notifRepository.findByPlant(plant);
+        for (int i = 0; i < notifications.size(); i++) {
+            notifRepository.deleteById(notifications.get(i).getNotifId());
+        }
+    }
+
 }

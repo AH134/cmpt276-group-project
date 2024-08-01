@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,10 @@ import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.Plant;
 import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.models.User;
+import ca.sfu.cmpt276.grow.with.you.services.ChatService;
 import ca.sfu.cmpt276.grow.with.you.services.ImageUploadService;
+import ca.sfu.cmpt276.grow.with.you.services.NotificationService;
+import ca.sfu.cmpt276.grow.with.you.services.PaymentService;
 import ca.sfu.cmpt276.grow.with.you.services.PlantService;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
 import ca.sfu.cmpt276.utils.setHttpHeader;
@@ -35,7 +39,16 @@ public class PlantController {
     private ImageUploadService imageUploadService;
 
     @Autowired
+    private ChatService chatService;
+
+    @Autowired
     private UserService userService;
+
+    @Autowired
+    private NotificationService notificationService;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @GetMapping("/plants/add")
     public String getAddPlant(HttpServletRequest req,
@@ -181,6 +194,28 @@ public class PlantController {
         model.addAttribute("selectedPlant", plant);
         model.addAttribute("role", "sponsor");
         return "protected/user/sponsorPlants.html";
+    }
+
+    @DeleteMapping("/plants/{pid}")
+    public String deletePlant(@PathVariable("pid") int pid, HttpServletResponse response, HttpSession session) {
+        User user = userService.getUserBySession(session);
+        setHttpHeader.setHeader(response);
+        if (user == null) {
+            return "redirect:/";
+        }
+
+        Plant plant = plantService.getPlantById(pid);
+        if (plant == null) {
+            return "redirect:/plants";
+        }
+
+        notificationService.deleteNotifByPlant(plant);
+        paymentService.deletePaymentByPlant(plant);
+        chatService.deleteChatByPlant(plant);
+        plantService.deletePlantById(pid);
+
+        return "redirect:/plants";
+
     }
 
     @GetMapping("/plants")

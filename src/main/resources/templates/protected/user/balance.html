@@ -13,19 +13,20 @@
 <body>
     <div class="main-container h-100 m-auto" layout:fragment="content">
         <div class="d-flex mt-4 d-flex justify-content-center flex-column">
-            <form id="balance-form" action="/balance/complete" method="post">
-                <div id="balance-container" class="box-container p-3 d-flex mb-4 justify-content-center flex-column">
+            <form id="balance-form" action="/balance" method="post">
+                <div id="balance-container" class="box-container p-3 d-flex mb-4 align-items-center flex-column">
                     <div th:if="${user.role.toString() == 'GROWER'}">
-                        <h1>Withdraw</h1>
-                        <p class="m-0 fs-6" th:text="${'Balance: $' + user.balance}"></p>
+                        <h1 id="balanceTitle">Withdraw</h1>
+                        <p id="balance" class="m-0 fs-6" th:text="${'Balance: $' + user.balance}"></p>
+                        <p th:text="${error1}" style="color: #BC4749"></p>
                     </div>
     
                     <div th:if="${user.role.toString() == 'SPONSOR'}">
-                        <h1>Deposit</h1>
-                        <p class="m-0 fs-6" th:text="${'Balance: $' + user.balance}"></p>
+                        <h1 id="balanceTitle">Deposit</h1>
+                        <p id="balance" class="m-0 fs-6" th:text="${'Balance: $' + user.balance}"></p>
                     </div> 
 
-                    <div class="d-flex flex-column">
+                    <div class="d-flex flex-column mt-4">
                         <input type="number" name="balance" id="balance"
                             class="form-control form-control-lg border border-5" step="any" min="0.1" required>
                       
