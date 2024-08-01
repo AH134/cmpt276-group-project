@@ -39,6 +39,7 @@ public class PaymentService {
         plantRepository.save(plant);
 
         user.setBalance(user.getBalance() - plant.getPrice());
+        plant.getGrower().setBalance(plant.getGrower().getBalance() + plant.getPrice());
         user.setPlantsSponsored(user.getPlantsSponsored() + 1);
         userRepository.save(user);
 
