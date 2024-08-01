@@ -14,6 +14,7 @@ import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.models.User;
 import ca.sfu.cmpt276.grow.with.you.services.UserService;
 import ca.sfu.cmpt276.utils.setHttpHeader;
+import ca.sfu.cmpt276.utils.enums.UserError;
 import ca.sfu.cmpt276.utils.enums.UserRole;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -46,14 +47,15 @@ public class BalanceController {
         return "protected/user/balance.html";
     }
 
-    @PostMapping("/balance/complete")
+    @PostMapping("/balance")
     public String updateBalance(@RequestParam Map<String, String> formInput, HttpSession session,
             HttpServletResponse res,
             HttpServletRequest req, Model model) {
         try {
             setHttpHeader.setHeader(res);
             User user = (User) session.getAttribute("session_user");
-            Double newBalance = Double.parseDouble(formInput.get("balance"));
+            Double withdraw = Double.parseDouble(formInput.get("balance"));
+            UserError balanceError = UserError.INVALID_BALANCE;
 
             if (user == null) {
                 return "redirect:/";
@@ -61,12 +63,18 @@ public class BalanceController {
 
             if (user.getRole() == UserRole.GROWER) {
                 Grower grower = (Grower) user;
-                grower.setBalance(grower.getBalance() - newBalance);
+                Double newBalance = grower.getBalance() - withdraw;
+                if(newBalance < 0) {
+                    model.addAttribute("error1", balanceError.getMessage());
+                    model.addAttribute("user", grower);
+                    return "protected/user/balance.html";
+                }
+                grower.setBalance(newBalance);
                 userService.createUser(grower);
                 model.addAttribute("user", grower);
             } else if (user.getRole() == UserRole.SPONSOR) {
                 Sponsor sponsor = (Sponsor) user;
-                sponsor.setBalance(sponsor.getBalance() + newBalance);
+                sponsor.setBalance(sponsor.getBalance() + withdraw);
                 userService.createUser(sponsor);
                 model.addAttribute("user", sponsor);
             } else {

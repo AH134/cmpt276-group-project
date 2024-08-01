@@ -23,6 +23,13 @@
                         <div id="error-name" class="errorMsg"></div>
                         <p th:text="${error1}" style="color: #BC4749"></p>
                     </div>
+                    <div id="edit-email">
+                        <label class="form-label fs-5">Change Email</label>
+                        <input th:value="${user.email}" type="email" name="email" id="email"
+                            class="form-control form-control-lg border border-5" placeholder=Email required>
+                        <div id="error-email" class="errorMsg"></div>
+                        <p th:text="${error2}" style="color: #BC4749"></p>
+                    </div>
                     <!-- <label class="form-label fs-5 mt-2">Change Background Color</label>
                     <input type="color" class="form-control form-control-color w-100"> -->
 
