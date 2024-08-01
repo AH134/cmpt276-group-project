@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ca.sfu.cmpt276.grow.with.you.models.Grower;
 import ca.sfu.cmpt276.grow.with.you.models.Sponsor;
 import ca.sfu.cmpt276.grow.with.you.services.LeaderboardService;
+import ca.sfu.cmpt276.utils.setHttpHeader;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
@@ -18,7 +20,8 @@ public class LeaderboardController {
     private LeaderboardService leaderboardService;
 
     @GetMapping("/leaderboard")
-    public String getLeaderboard(Model model) {
+    public String getLeaderboard(Model model, HttpServletResponse res) {
+        setHttpHeader.setHeader(res);
         List<Grower> topGrowers = leaderboardService.getTopGrowers();
         model.addAttribute("topGrowers", topGrowers);
 

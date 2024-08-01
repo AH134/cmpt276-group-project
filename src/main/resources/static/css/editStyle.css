@@ -11,13 +11,18 @@
 
 }
 
-a[id='back-btn'], input[id='save-btn'] {
+input[id='save-btn'] {
     background-color: var(--box-title-color);
     border-color: var(--box-title-color);
 }
 
-a[id='back-btn']:hover, a[id='back-btn']:active, 
-a[id='back-btn']:focus, input[id='save-btn']:hover, 
+a[id='back-btn'], a[id='back-btn']:hover, a[id='back-btn']:active, 
+a[id='back-btn']:focus {
+    background-color: var(--red);
+    border-color: var(--red);
+}
+
+input[id='save-btn']:hover, 
 input[id='save-btn']:active, input[id='save-btn']:focus {
     background-color: var(--box-title-font-color) !important;
     border-color: var(--box-title-font-color) !important;
